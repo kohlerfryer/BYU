@@ -1,0 +1,14 @@
+apply plugin: 'application'
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+   compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
+   compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+   testCompile "junit:junit:4.12"
+}
+
+mainClassName = "com.famlymap.Server"
+
