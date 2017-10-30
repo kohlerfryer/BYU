@@ -1,5 +1,1 @@
-
-
-********************
-
-
+-INSERT INTO EventType (type) VALUES ('asdf')

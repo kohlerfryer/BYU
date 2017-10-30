@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Properties;
 import java.text.MessageFormat;
 
@@ -76,6 +77,20 @@ public class SQLDBConnection implements DBConnection{
         return result;
     }
 
+    private int executeUpdate(String query){
+        Connection connection = this.getConnection(this.databaseURL);
+        //JsonObject resultJson;
+        int id = -1;
+        try {
+            id = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).executeUpdate();
+            //resultJson = JavaUtil.convertResultSetToJSON(Result);
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
     public ResultSet getTuple(String fromRelation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
             "SELECT * FROM {0} where {1} {2} {3}",
@@ -92,8 +107,13 @@ public class SQLDBConnection implements DBConnection{
         return null;
     }
 
-    public int addTuple(String relation, ResultSet tuple){
-        return 0;
+    public int addTuple(String relation, String attributes, String values){
+        String query = MessageFormat.format(
+            "INSERT INTO {0} ({1}) VALUES ({2})",
+            relation, attributes, values);
+	System.out.println(query);
+        int id  = this.executeUpdate(query);
+	return id;
     }
 
     public void truncateRelation(String relation){}

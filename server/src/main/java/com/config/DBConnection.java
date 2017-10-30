@@ -56,7 +56,7 @@ public interface DBConnection{
     * @param tuple Jsonified version of tuple to update
     * @return int id of added row
     */
-    public int addTuple(String relation, ResultSet tuple);
+    public int addTuple(String relation, String attributes, String values);
 
     /** 
     * truncates relation in DB
