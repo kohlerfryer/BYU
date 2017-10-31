@@ -1,1 +1,1 @@
-&SELECT * FROM EventType where id = 53
+&SELECT * FROM EventType where id = 98

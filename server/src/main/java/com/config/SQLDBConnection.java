@@ -78,7 +78,7 @@ public class SQLDBConnection implements DBConnection{
         return result;
     }
 
-    private int executeUpdate(String query){
+    private int executeAdd(String query){
         Connection connection = this.getConnection(this.databaseURL);
         //JsonObject resultJson;
         int id = -1;
@@ -95,6 +95,21 @@ public class SQLDBConnection implements DBConnection{
         return id;
     }
 
+     private int executeUpdate(String query){
+        Connection connection = this.getConnection(this.databaseURL);
+        //JsonObject resultJson;
+        ResultSet result = null;
+	int rowsAffected = 0;
+        try {
+            rowsAffected  = connection.prepareStatement(query).executeUpdate();
+            //resultJson = JavaUtil.convertResultSetToJSON(Result);
+            // connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	return rowsAffected;
+     }
+
     public ResultSet getTuple(String fromRelation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
             "SELECT * FROM {0} where {1} {2} {3}",
@@ -105,13 +120,12 @@ public class SQLDBConnection implements DBConnection{
         return results;
     }
     
-    public int updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue){
+    public boolean updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
             "UPDATE {0} SET {1} WHERE {2} {3} {4}",
             relation, setStatement, key, delimeter, desiredValue);
-        System.out.println(query);
-        int id  = this.executeUpdate(query);
-	    return id;    
+        int rowsAffected  = this.executeUpdate(query);
+	return (rowsAffected > 0);
     }
 
     public ResultSet getTupleFromJoin(String firstRelation, String secondRelation, String key, String delimeter, String desiredValue){
@@ -122,15 +136,16 @@ public class SQLDBConnection implements DBConnection{
         String query = MessageFormat.format(
             "INSERT INTO {0} ({1}) VALUES ({2})",
             relation, attributes, values);
-        int id  = this.executeUpdate(query);
-	    return id;
+        int id  = this.executeAdd(query);
+	return id;
     }
 
-    public void deleteTuple(String fromRelation, String key, String delimeter, String desiredValue){
+    public boolean deleteTuple(String fromRelation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
-            "DELETE * FROM {0} where {1} {2} {3}",
+            "DELETE FROM {0} where {1} {2} {3}",
             fromRelation, key, delimeter, desiredValue);
-        ResultSet results = this.executeQuery(query);
+        int rowsAffected  = this.executeUpdate(query);
+	return (rowsAffected > 0);
     }
 
     public void truncateRelation(String relation){}

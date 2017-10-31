@@ -48,7 +48,7 @@ public interface DBConnection{
     * @param tuple Jsonified version of tuple to update
     * @return JsonObject Jsonified version of tuple
     */
-    public int updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue);
+    public boolean updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue);
 
     /** 
     * Updates current existing tuple in DB
