@@ -1,4 +1,4 @@
-// package com.familymap;
+;// package com.familymap;
 
 // import com.familymap.DBConnection;
 // import com.familymap.EventType;

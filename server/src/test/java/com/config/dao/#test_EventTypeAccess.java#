@@ -24,19 +24,10 @@ public class test_EventTypeAccess{
          this.eventTypeAccess = new EventTypeAccess(connection);
      }
 
-    // @Test
-    // public void testCRUD() {
-    //     //CREATE
-    //     String columns = "type";
-    //     String values = "'asdf'";
-    //     //READ
-    //     int eventID = this.connection.addTuple("EventType", columns, values);
-    //     assertNotEquals("db not returning id", eventID, -1);
-    //     int eventIDCopy = this.connection.getTuple("EventType", "id", "=", Integer.toString(eventID));
-    //     assertEquals(eventID, eventIDCopy);
-    //     //UPDATE
-	
-    // }
+     @Test
+     public void createEvent() {
+	 
+     }
     
     // @Test
     // public void testGetTuple() {

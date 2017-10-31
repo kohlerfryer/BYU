@@ -102,8 +102,6 @@ public class SQLDBConnection implements DBConnection{
 	int rowsAffected = 0;
         try {
             rowsAffected  = connection.prepareStatement(query).executeUpdate();
-            //resultJson = JavaUtil.convertResultSetToJSON(Result);
-            // connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,7 +114,6 @@ public class SQLDBConnection implements DBConnection{
             fromRelation, key, delimeter, desiredValue);
         System.out.println(query);
         ResultSet results = this.executeQuery(query);
-        // System.out.println(results.getString(1));
         return results;
     }
     
