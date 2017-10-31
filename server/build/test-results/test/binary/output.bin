@@ -1,1 +1,1 @@
--INSERT INTO EventType (type) VALUES ('asdf')
+&SELECT * FROM EventType where id = 53

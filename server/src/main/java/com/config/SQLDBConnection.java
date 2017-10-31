@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.Properties;
 import java.text.MessageFormat;
 
@@ -70,7 +71,7 @@ public class SQLDBConnection implements DBConnection{
         try {
             result = connection.prepareStatement(query).executeQuery();
             //resultJson = JavaUtil.convertResultSetToJSON(Result);
-            connection.close();
+            // connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,8 +83,11 @@ public class SQLDBConnection implements DBConnection{
         //JsonObject resultJson;
         int id = -1;
         try {
-            id = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).executeUpdate();
-            //resultJson = JavaUtil.convertResultSetToJSON(Result);
+            PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  
+            pstmt.executeUpdate();  
+            ResultSet keys = pstmt.getGeneratedKeys();    
+            keys.next();  
+            id = keys.getInt(1);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,12 +99,19 @@ public class SQLDBConnection implements DBConnection{
         String query = MessageFormat.format(
             "SELECT * FROM {0} where {1} {2} {3}",
             fromRelation, key, delimeter, desiredValue);
+        System.out.println(query);
         ResultSet results = this.executeQuery(query);
+        // System.out.println(results.getString(1));
         return results;
     }
     
-    public ResultSet updateTuple(String relation, ResultSet tuple){
-        return null;
+    public int updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue){
+        String query = MessageFormat.format(
+            "UPDATE {0} SET {1} WHERE {2} {3} {4}",
+            relation, setStatement, key, delimeter, desiredValue);
+        System.out.println(query);
+        int id  = this.executeUpdate(query);
+	    return id;    
     }
 
     public ResultSet getTupleFromJoin(String firstRelation, String secondRelation, String key, String delimeter, String desiredValue){
@@ -111,9 +122,15 @@ public class SQLDBConnection implements DBConnection{
         String query = MessageFormat.format(
             "INSERT INTO {0} ({1}) VALUES ({2})",
             relation, attributes, values);
-	System.out.println(query);
         int id  = this.executeUpdate(query);
-	return id;
+	    return id;
+    }
+
+    public void deleteTuple(String fromRelation, String key, String delimeter, String desiredValue){
+        String query = MessageFormat.format(
+            "DELETE * FROM {0} where {1} {2} {3}",
+            fromRelation, key, delimeter, desiredValue);
+        ResultSet results = this.executeQuery(query);
     }
 
     public void truncateRelation(String relation){}
