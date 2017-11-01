@@ -1,1 +1,2 @@
-&SELECT * FROM EventType where id = 98
+&SELECT * FROM EventType where id = 93
+&SELECT * FROM EventType where id = 97

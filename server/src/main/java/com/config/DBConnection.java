@@ -21,13 +21,13 @@ public interface DBConnection{
     
     /** 
     * gets tuple with specified value
-    * @param fromRelation  name of first relation in DB
+    * @param relation  name of first relation in DB
     * @param key value identifier of tuple of first Relation on which to project
     * @param delimeter delimiter used with key
     * @param desiredValue dilimeted value
     * @return JsonObject Jsonified version of tuple
     */
-    public ResultSet getTuple(String fromRelation, String key, String delimeter, String desiredValue);
+    public ResultSet getTuple(String relation, String key, String delimeter, String desiredValue);
 
     /**
     * gets first relation with specified value and then joins
@@ -56,7 +56,7 @@ public interface DBConnection{
     * @param tuple Jsonified version of tuple to update
     * @return int id of added row
     */
-    public int addTuple(String relation, String attributes, String values);
+    public int createTuple(String relation, String attributes, String values);
 
     /** 
     * truncates relation in DB
@@ -71,6 +71,14 @@ public interface DBConnection{
     * @return void
     */
     public void truncateAllRelations();
+
+    /** 
+    * deletes all identified tuples
+    * @param relation name of first relation in DB
+    * @param key value identifier of tuple of first Relation on which to project
+    * @param delimeter delimiter used with key
+    * @param desiredValue dilimeted value    
+    * @return boolean if deletion was successfull
+    */
+    public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue);
 }
-
-

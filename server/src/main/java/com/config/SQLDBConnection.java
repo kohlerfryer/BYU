@@ -66,12 +66,9 @@ public class SQLDBConnection implements DBConnection{
     //take the obvious security mesures such as prottection against sql injection ect...
     private ResultSet executeQuery(String query){
         Connection connection = this.getConnection(this.databaseURL);
-        //JsonObject resultJson;
         ResultSet result = null;
         try {
             result = connection.prepareStatement(query).executeQuery();
-            //resultJson = JavaUtil.convertResultSetToJSON(Result);
-            // connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,7 +77,6 @@ public class SQLDBConnection implements DBConnection{
 
     private int executeAdd(String query){
         Connection connection = this.getConnection(this.databaseURL);
-        //JsonObject resultJson;
         int id = -1;
         try {
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  
@@ -97,21 +93,20 @@ public class SQLDBConnection implements DBConnection{
 
      private int executeUpdate(String query){
         Connection connection = this.getConnection(this.databaseURL);
-        //JsonObject resultJson;
         ResultSet result = null;
-	int rowsAffected = 0;
+	    int rowsAffected = 0;
         try {
             rowsAffected  = connection.prepareStatement(query).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-	return rowsAffected;
+	    return rowsAffected;
      }
 
-    public ResultSet getTuple(String fromRelation, String key, String delimeter, String desiredValue){
+    public ResultSet getTuple(String relation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
             "SELECT * FROM {0} where {1} {2} {3}",
-            fromRelation, key, delimeter, desiredValue);
+            relation, key, delimeter, desiredValue);
         System.out.println(query);
         ResultSet results = this.executeQuery(query);
         return results;
@@ -119,30 +114,30 @@ public class SQLDBConnection implements DBConnection{
     
     public boolean updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
-            "UPDATE {0} SET {1} WHERE {2} {3} {4}",
+            "UPDATE {0} SET TYPE = {1} WHERE {2} {3} {4}",
             relation, setStatement, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
-	return (rowsAffected > 0);
+	    return (rowsAffected > 0);
     }
 
     public ResultSet getTupleFromJoin(String firstRelation, String secondRelation, String key, String delimeter, String desiredValue){
         return null;
     }
 
-    public int addTuple(String relation, String attributes, String values){
+    public int createTuple(String relation, String attributes, String values){
         String query = MessageFormat.format(
             "INSERT INTO {0} ({1}) VALUES ({2})",
             relation, attributes, values);
         int id  = this.executeAdd(query);
-	return id;
+	    return id;
     }
 
-    public boolean deleteTuple(String fromRelation, String key, String delimeter, String desiredValue){
+    public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
             "DELETE FROM {0} where {1} {2} {3}",
-            fromRelation, key, delimeter, desiredValue);
+            relation, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
-	return (rowsAffected > 0);
+	    return (rowsAffected > 0);
     }
 
     public void truncateRelation(String relation){}

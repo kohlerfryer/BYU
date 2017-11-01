@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_SQLDBConnection" tests="4" skipped="0" failures="0" errors="0" timestamp="2017-10-31T17:42:25" hostname="clwc-prog-5.byu.edu" time="0.507">
+<testsuite name="com.familymap.test_SQLDBConnection" tests="4" skipped="0" failures="0" errors="0" timestamp="2017-10-31T23:34:57" hostname="ImacAttack" time="0.07">
   <properties/>
-  <testcase name="testRead" classname="com.familymap.test_SQLDBConnection" time="0.466"/>
-  <testcase name="testCreate" classname="com.familymap.test_SQLDBConnection" time="0.01"/>
+  <testcase name="testRead" classname="com.familymap.test_SQLDBConnection" time="0.02"/>
+  <testcase name="testCreate" classname="com.familymap.test_SQLDBConnection" time="0.016"/>
   <testcase name="testDelete" classname="com.familymap.test_SQLDBConnection" time="0.016"/>
-  <testcase name="testUpdate" classname="com.familymap.test_SQLDBConnection" time="0.014"/>
-  <system-out><![CDATA[SELECT * FROM EventType where id = 98
+  <testcase name="testUpdate" classname="com.familymap.test_SQLDBConnection" time="0.016"/>
+  <system-out><![CDATA[SELECT * FROM EventType where id = 97
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

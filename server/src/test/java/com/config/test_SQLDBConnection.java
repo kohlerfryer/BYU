@@ -1,6 +1,7 @@
 package com.familymap;
 
 import com.familymap.test_SQLDBConnection;
+import static com.familymap.DBConnectionFactory.*;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -13,18 +14,14 @@ import static org.junit.Assert.* ;
 public class test_SQLDBConnection {
 
     private SQLDBConnection connection;
-    private final String connectionURL = "jdbc:mysql://localhost:3306/FamilyMap";
-    private final String connectionUsername= "FamilyMapApp";
-    private final String connectionPassword = "FamilyMapApp";
-    
     
     @Before
     public void setUp() {
-	this.connection = new SQLDBConnection(connectionURL, connectionUsername, connectionPassword);
+	    this.connection = DBConnectionFactory.getMYSQLDBConnection();
     }
 
     public int create(String columns, String values){
-        return this.connection.addTuple("EventType", columns, values);
+        return this.connection.createTuple("EventType", columns, values);
     }
 
     public ResultSet read(int id){
@@ -32,7 +29,7 @@ public class test_SQLDBConnection {
     }
 
     public boolean update(int id, String value){
-        return this.connection.updateTuple("EventType", "type='"+ value  +"'" , "id", "=", Integer.toString(id));
+        return this.connection.updateTuple("EventType", "'"+ value +"'" , "id", "=", Integer.toString(id));
     }
 
     public boolean delete(int id){
