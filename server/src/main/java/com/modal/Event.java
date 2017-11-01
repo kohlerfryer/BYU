@@ -1,43 +1,79 @@
-// /**
-// * represents a single Event tuple
-// */
-// public class Event{
-//     /** tuples unique identifier in relation */
-//     private int id;
+ package com.familymap;
+ 
+ /**
+ * represents a single Event tuple
+ */
+ public class Event{
+     /** tuples unique identifier in relation */
+     private String id;
 
-//     /** lattitude of event location */
-//     private int lattitude;
+     /** lattitude of event location */
+     private String lattitude;
 
-//     /** longitude of event location */
-//     private int longitude;
+     /** longitude of event location */
+     private String longitude;
 
-//     /** country of event */
-//     private String country;
+     /** country of event */
+     private String country;
 
-//     /** city of event */
-//     private String city;
+     /** city of event */
+     private String city;
 
-//     /** refers to eventType a relation tuple*/
-//     private int eventTypeId;
+     /** refers to eventType a relation tuple*/
+     private String eventTypeId;
 
-//     /** year of event */
-//     private Year year;
+     /** year of event */
+     private String year;
 
-//     public Event(int id, int lattitude, int longitude, String country, String city, int eventTypeId, Year year){}
+     public Event(String id, String lattitude, String longitude, String country, String city, String eventTypeId, String year){
+         this.id = id;
+         this.lattitude = lattitude;
+         this.longitude = longitude;
+         this.country = country;
+         this.city = city;
+         this.eventTypeId = eventTypeId;
+         this.year = year;
+     }
 
-//     public int getId(){}
-//     public int getLattitude(){}
-//     public int getLongitude(){}
-//     public String getCountry(){}
-//     public String getCity(){}
-//     public int getEventTypeId(){}
-//     public Year getYear(){}
+     public String getId(){
+	 return this.id;
+     }
+     public String getLattitude(){
+	 return this.lattitude;
+     }
+     public String getLongitude(){
+	 return this.longitude;
+     }
+     public String getCountry(){
+	 return this.country;
+     }
+     public String getCity(){
+	 return this.city;
+     }
+     public String getEventTypeId(){
+	 return this.eventTypeId;
+     }
+     public String getYear(){
+	 return this.year;
+     }
 
-//     public void setLattitude(int lattitude){}
-//     public void setLongitude(int longitude){}
-//     public void setCountry(String country){}
-//     public void setCity(String city){}
-//     public void setEventTypeId(int eventTypeId){}
-//     public void setYear(Year year){}
-    
-// }
+     public void setLattitude(String lattitude){
+	 this.lattitude = lattitude;
+     }
+     public void setLongitude(String longitude){
+	 this.longitude = longitude;
+     }
+     public void setCountry(String country){
+	 this.country = country;
+     }
+     public void setCity(String city){
+	 this.city = city;
+     }
+     public void setEventTypeId(String eventTypeId){
+	 this.eventTypeId = eventTypeId;
+     }
+     public void setYear(String year){
+	 this.year = year;
+     }
+  
+ }

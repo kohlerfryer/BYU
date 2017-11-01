@@ -38,7 +38,7 @@ public class DataAccess{
 //     * @param desiredValue dilimeted value
 //     * @return ResultSet
 //     */
-    public int create(String relation, String attributes, String values){
+    public String create(String relation, String attributes, String values){
         return this.dbConnection.createTuple(relation, attributes, values);
     }
 

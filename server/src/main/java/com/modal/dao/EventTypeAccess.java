@@ -22,8 +22,9 @@ public class EventTypeAccess extends DataAccess{
     * @param eventType type of event
     * @return EventType
     */
+    //change all data types to string :)*******************************************************************************
     public EventType create(String eventType){
-        int id = super.create(this.relation, "type", "'" + eventType + "'");
+        String id = super.create(this.relation, "type", "'" + eventType + "'");
         return new EventType(id, eventType);
     }
 
@@ -56,7 +57,8 @@ public class EventTypeAccess extends DataAccess{
     public boolean update(EventType eventType){
         String changes = MessageFormat.format(
             " {0} = ''{1}'' ",
-            "type", eventType.getType()
+            "type", 
+            eventType.getType()
         );
         return super.update(this.relation, changes, "id", "=", Integer.toString(eventType.getId()));
     }

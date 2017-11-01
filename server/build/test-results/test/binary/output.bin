@@ -1,5 +1,0 @@
-E********************************DELETE FROM EventType where id = 203
-U********************************UPDATE EventType SET type = 'updated' WHERE id = 204
-	E********************************DELETE FROM EventType where id = 207
-
-W********************************UPDATE EventType SET  type = 'Divorce'  WHERE id = 208

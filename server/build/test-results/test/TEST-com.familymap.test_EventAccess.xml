@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.familymap.test_EventAccess" tests="4" skipped="0" failures="0" errors="0" timestamp="2017-11-01T18:40:33" hostname="clwc-prog-5.byu.edu" time="0.06">
+  <properties/>
+  <testcase name="testRead" classname="com.familymap.test_EventAccess" time="0.022"/>
+  <testcase name="testCreate" classname="com.familymap.test_EventAccess" time="0.008"/>
+  <testcase name="testDelete" classname="com.familymap.test_EventAccess" time="0.014"/>
+  <testcase name="testUpdate" classname="com.familymap.test_EventAccess" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

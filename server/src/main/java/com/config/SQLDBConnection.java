@@ -75,15 +75,16 @@ public class SQLDBConnection implements DBConnection{
         return result;
     }
 
-    private int executeAdd(String query){
+    private String executeAdd(String query){
+        // System.out.println("*******************" + query);
         Connection connection = this.getConnection(this.databaseURL);
-        int id = -1;
+        String id = "-1";
         try {
             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  
             pstmt.executeUpdate();  
             ResultSet keys = pstmt.getGeneratedKeys();    
             keys.next();  
-            id = keys.getInt(1);
+            id = keys.getString(1);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,11 +124,11 @@ public class SQLDBConnection implements DBConnection{
         return null;
     }
 
-    public int createTuple(String relation, String attributes, String values){
+    public String createTuple(String relation, String attributes, String values){
         String query = MessageFormat.format(
             "INSERT INTO {0} ({1}) VALUES ({2})",
             relation, attributes, values);
-        int id  = this.executeAdd(query);
+        String id  = this.executeAdd(query);
 	    return id;
     }
 
