@@ -19,6 +19,7 @@ public class test_DataAccess {
     final String initialValues = "'initial'";
     final String initialComparisonValue = "initial";
     final String updatedValues = "'updated'";
+    final String updateQuery = "type = 'updated'";
     final String attributes = "type";
     final String relation = "EventType";
     final String delimeter = "=";
@@ -47,7 +48,7 @@ public class test_DataAccess {
     @Test
     public void testUpdate() throws SQLException {
         int id = this.dataAccess.create(this.relation, this.attributes, this.initialValues);
-	    assertTrue(this.dataAccess.update(this.relation, this.updatedValues, this.key, this.delimeter, Integer.toString(id)));
+	    assertTrue(this.dataAccess.update(this.relation, this.updateQuery, this.key, this.delimeter, Integer.toString(id)));
     }
 
     @Test

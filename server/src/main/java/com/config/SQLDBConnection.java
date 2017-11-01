@@ -107,14 +107,13 @@ public class SQLDBConnection implements DBConnection{
         String query = MessageFormat.format(
             "SELECT * FROM {0} where {1} {2} {3}",
             relation, key, delimeter, desiredValue);
-        System.out.println(query);
         ResultSet results = this.executeQuery(query);
         return results;
     }
     
     public boolean updateTuple(String relation, String setStatement, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
-            "UPDATE {0} SET TYPE = {1} WHERE {2} {3} {4}",
+            "UPDATE {0} SET {1} WHERE {2} {3} {4}",
             relation, setStatement, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
 	    return (rowsAffected > 0);
