@@ -63,14 +63,14 @@ public interface DBConnection{
     * @param relation  name of relation in DB
     * @return void
     */
-    public void truncateRelation(String relation);
+    public boolean truncateRelation(String relation);
 
-    /** 
-    * truncates all relations in DB
-    * @param relation  name of relation in DB
-    * @return void
-    */
-    public void truncateAllRelations();
+    // /** 
+    // * truncates all relations in DB
+    // * @param relation  name of relation in DB
+    // * @return void
+    // */
+    // public boolean truncateAllRelations();
 
     /** 
     * deletes all identified tuples
@@ -81,4 +81,5 @@ public interface DBConnection{
     * @return boolean if deletion was successfull
     */
     public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue);
+
 }

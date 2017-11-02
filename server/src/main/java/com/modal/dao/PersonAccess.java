@@ -1,7 +1,7 @@
 package com.familymap;
 
 import com.familymap.DBConnection;
-import com.familymap.User;
+import com.familymap.Person;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -14,18 +14,11 @@ import java.util.ArrayList;
 public class PersonAccess extends DataAccess{
     
     /** Reference to Singleton DB*/
-    private DataHandler db;
+    final private String relation = "Person";
 
-    public PersonAccess(DataHandler db){}
-
-    /** 
-    * gets person with specified value
-    * @param key value identifier of tuple of first Relation on which to project
-    * @param delimeter delimiter used with key
-    * @param desiredValue dilimeted value
-    * @return String matching eventType
-    */
-    public Person getPerson(String key, string delimeter, String desiredValue){}
+    public PersonAccess(DBConnection dbConnection){
+        super(dbConnection);
+    }
 
     /** 
     * creates person in db modeled after parameters
@@ -37,7 +30,7 @@ public class PersonAccess extends DataAccess{
     * @param spouseId referrs to spouse tuple of this person 
     * @return Person
     */
-    public Person create(Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){
+    public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
         String attributes = MessageFormat.format(
             "{0}, {1}, {2}, {3}, {4}, {5}",
             "first_name",
@@ -56,17 +49,47 @@ public class PersonAccess extends DataAccess{
             motherId, 
             spouseId
         );
-//     public Person(int id, Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){}
 
         String id = super.create(this.relation, attributes, values);
-        return new User(id, firstName, lastName, gender, fatherId, motherId, spouseId);
+        return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
     }
+
+
+    /** 
+    * gets person with specified value
+    * @param key value identifier of tuple of first Relation on which to project
+    * @param delimeter delimiter used with key
+    * @param desiredValue dilimeted value
+    * @return String matching eventType
+    */
+//     public Person(int id, Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){}
+
+    public ArrayList<Person> get(String key, String delimeter, String desiredValue){
+        ResultSet result = super.get(this.relation, key, delimeter, desiredValue);
+        ArrayList<Person> Person = new ArrayList<Person>();
+        try{
+            while(result.next()){
+                String id = result.getString("id");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String gender = result.getString("gender");
+                String fatherId = result.getString("father_id");
+                String motherId = result.getString("mother_id");
+                String spouseId = result.getString("spouse_id");
+                Person.add(new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return Person;
+    }
+
     /** 
     * update specific user in db
     * @param user user with new parameters
     * @return EventType
     */
-    public Person updatePerson(Person user){}
+    // public Person updatePerson(Person user){}
     
     // /** 
     // * generates random data for a user up
@@ -78,53 +101,3 @@ public class PersonAccess extends DataAccess{
 
 }
 
-
-
-/**
- * API's with DBConnection and returns/manages models
- */
-public class UserAccess extends DataAccess{
-
-    /** Reference to Singleton DB*/
-    final private String relation = "User";
-
-    public UserAccess(DBConnection dbConnection){
-        super(dbConnection);
-    }
-
-    /** 
-    * creates user event in db modeled after parameters
-    * @param username username of user
-    * @param email email of user
-    * @param personId email of user
-    * @return User
-    */
-//  String id, String username, String email, String personId
-
-
-    /** 
-    * gets user event with specified value
-    * @param key value identifier of tuple of first Relation on which to project
-    * @param delimeter delimiter used with key
-    * @param desiredValue dilimeted value
-    * @return User
-    */
-    public ArrayList<User> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.get(this.relation, key, delimeter, desiredValue);
-        ArrayList<User> users = new ArrayList<User>();
-        try{
-            while(result.next()){
-                String id = result.getString("id");
-                String username = result.getString("username");
-                String email = result.getString("email");
-                String personId = result.getString("person_id");
-                users.add(new User(id, username, email, personId));
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return users;
-    }
-
-
-}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_AuthenticationAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-02T04:23:02" hostname="ImacAttack" time="0.368">
+<testsuite name="com.familymap.test_AuthenticationAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-02T10:02:24" hostname="ImacAttack" time="0.43">
   <properties/>
-  <testcase name="testRead" classname="com.familymap.test_AuthenticationAccess" time="0.357"/>
+  <testcase name="testRead" classname="com.familymap.test_AuthenticationAccess" time="0.419"/>
   <testcase name="testCreate" classname="com.familymap.test_AuthenticationAccess" time="0.011"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

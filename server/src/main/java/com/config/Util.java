@@ -29,6 +29,11 @@ public class Util{
         }
         return new String(Hex.encodeHex(theDigest));
     }
+
+    // public static String inputStreamToString(){
+
+    // }
+
     
 
 }

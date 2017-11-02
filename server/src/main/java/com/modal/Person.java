@@ -1,43 +1,78 @@
-// /**
-// * represents a single Person tuple
-// */
-// public class Person{
+package com.familymap;
 
-//     /** tuples unique identifier in relation */
-//     private int id;
+/**
+* represents a single Person tuple
+*/
+public class Person{
 
-//     /** first name of person */
-//     private Name firstName;
+    /** tuples unique identifier in relation */
+    private String id;
 
-//     /** last name of person */
-//     private Name lastName;
+    /** first name of person */
+    private String firstName;
 
-//     /** gender of person */
-//     private char gender;
+    /** last name of person */
+    private String lastName;
 
-//     /** referrs to father tuple of this person */
-//     private int fatherId;
+    /** gender of person */
+    private String gender;
 
-//     /** referrs to mother tuple of this person */
-//     private int motherId;
+    /** referrs to father tuple of this person */
+    private String fatherId;
 
-//     /** referrs to spouse tuple of this person */
-//     private int spouseId;
+    /** referrs to mother tuple of this person */
+    private String motherId;
+
+    /** referrs to spouse tuple of this person */
+    private String spouseId;
     
-//     public Person(int id, Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){}
+    public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.fatherId = fatherId;
+        this.spouseId = spouseId;
+    }
        
-//     public int getId(){}
-//     public Name getFirstName(){}
-//     public Name getLastName(){}
-//     public char getGender(){}
-//     public int getFatherId(){}
-//     public int getMotherId(){}
-//     public int getSpouseId(){}
+    public String getId(){
+        return this.id;
+    }
+    public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){
+        return this.lastName;
+    }
+    public String getGender(){
+        return this.gender;
+    }
+    public String getFatherId(){
+        return this.fatherId;
+    }
+    public String getMotherId(){
+        return this.motherId;
+    }
+    public String getSpouseId(){
+        return this.spouseId;
+    }
 
-//     public void setUsername(UserName username){}
-//     public void setEmail(Email email){}
-//     public void setGender(char gender){}
-//     public void setFatherId(int fatherId){}
-//     public void setMotherId(int motherId){}
-//     public void setSpouseId(int spouseId){}
-// }
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    public void setGender(String gender){
+        this.gender = gender;
+    }
+    public void setFatherId(String fatherId){
+        this.fatherId = fatherId;
+    }
+    public void setMotherId(String motherId){
+        this.motherId = motherId;
+    }
+    public void setSpouseId(String spouseId){
+        this.spouseId = spouseId;
+    }
+}

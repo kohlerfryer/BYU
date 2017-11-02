@@ -140,7 +140,13 @@ public class SQLDBConnection implements DBConnection{
 	    return (rowsAffected > 0);
     }
 
-    public void truncateRelation(String relation){}
-    public void truncateAllRelations(){}
+    public boolean truncateRelation(String relation){
+        String query = MessageFormat.format(
+            "TRUNCATE {0}",
+            relation
+        );
+        int rowsAffected  = this.executeUpdate(query);
+	    return (rowsAffected > 0);
+    }
 
 }
