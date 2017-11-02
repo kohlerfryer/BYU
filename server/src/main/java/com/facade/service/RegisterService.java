@@ -27,9 +27,10 @@ public class RegisterService extends FamilyMapService{
         return null;
     }
 
-    public boolean register(JsonObject requestBody){
+    public ResponseBodyWrapper register(JsonObject requestBody) throws InvalidRequestException{
 
         JsonObject responseBody;
+        boolean success = true;
         try{
             this.validateRequestBody(requestBody);
 
@@ -52,10 +53,9 @@ public class RegisterService extends FamilyMapService{
             response = this.generateSuccessResponseBody(user, person);
         }catch(InvalidRequestException e){
             response = this.generateErrorResponseBody(e.getMessage());
-        }//should be in handler catch(Exception e){
-        //     response = this.generateErrorResponseBody("Internal server error");
-        // }
-        return response;
+            success = false;
+        }
+        return new ResponseBodyWrapper(success, response);
 
     }
 

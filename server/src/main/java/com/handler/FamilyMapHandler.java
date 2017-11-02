@@ -1,22 +1,6 @@
 package com.familymap;
 
-public class FamilyMapHandler implements HttpHandler{
-
-	@Override
-	public void handle(HttpExchange exchange) throws IOException {
-        try{
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
-                Headers reqestHeaders = exchange.getRequestHeaders();
-                String requestBody = this.getRequestBody(exchange);
-
-                String responseBody = "{name:'john'}";
-                this.writeStringToOutputStream(responseBody, exchange.getResponseBody());
-
-            }
-        }catch(){
-            
-        }   
-    }
+public class FamilyMapHandler{
 
 	private void writeStringToOutputStream(String string, OutputStream outputStream) throws IOException {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
@@ -40,6 +24,7 @@ public class FamilyMapHandler implements HttpHandler{
         out.print(response);
         out.close();
     }
+
 
     //Gson gson = new Gson();
 
