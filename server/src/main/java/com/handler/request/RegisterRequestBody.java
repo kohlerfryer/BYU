@@ -7,7 +7,7 @@
 //     private validateInputs();
 // }
 
-public class RegisterRequestBody implements RequestBody{
+//public class RegisterRequestBody implements RequestBody{
     // private String userName;
     // private String password;
     // private String email;
@@ -30,4 +30,4 @@ public class RegisterRequestBody implements RequestBody{
     // }
 
 
-}
+//}
