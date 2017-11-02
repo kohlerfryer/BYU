@@ -54,6 +54,31 @@ public class PersonAccess extends DataAccess{
         return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
     }
 
+    /** 
+    * creates person in db modeled after parameters
+    * @param firstName firstName of person
+    * @param lastName lastName of person
+    * @param gender gender of person
+    * @return Person
+    */
+    public Person create(String firstName, String lastName, String gender){
+        String attributes = MessageFormat.format(
+            "{0}, {1}, {2}",
+            "first_name",
+            "last_name",
+            "gender"
+        );
+        String values = MessageFormat.format(
+            "''{0}'', ''{1}'', ''{2}''",
+            firstName, 
+            lastName, 
+            gender
+        );
+
+        String id = super.create(this.relation, attributes, values);
+        return new Person(id, firstName, lastName, gender);
+    }
+
 
     /** 
     * gets person with specified value

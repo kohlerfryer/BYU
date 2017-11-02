@@ -32,7 +32,15 @@ public class Person{
         this.lastName = lastName;
         this.gender = gender;
         this.fatherId = fatherId;
+        this.motherId = motherId;
         this.spouseId = spouseId;
+    }
+
+    public Person(String id, String firstName, String lastName, String gender){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
     }
        
     public String getId(){
