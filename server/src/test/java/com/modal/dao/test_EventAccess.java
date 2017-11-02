@@ -21,8 +21,8 @@ public class test_EventAccess {
     final String longitude = "2000000";
     final String country = "Peru";
     final String city = "Arequipa";
-    final String eventTypeId = "3";
-    final String updatedTypeId = "6";
+    final String type = "wedding";
+    final String updatedType = "divorce";
     final String year = "2017";
 
     @Before
@@ -33,28 +33,27 @@ public class test_EventAccess {
 
     @Test
     public void testCreate() {
-        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.eventTypeId, this.year);
-        // System.out.println("****************" + event.getCountry());
+        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.type, this.year);
         assertEquals(event.getCountry(), this.country);
     }
 
     @Test
     public void testRead() throws SQLException {
-        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.eventTypeId, this.year);
+        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.type, this.year);
         ArrayList<Event> eventDuplicateList = this.eventAccess.get("id", "=", event.getId());
         assertEquals(event.getId(), eventDuplicateList.get(0).getId());
     }
 
     @Test
     public void testUpdate() throws SQLException {
-        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.eventTypeId, this.year);
-        event.setEventTypeId(this.updatedTypeId);
+        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.type, this.year);
+        event.setType(this.updatedType);
 	    assertTrue(this.eventAccess.update(event));
     }
 
     @Test
     public void testDelete() throws SQLException{
-        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.eventTypeId, this.year);
+        Event event = this.eventAccess.create(this.lattitude, this.longitude, this.country, this.city, this.type, this.year);
 	    assertTrue(this.eventAccess.delete(event));
     }
 

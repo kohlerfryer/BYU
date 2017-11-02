@@ -26,14 +26,14 @@ public class EventAccess extends DataAccess{
     * @return Event
     */
     //int id, int lattitude, int longitude, String country, String city, int eventTypeId, Year year
-    public Event create(String lattitude, String longitude, String country, String city, String eventTypeId, String year){
+    public Event create(String lattitude, String longitude, String country, String city, String type, String year){
         String attributes = MessageFormat.format(
             "{0}, {1}, {2}, {3}, {4}, {5}",
             "lattitude",
             "longitude",
             "country",
             "city",
-            "event_type_id",
+            "type",
             "year"
         );
         String values = MessageFormat.format(
@@ -42,12 +42,12 @@ public class EventAccess extends DataAccess{
             longitude, 
             country, 
             city, 
-            eventTypeId, 
+            type, 
             year
         );
-        //todo change this
+
         String id = super.create(this.relation, attributes, values);
-        return new Event(id, lattitude, longitude, country, city, eventTypeId, year);
+        return new Event(id, lattitude, longitude, country, city, type, year);
     }
 
     /** 
@@ -67,9 +67,9 @@ public class EventAccess extends DataAccess{
                 String longitude = result.getString("longitude");
                 String country = result.getString("country");
                 String city = result.getString("city");
-                String eventTypeId = result.getString("event_type_id");
+                String type = result.getString("type");
                 String year = result.getString("year");
-                events.add(new Event(id, lattitude, longitude, country, city, eventTypeId, year));
+                events.add(new Event(id, lattitude, longitude, country, city, type, year));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class EventAccess extends DataAccess{
             "longitude", event.getLongitude(),
             "country", event.getCountry(),
             "city", event.getCity(),
-            "event_type_id", event.getEventTypeId(),
+            "type", event.getEventType(),
             "year", event.getYear()
         );
         return super.update(this.relation, changes, "id", "=", event.getId());

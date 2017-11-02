@@ -20,18 +20,18 @@
      private String city;
 
      /** refers to eventType a relation tuple*/
-     private String eventTypeId;
+     private String type;
 
      /** year of event */
      private String year;
 
-     public Event(String id, String lattitude, String longitude, String country, String city, String eventTypeId, String year){
+     public Event(String id, String lattitude, String longitude, String country, String city, String type, String year){
          this.id = id;
          this.lattitude = lattitude;
          this.longitude = longitude;
          this.country = country;
          this.city = city;
-         this.eventTypeId = eventTypeId;
+         this.type = type;
          this.year = year;
      }
 
@@ -50,8 +50,8 @@
      public String getCity(){
 	 return this.city;
      }
-     public String getEventTypeId(){
-	 return this.eventTypeId;
+     public String getEventType(){
+	 return this.type;
      }
      public String getYear(){
 	 return this.year;
@@ -69,8 +69,8 @@
      public void setCity(String city){
 	 this.city = city;
      }
-     public void setEventTypeId(String eventTypeId){
-	 this.eventTypeId = eventTypeId;
+     public void setType(String type){
+	 this.type = type;
      }
      public void setYear(String year){
 	 this.year = year;

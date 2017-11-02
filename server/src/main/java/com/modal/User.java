@@ -1,32 +1,53 @@
-// /**
-// * PersonEvent a single User tuple
-// */
-// public class User{
+package com.familymap;
 
-//     /** tuples unique identifier in relation */
-//     private int id;
+/**
+* PersonEvent a single User tuple
+*/
+public class User{
 
-//     /** Username of user */
-//     private UserName username;
+    /** tuples unique identifier in relation */
+    private String id;
 
-//     /** email of user */
-//     private Email email;
+    /** Username of user */
+    private String username;
 
-//     /** referrs to person of user account */
-//     private int personId;
+    /** email of user */
+    private String email;
 
-//     public User(int id, UserName username, Email email, int personId){}
+    /** referrs to person of user account */
+    private String personId;
+
+    public User(String id, String username, String email, String personId){
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.personId = personId;
+    }
     
-//     public int getId(){}
-//     public UserName getUserName(){}
-//     public Email getEmail(){}
-//     public int getPersonId(){}
+    public String getId(){
+        return this.id;
+    }
+    public String getUsername(){
+        return this.username;
+    }
+    public String getEmail(){
+        return this.email;
+    }
+    public String getPersonId(){
+        return this.personId;
+    }
    
-//     public void setUsername(UserName username){}
-//     public void setEmail(Email email){}
-//     public void setPersonId(int personId){}
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
+    public void setPersonId(String personId){
+        this.personId = personId;
+    }
 
-// }
+}
 
 
 

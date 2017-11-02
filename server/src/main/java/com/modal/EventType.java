@@ -5,27 +5,27 @@ package com.familymap;
 */
 public class EventType{
 
-    /** tuples unique identifier in relation */
-    private int id;
+    // /** tuples unique identifier in relation */
+    // private String id;
 
-    /** type of event */
-    private String type;
+    // /** type of event */
+    // private String type;
 
-    public EventType(int id, String type){
-        this.id = id;
-        this.type = type;
-    }
+    // public EventType(String id, String type){
+    //     this.id = id;
+    //     this.type = type;
+    // }
 
-    public String getType(){
-        return this.type;
-    }
+    // public String getType(){
+    //     return this.type;
+    // }
 
-    public int getId(){
-        return this.id;
-    }
+    // public String getId(){
+    //     return this.id;
+    // }
 
-    public void setType(String type){
-        this.type = type;
-    }
+    // public void setType(String type){
+    //     this.type = type;
+    // }
     
 }
