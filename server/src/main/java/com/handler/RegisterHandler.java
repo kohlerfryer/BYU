@@ -1,24 +1,23 @@
 package com.familymap;
 
-public class ResponseBodyWrapper(){
-    private boolean successResponse;
-    private JsonObject responseBody;
-    
-    public ResponseBodyWrapper(boolean successResponse, JsonObject responseBody){
-        this.successResponse = successResponse;
-        this.responseBody = responseBody;
-    }
+// import java.io.*;
+// import java.net.*;
+// import com.sun.net.httpserver.*;
+import com.familymap.DBConnection;
+import com.familymap.FamilyMapHandler;
+import com.familymap.ResponseBodyWrapper;
 
-    public String getResponseBody(){
-        return responseBody.toString();
-    }
-    public boolean responseTypeSuccessfull(){
-        return this.successResponse;
-    }
-    public JsonObject getResponseBody(){
-        return this.responseBody;
-    }
-}
+import java.net.HttpURLConnection;
+import com.google.gson.JsonParser;
+import com.sun.net.httpserver.Headers;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.Gson;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
 
 public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
 
@@ -28,21 +27,21 @@ public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
     
         try{
             Gson gson = new Gson();
+            JsonParser parser = new JsonParser();
             String requestBody = this.getRequestBody(exchange);
             JsonObject registerRequestBody = parser.parse(requestBody).getAsJsonObject();
 
             RegisterService registerService = new RegisterService(dbConnection);
             Headers reqestHeaders = exchange.getRequestHeaders();
-            JsonParser parser = new JsonParser();
 
 
             ResponseBodyWrapper responseBodyWrapper = registerService.register(registerRequestBody);
             this.writeStringToOutputStream(responseBodyWrapper.getResponseBody(), exchange.getResponseBody());
 
-            if(responseBody instanceof errorResponseBody){
+            if(!responseBodyWrapper.responseTypeSuccessfull()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
-            else if(responseBody instanceof successResponseBody){
+            else if(responseBodyWrapper.responseTypeSuccessfull()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
 

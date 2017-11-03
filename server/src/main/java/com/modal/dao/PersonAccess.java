@@ -20,39 +20,39 @@ public class PersonAccess extends DataAccess{
         super(dbConnection);
     }
 
-    /** 
-    * creates person in db modeled after parameters
-    * @param firstName firstName of person
-    * @param lastName lastName of person
-    * @param gender gender of person
-    * @param fatherId treferrs to father tuple of this person 
-    * @param motherId referrs to mohter tuple of this person 
-    * @param spouseId referrs to spouse tuple of this person 
-    * @return Person
-    */
-    public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
-        String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}",
-            "first_name",
-            "last_name",
-            "gender",
-            "father_id",
-            "mother_id",
-            "spouse_id"
-        );
-        String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
-            firstName, 
-            lastName, 
-            gender, 
-            fatherId, 
-            motherId, 
-            spouseId
-        );
+    // /** 
+    // * creates person in db modeled after parameters
+    // * @param firstName firstName of person
+    // * @param lastName lastName of person
+    // * @param gender gender of person
+    // * @param fatherId treferrs to father tuple of this person 
+    // * @param motherId referrs to mohter tuple of this person 
+    // * @param spouseId referrs to spouse tuple of this person 
+    // * @return Person
+    // */
+    // public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+    //     String attributes = MessageFormat.format(
+    //         "{0}, {1}, {2}, {3}, {4}, {5}",
+    //         "first_name",
+    //         "last_name",
+    //         "gender",
+    //         "father_id",
+    //         "mother_id",
+    //         "spouse_id"
+    //     );
+    //     String values = MessageFormat.format(
+    //         "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
+    //         firstName, 
+    //         lastName, 
+    //         gender, 
+    //         fatherId, 
+    //         motherId, 
+    //         spouseId
+    //     );
 
-        String id = super.create(this.relation, attributes, values);
-        return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
-    }
+    //     String id = super.create(this.relation, attributes, values);
+    //     return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
+    // }
 
     /** 
     * creates person in db modeled after parameters
