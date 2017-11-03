@@ -1,5 +1,7 @@
 package com.familymap;
 
+import com.familymap.InvalidRequestException;
+
 // public interface RequestBody{
 //     private validateInputs();
 // }
@@ -21,7 +23,10 @@ public class RegisterRequestBody{
         this.lastName = lastName;
         this.gender = gender;
     }
-    //String userJson = gson.toJson(userObject);  
+
+    public void validate() throws InvalidRequestException{
+        // if(false == true)throw new InvalidRequestException("Invalid parameters");
+    }
      
     public String getUsername(){
         return this.userName;
@@ -41,11 +46,5 @@ public class RegisterRequestBody{
     public String getGender(){
         return this.gender;
     }
-
-    // private validateInputs() throws InvalidRequestException{
-        //throw new InvalidRequestExpection("invalid parameters");
-        //gson.toJson(dobj, new FileWriter("D:\\file.json"));
-    // }
-
 
 }

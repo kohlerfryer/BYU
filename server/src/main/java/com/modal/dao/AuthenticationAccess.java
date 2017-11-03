@@ -44,7 +44,7 @@ public class AuthenticationAccess extends DataAccess{
             timestamp.toString()
         );
 
-        String id = super.create(this.relation, attributes, values);
+        String id = super.rawCreate(this.relation, attributes, values);
         return new Authentication(id, token, userId, timestamp.toString());
     }
 
@@ -56,7 +56,7 @@ public class AuthenticationAccess extends DataAccess{
     * @return Authentication
     */
     public ArrayList<Authentication> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.get(this.relation, key, delimeter, desiredValue);
+        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
         ArrayList<Authentication> authentications = new ArrayList<Authentication>();
         try{
             while(result.next()){

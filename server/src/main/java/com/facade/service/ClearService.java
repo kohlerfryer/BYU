@@ -6,8 +6,8 @@ public class ClearService extends FamilyMapService{
     //and to truncate them. For lack of time, this will have to do. 
     final String[] relations = {"Authentication", "Event", "Person", "User"};
 
-    public ClearService(DBConnection dbConnection){
-        super(dbConnection);
+    public ClearService(){
+
     }
 
     public void clearData(){

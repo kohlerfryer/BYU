@@ -4,7 +4,7 @@ import com.familymap.DBConnection;
 import com.familymap.Person;
 import com.familymap.PersonAccess;
 
-import static com.familymap.DBConnectionFactory.*;
+import static com.familymap.DBSingleton.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -28,7 +28,7 @@ public class test_PersonAccess{
 
     @Before
     public void setUp() {
-	SQLDBConnection connection = DBConnectionFactory.getMYSQLDBConnection();
+	    DBConnection connection = DBSingleton.getInstance();
         this.personAccess = new PersonAccess(connection);
     }
 

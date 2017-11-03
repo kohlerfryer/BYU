@@ -1,12 +1,13 @@
 package com.familymap;
 
-import com.familymap.ResponseBodyWrapper;
 import com.familymap.RegisterRequestBody;
+import com.familymap.FamilyMapService;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import java.net.URLConnection;
+import java.lang.NullPointerException;
 
 public class RegisterService extends FamilyMapService{
 
@@ -16,58 +17,28 @@ public class RegisterService extends FamilyMapService{
 
     public RegisterService(){
         super();
-        UserAccess userAccess = new UserAccess(this.db);
-        AuthenticationAccess authenticationAccess = new AuthenticationAccess(this.db);
-        PersonAccess personAccess = new PersonAccess(this.db);
+        UserAccess userAccess = new UserAccess(this.dbConnection);
+        AuthenticationAccess authenticationAccess = new AuthenticationAccess(this.dbConnection);
+        PersonAccess personAccess = new PersonAccess(this.dbConnection);
         //implement singleton pattern instead with db
     }
 
-    // public boolean validRequestBody(JsonObject request){
-    //     if(requestBody.get("username").getAsString() == null)return false;
-    //     if(requestBody.get("password").getAsString()  == null)return false;
-    //     if(requestBody.get("username").getAsString()  == null)return false;
-    //     if(requestBody.get("firstName").getAsString()  == null)return false;
-    //     if(requestBody.get("lastName").getAsString()  == null)return false;
-    //     if(requestBody.get("gender").getAsString()  == null)return false;
-    //     ArrayList<User> userList = this.userAccess.get("username", "=", requestBody.get("username"));
-    //     if(userList.size() > 0)return false;
-    // }
+    public RegisterResponseBody register(RegisterRequestBody requestBody) throws InvalidRequestException{
 
-    public JsonObject generateSuccessResponseBody(String authToken, String userName, String personId){
-        RegisterRequestBody requestBody = gson.fromJson(requestBody, RegisterRequestBody.class); 
-        JsonObject responseBody = new JsonObject();
-        responseBody.add("authToken", new JsonPrimitive(authToken));
-        responseBody.add("userName", new JsonPrimitive(userName));
-        responseBody.add("personID", new JsonPrimitive(personId));
-        return responseBody;
-    }
-
-    public JsonObject generateErrorResponseBody(String message){
-        JsonObject responseBody = new JsonObject();
-        responseBody.add("message", message);
-        return responseBody;    
-    }
-
-    public ResponseBodyWrapper register(RegisterRequestBody requestBody) throws InvalidRequestException{
-
-        JsonObject responseBody;
-        boolean success = true;
+        RegisterResponseBody responseBody;
         try{
-            // if(this.validateRequestBody(requestBody)){
-            //     throw new InvalidRequestException("Invalid parameters");
-            // }
-            
+            requestBody.validate();
             Person person = this.personAccess.create(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getGender());
             User user = this.userAccess.create(requestBody.getUsername(), requestBody.getEmail(), person.getId(), requestBody.getPassword());
             Authentication authentication = this.authenticationAccess.create(user.getId());
-
             //PersonAccess.addFalseData(4, person.getId());
-            response = this.generateSuccessResponseBody(user, person);
+            responseBody = new RegisterResponseBody(authentication.getToken(), user.getUsername(), person.getId());
         }catch(InvalidRequestException e){
-            response = this.generateErrorResponseBody(e.getMessage());
-            success = false;
+            responseBody = new RegisterResponseBody(e.getMessage());
+        }catch(NullPointerException e){
+            responseBody = new RegisterResponseBody("Missing parameters");
         }
-        return new ResponseBodyWrapper(success, response);
+        return responseBody;
 
     }
 

@@ -13,5 +13,5 @@ dependencies {
    compile "junit:junit:4.12"
 }
 
-mainClassName = "com.famlymap.Server"
+mainClassName = "com.familymap.Server"
 

@@ -46,7 +46,7 @@ public class EventAccess extends DataAccess{
             year
         );
 
-        String id = super.create(this.relation, attributes, values);
+        String id = super.rawCreate(this.relation, attributes, values);
         return new Event(id, lattitude, longitude, country, city, type, year);
     }
 
@@ -58,7 +58,7 @@ public class EventAccess extends DataAccess{
     * @return ArrayList of Events
     */
     public ArrayList<Event> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.get(this.relation, key, delimeter, desiredValue);
+        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
         ArrayList<Event> events = new ArrayList<Event>();
         try{
             while(result.next()){
@@ -92,7 +92,7 @@ public class EventAccess extends DataAccess{
             "type", event.getEventType(),
             "year", event.getYear()
         );
-        return super.update(this.relation, changes, "id", "=", event.getId());
+        return super.rawUpdate(this.relation, changes, "id", "=", event.getId());
     }
 
     /** 
@@ -101,7 +101,7 @@ public class EventAccess extends DataAccess{
     * @return boolean whether deletion was successfull
     */
     public boolean delete(Event event){
-        return super.delete(this.relation, "id", "=", event.getId());
+        return super.rawDelete(this.relation, "id", "=", event.getId());
     }
 
 }

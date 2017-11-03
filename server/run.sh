@@ -1,9 +1,5 @@
 clear
-gradle test
+gradle assemble
+gradle build
+gradle run
 
-
-function run {
-    gradle assemble
-    gradle build
-    gradle run
-}

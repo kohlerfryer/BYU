@@ -5,7 +5,7 @@ package com.familymap;
 // import com.sun.net.httpserver.*;
 import com.familymap.DBConnection;
 import com.familymap.FamilyMapHandler;
-import com.familymap.ResponseBodyWrapper;
+import com.familymap.RegisterResponseBody;
 import com.familymap.RegisterRequestBody;
 
 import java.net.HttpURLConnection;
@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import java.io.IOException;
 
 
 public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
@@ -25,30 +26,25 @@ public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().toLowerCase().equals("post"))return; 
-    
+        
         try{
             Gson gson = new Gson();
-            JsonParser parser = new JsonParser();
-            String requestBody = this.getRequestBody(exchange);
-            RegisterRequestBody requestBody = gson.fromJson(requestBody, RegisterRequestBody.class); 
-
-            //JsonObject registerRequestBody = parser.parse(requestBody).getAsJsonObject();
-
+            String requestBodyString = this.getRequestBody(exchange);
+            RegisterRequestBody requestBody = gson.fromJson(requestBodyString, RegisterRequestBody.class); 
             RegisterService registerService = new RegisterService();
             Headers reqestHeaders = exchange.getRequestHeaders();
+            RegisterResponseBody responseBody = registerService.register(requestBody);
 
-
-            ResponseBodyWrapper responseBodyWrapper = registerService.register(requestBody);
-            this.writeStringToOutputStream(responseBodyWrapper.getResponseBody(), exchange.getResponseBody());
-
-            if(!responseBodyWrapper.responseTypeSuccessfull()){
+            if(responseBody.success()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
-            else if(responseBodyWrapper.responseTypeSuccessfull()){
+            else{
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
+            this.writeStringToOutputStream(gson.toJson(responseBody), exchange.getResponseBody());
 
         }catch(Exception e){
+             e.printStackTrace();
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }
         exchange.getResponseBody().close();

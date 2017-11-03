@@ -26,7 +26,7 @@ public class DataAccess{
 //     * @param desiredValue dilimeted value
 //     * @return ResultSet
 //     */
-    public ResultSet get(String relation, String key, String delimeter, String desiredValue){
+    public ResultSet rawGet(String relation, String key, String delimeter, String desiredValue){
         return this.dbConnection.getTuple(relation, key, delimeter, desiredValue);
     }
 
@@ -38,15 +38,15 @@ public class DataAccess{
 //     * @param desiredValue dilimeted value
 //     * @return ResultSet
 //     */
-    public String create(String relation, String attributes, String values){
+    public String rawCreate(String relation, String attributes, String values){
         return this.dbConnection.createTuple(relation, attributes, values);
     }
 
-    public boolean update(String relation, String changes, String key, String delimeter, String value){
+    public boolean rawUpdate(String relation, String changes, String key, String delimeter, String value){
         return this.dbConnection.updateTuple(relation, changes, key, delimeter, value);
     }
 
-    public boolean delete(String relation, String key, String delimeter, String value){
+    public boolean rawDelete(String relation, String key, String delimeter, String value){
         return this.dbConnection.deleteTuple(relation, key, delimeter, value);
     }
 

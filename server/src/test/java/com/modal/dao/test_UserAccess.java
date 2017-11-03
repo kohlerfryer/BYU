@@ -4,7 +4,7 @@ import com.familymap.DBConnection;
 import com.familymap.User;
 import com.familymap.UserAccess;
 
-import static com.familymap.DBConnectionFactory.*;
+import static com.familymap.DBSingleton.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -27,7 +27,7 @@ public class test_UserAccess{
 
     @Before
     public void setUp() {
-	SQLDBConnection connection = DBConnectionFactory.getMYSQLDBConnection();
+	DBConnection connection = DBSingleton.getInstance();
         this.userAccess = new UserAccess(connection);
     }
 

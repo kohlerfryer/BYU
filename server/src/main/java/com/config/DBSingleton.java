@@ -1,7 +1,6 @@
 package com.familymap;
 
 import com.familymap.DBConnection;
-import com.familymap.DBConnectionFactory;
 import com.familymap.SQLDBConnection;
 
 public class DBSingleton{
@@ -14,7 +13,7 @@ public class DBSingleton{
     // Exists only to defeat instantiation.
     }
 
-    public static DB getInstance() {
+    public static DBConnection getInstance() {
         //put url here up above
         if(db == null) {
             db = new SQLDBConnection(MYSQLConnectionURL, MYSQLConnectionUsername, MYSQLConnectionPassword);

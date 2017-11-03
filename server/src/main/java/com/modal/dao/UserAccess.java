@@ -44,7 +44,7 @@ public class UserAccess extends DataAccess{
             Util.getHash(password)
         );
 
-        String id = super.create(this.relation, attributes, values);
+        String id = super.rawCreate(this.relation, attributes, values);
         return new User(id, username, email, personId);
     }
 
@@ -56,7 +56,7 @@ public class UserAccess extends DataAccess{
     * @return User
     */
     public ArrayList<User> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.get(this.relation, key, delimeter, desiredValue);
+        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
         ArrayList<User> users = new ArrayList<User>();
         try{
             while(result.next()){

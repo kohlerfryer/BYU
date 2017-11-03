@@ -6,11 +6,11 @@ import com.familymap.DBConnection;
 public class FamilyMapService{
     protected DBConnection dbConnection;
 
-    public FamilyMapService(DBConnection dbConnection){
+    public FamilyMapService(){
         this.dbConnection = DBSingleton.getInstance();
     }
 
-    boolean hasValidAuthToken(HttpExchange exchange) {
+    //boolean hasValidAuthToken(HttpExchange exchange) {
         //getkey
         //check time stamp
         
@@ -25,7 +25,7 @@ public class FamilyMapService{
         // System.out.println();
 
         //printHeaders(exchange.getRequestHeaders());
-    }
+    //}
 
 //    private authenticateRequest();
 

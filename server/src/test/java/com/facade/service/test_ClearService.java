@@ -25,7 +25,7 @@ public class test_ClearService{
     @Before
     public void setUp() {
 	SQLDBConnection connection = DBConnectionFactory.getMYSQLDBConnection();
-        this.clearService = new ClearService(connection);
+        this.clearService = new ClearService();
         this.authenticationAccess = new AuthenticationAccess(connection);
     }
 
