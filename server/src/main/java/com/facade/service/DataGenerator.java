@@ -65,7 +65,6 @@ public class DataGenerator{
             int baptismDate = this.generateBatismDate(birthDate);  
         }
 
-
     }
 
     public void setPersonData(Person person, int year){
