@@ -10,13 +10,13 @@ import com.sun.net.httpserver.HttpServer;
 
 public class FamilyMapHandler{
 
-	private void writeStringToOutputStream(String string, OutputStream outputStream) throws IOException {
+	protected void writeStringToOutputStream(String string, OutputStream outputStream) throws IOException {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
 		outputStreamWriter.write(string);
 		outputStreamWriter.flush();
 	}
 
-    private String getRequestBody(HttpExchange exchange){
+    protected String getRequestBody(HttpExchange exchange){
         String request = "";
         Scanner in = new Scanner(exchange.getRequestBody());
         while (in.hasNextLine()) {
@@ -27,7 +27,7 @@ public class FamilyMapHandler{
         return request;
     }
 
-    void sendResponseBody(HttpExchange exchange, String response) {
+    protected void sendResponseBody(HttpExchange exchange, String response) {
         PrintWriter out = new PrintWriter(exchange.getResponseBody());
         out.print(response);
         out.close();

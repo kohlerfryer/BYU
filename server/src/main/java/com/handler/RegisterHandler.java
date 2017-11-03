@@ -6,6 +6,7 @@ package com.familymap;
 import com.familymap.DBConnection;
 import com.familymap.FamilyMapHandler;
 import com.familymap.ResponseBodyWrapper;
+import com.familymap.RegisterRequestBody;
 
 import java.net.HttpURLConnection;
 import com.google.gson.JsonParser;
@@ -29,13 +30,15 @@ public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
             Gson gson = new Gson();
             JsonParser parser = new JsonParser();
             String requestBody = this.getRequestBody(exchange);
-            JsonObject registerRequestBody = parser.parse(requestBody).getAsJsonObject();
+            RegisterRequestBody requestBody = gson.fromJson(requestBody, RegisterRequestBody.class); 
 
-            RegisterService registerService = new RegisterService(dbConnection);
+            //JsonObject registerRequestBody = parser.parse(requestBody).getAsJsonObject();
+
+            RegisterService registerService = new RegisterService();
             Headers reqestHeaders = exchange.getRequestHeaders();
 
 
-            ResponseBodyWrapper responseBodyWrapper = registerService.register(registerRequestBody);
+            ResponseBodyWrapper responseBodyWrapper = registerService.register(requestBody);
             this.writeStringToOutputStream(responseBodyWrapper.getResponseBody(), exchange.getResponseBody());
 
             if(!responseBodyWrapper.responseTypeSuccessfull()){
