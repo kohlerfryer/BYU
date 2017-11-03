@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_ClearService" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-11-03T08:43:41" hostname="ImacAttack" time="0.088">
+<testsuite name="com.familymap.test_ClearService" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-11-03T18:17:17" hostname="clwc-prog-5.byu.edu" time="0.151">
   <properties/>
-  <testcase name="testClear" classname="com.familymap.test_ClearService" time="0.088"/>
+  <testcase name="testClear" classname="com.familymap.test_ClearService" time="0.151"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

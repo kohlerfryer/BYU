@@ -28,7 +28,7 @@ public class RegisterService extends FamilyMapService{
         RegisterResponseBody responseBody;
         try{
             requestBody.validate();
-            Person person = this.personAccess.create(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getGender());
+            Person person = this.personAccess.create(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getGender(), null, null, null);
             User user = this.userAccess.create(requestBody.getUsername(), requestBody.getEmail(), person.getId(), requestBody.getPassword());
             Authentication authentication = this.authenticationAccess.create(user.getId());
             //PersonAccess.addRandomData(4, person.getId());

@@ -39,7 +39,7 @@ public class test_DataGenerator{
 
     @Test
     public void testGenerate() {
-        dataGenerator.generatePersonData(this.currentPerson.getId(), 4);
+        dataGenerator.generatePersonData(this.currentPerson,4, 2000);
         assertTrue(false);
     }
 

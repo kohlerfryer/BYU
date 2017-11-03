@@ -20,30 +20,30 @@ public class PersonAccess extends DataAccess{
         super(dbConnection);
     }
 
-    /** 
-    * creates person in db modeled after parameters
-    * @param firstName firstName of person
-    * @param lastName lastName of person
-    * @param gender gender of person
-    * @return Person
-    */
-    public Person create(String firstName, String lastName, String gender){
-        String attributes = MessageFormat.format(
-            "{0}, {1}, {2}",
-            "first_name",
-            "last_name",
-            "gender"
-        );
-        String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}''",
-            firstName, 
-            lastName, 
-            gender
-        );
+    // /** 
+    // * creates person in db modeled after parameters
+    // * @param firstName firstName of person
+    // * @param lastName lastName of person
+    // * @param gender gender of person
+    // * @return Person
+    // */
+    // public Person create(String firstName, String lastName, String gender){
+    //     String attributes = MessageFormat.format(
+    //         "{0}, {1}, {2}",
+    //         "first_name",
+    //         "last_name",
+    //         "gender"
+    //     );
+    //     String values = MessageFormat.format(
+    //         "''{0}'', ''{1}'', ''{2}''",
+    //         firstName, 
+    //         lastName, 
+    //         gender
+    //     );
 
-        String id = super.rawCreate(this.relation, attributes, values);
-        return new Person(id, firstName, lastName, gender);
-    }
+    //     String id = super.rawCreate(this.relation, attributes, values);
+    //     return new Person(id, firstName, lastName, gender);
+    // }
 
     /** 
     * creates person in db modeled after parameters
@@ -66,15 +66,15 @@ public class PersonAccess extends DataAccess{
             "spouse_id"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
+            "''{0}'', ''{1}'', ''{2}'', {3}, {4}, {5}",
             firstName, 
             lastName, 
             gender, 
-            fatherId, 
-            motherId, 
-            spouseId
+            fatherId != null ? "'" + fatherId + "'" : "NULL", 
+            motherId != null ? "'" + motherId + "'" : "NULL", 
+            spouseId != null ? "'" + spouseId + "'" : "NULL"
         );
-
+        //System.out.println("**********************" + values);
         String id = super.rawCreate(this.relation, attributes, values);
         return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
     }
@@ -116,14 +116,15 @@ public class PersonAccess extends DataAccess{
     */
     public boolean update(Person person){
         String changes = MessageFormat.format(
-            "{0} = ''{1}'', {2} = ''{3}'', {4} = ''{5}'', {6} = ''{7}'', {8} = ''{9}'', {10} = ''{11}''",
+            "{0} = ''{1}'', {2} = ''{3}'', {4} = ''{5}'', {6} = {7}, {8} = {9}, {10} = {11}",
             "first_name", person.getFirstName(),
             "last_name", person.getLastName(),
             "gender", person.getGender(),
-            "father_id", person.getFatherId(),
-            "mother_id", person.getMotherId(),
-            "spouse_id", person.getSpouseId()
+            "father_id", person.getFatherId() != null ? "'" + person.getFatherId() + "'" : "NULL",
+            "mother_id", person.getMotherId() != null ? "'" + person.getMotherId() + "'" : "NULL",
+            "spouse_id", person.getSpouseId() != null ? "'" + person.getSpouseId() + "'" : "NULL"
         );
+        //System.out.println("**********************" + changes);
         return super.rawUpdate(this.relation, changes, "id", "=", person.getId());
     }
     // /** 
