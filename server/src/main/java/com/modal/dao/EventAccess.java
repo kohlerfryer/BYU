@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class EventAccess extends DataAccess{
 
     /** Reference to Singleton DB*/
-    final private String relation = "Event";
+    final private String relation = "event";
 
     public EventAccess(DBConnection dbConnection){
         super(dbConnection);
@@ -25,29 +25,31 @@ public class EventAccess extends DataAccess{
     * @param Event event
     * @return Event
     */
-    //int id, int lattitude, int longitude, String country, String city, int eventTypeId, Year year
-    public Event create(String lattitude, String longitude, String country, String city, String type, String year){
+    //int id, int latitude, int longitude, String country, String city, int eventTypeId, Year year
+    public Event create(String latitude, String longitude, String country, String city, String type, String year, String personId){
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}",
-            "lattitude",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
+            "latitude",
             "longitude",
             "country",
             "city",
             "type",
-            "year"
+            "year",
+            "person_id"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
-            lattitude, 
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}''",
+            latitude, 
             longitude, 
             country, 
             city, 
             type, 
-            year
+            year,
+            personId
         );
 
         String id = super.rawCreate(this.relation, attributes, values);
-        return new Event(id, lattitude, longitude, country, city, type, year);
+        return new Event(id, latitude, longitude, country, city, type, year, personId);
     }
 
     /** 
@@ -63,13 +65,14 @@ public class EventAccess extends DataAccess{
         try{
             while(result.next()){
                 String id = result.getString("id");
-                String lattitude = result.getString("lattitude");
+                String latitude = result.getString("latitude");
                 String longitude = result.getString("longitude");
                 String country = result.getString("country");
                 String city = result.getString("city");
                 String type = result.getString("type");
                 String year = result.getString("year");
-                events.add(new Event(id, lattitude, longitude, country, city, type, year));
+                String personId = result.getString("person_id");
+                events.add(new Event(id, latitude, longitude, country, city, type, year, personId));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -82,18 +85,18 @@ public class EventAccess extends DataAccess{
     * @param event event with new parameters
     * @return EventType
     */
-    public boolean update(Event event){
-        String changes = MessageFormat.format(
-            "{0} = ''{1}'', {2} = ''{3}'', {4} = ''{5}'', {6} = ''{7}'', {8} = ''{9}'', {10} = ''{11}''",
-            "lattitude", event.getLattitude(),
-            "longitude", event.getLongitude(),
-            "country", event.getCountry(),
-            "city", event.getCity(),
-            "type", event.getEventType(),
-            "year", event.getYear()
-        );
-        return super.rawUpdate(this.relation, changes, "id", "=", event.getId());
-    }
+    // public boolean update(Event event){
+    //     String changes = MessageFormat.format(
+    //         "{0} = ''{1}'', {2} = ''{3}'', {4} = ''{5}'', {6} = ''{7}'', {8} = ''{9}'', {10} = ''{11}''",
+    //         "latitude", event.getlatitude(),
+    //         "longitude", event.getLongitude(),
+    //         "country", event.getCountry(),
+    //         "city", event.getCity(),
+    //         "type", event.getEventType(),
+    //         "year", event.getYear()
+    //     );
+    //     return super.rawUpdate(this.relation, changes, "id", "=", event.getId());
+    // }
 
     /** 
     * delete specific EventType

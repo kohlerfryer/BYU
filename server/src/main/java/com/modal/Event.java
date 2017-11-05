@@ -7,8 +7,8 @@
      /** tuples unique identifier in relation */
      private String id;
 
-     /** lattitude of event location */
-     private String lattitude;
+     /** latitude of event location */
+     private String latitude;
 
      /** longitude of event location */
      private String longitude;
@@ -25,9 +25,12 @@
      /** year of event */
      private String year;
 
-     public Event(String id, String lattitude, String longitude, String country, String city, String type, String year){
+     /** person attatched to event */
+     private String personId;
+
+     public Event(String id, String latitude, String longitude, String country, String city, String type, String year, String personId){
          this.id = id;
-         this.lattitude = lattitude;
+         this.latitude = latitude;
          this.longitude = longitude;
          this.country = country;
          this.city = city;
@@ -38,8 +41,8 @@
      public String getId(){
 	 return this.id;
      }
-     public String getLattitude(){
-	 return this.lattitude;
+     public String getlatitude(){
+	 return this.latitude;
      }
      public String getLongitude(){
 	 return this.longitude;
@@ -56,9 +59,12 @@
      public String getYear(){
 	 return this.year;
      }
+     public String getPersonId(){
+	 return this.personId;
+     }
 
-     public void setLattitude(String lattitude){
-	 this.lattitude = lattitude;
+     public void setlatitude(String latitude){
+	 this.latitude = latitude;
      }
      public void setLongitude(String longitude){
 	 this.longitude = longitude;
@@ -74,6 +80,9 @@
      }
      public void setYear(String year){
 	 this.year = year;
+     }
+     public void setPersonId(String personId){
+	 this.personId = personId;
      }
   
  }

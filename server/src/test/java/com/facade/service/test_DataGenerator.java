@@ -22,8 +22,8 @@ public class test_DataGenerator{
     private PersonAccess personAccess;
     Person currentPerson;
     DataGenerator dataGenerator;
-    final String firstName = "noob";
-    final String lastname = "noober";
+    final String firstName = "Kohler";
+    final String lastname = "Fryer";
     final String gender = "m";
     final String fatherId = "1";
     final String motherId = "2";
@@ -39,8 +39,8 @@ public class test_DataGenerator{
 
     @Test
     public void testGenerate() {
-        dataGenerator.generatePersonData(this.currentPerson,4, 2000);
-        assertTrue(false);
+       dataGenerator.generatePersonData(this.currentPerson,4, 2000);
+       assertTrue(false);
     }
 
     // @Test

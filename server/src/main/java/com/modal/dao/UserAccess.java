@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class UserAccess extends DataAccess{
 
     /** Reference to Singleton DB*/
-    final private String relation = "User";
+    final private String relation = "user";
 
     public UserAccess(DBConnection dbConnection){
         super(dbConnection);
@@ -45,7 +45,7 @@ public class UserAccess extends DataAccess{
         );
 
         String id = super.rawCreate(this.relation, attributes, values);
-        return new User(id, username, email, personId);
+        return new User(id, username, email, personId, password);
     }
 
     /** 
@@ -56,7 +56,7 @@ public class UserAccess extends DataAccess{
     * @return User
     */
     public ArrayList<User> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
+        ResultSet result = super.rawGet(this.relation, key, delimeter, "'" +  desiredValue + "'");
         ArrayList<User> users = new ArrayList<User>();
         try{
             while(result.next()){
@@ -64,7 +64,8 @@ public class UserAccess extends DataAccess{
                 String username = result.getString("username");
                 String email = result.getString("email");
                 String personId = result.getString("person_id");
-                users.add(new User(id, username, email, personId));
+                String password = result.getString("password");
+                users.add(new User(id, username, email, personId, password));
             }
         }catch(SQLException e){
             e.printStackTrace();

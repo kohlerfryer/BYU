@@ -27,7 +27,7 @@ public class test_UserAccess{
 
     @Before
     public void setUp() {
-	DBConnection connection = DBSingleton.getInstance();
+	    DBConnection connection = DBSingleton.getInstance();
         this.userAccess = new UserAccess(connection);
     }
 

@@ -134,7 +134,7 @@ public class SQLDBConnection implements DBConnection{
 
     public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
-            "DELETE FROM {0} where {1} {2} {3}",
+            "DELETE FROM {0} where {1} {2} ''{3}''",
             relation, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
 	    return (rowsAffected > 0);

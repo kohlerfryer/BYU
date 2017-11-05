@@ -1,6 +1,8 @@
 package com.familymap;
 
+import com.familymap.UserAccess;
 import com.familymap.InvalidRequestException;
+import java.util.ArrayList;
 
 // public interface RequestBody{
 //     private validateInputs();
@@ -24,8 +26,9 @@ public class RegisterRequestBody{
         this.gender = gender;
     }
 
-    public void validate() throws InvalidRequestException{
-        // if(false == true)throw new InvalidRequestException("Invalid parameters");
+    public void validate(UserAccess userAccess) throws InvalidRequestException{
+        ArrayList<User> userList = userAccess.get("username", "=", this.userName);
+        if(userList.size() > 0) throw new InvalidRequestException("username taken"); 
     }
      
     public String getUsername(){

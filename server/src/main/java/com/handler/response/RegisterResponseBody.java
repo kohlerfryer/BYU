@@ -17,6 +17,18 @@ public class RegisterResponseBody{
         this.message = message;
     }
 
+    public String getAuthToken(){
+        return this.authToken;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public String getPersonID(){
+        return this.personID;
+    }
+
     public boolean success(){
         return (this.authToken != null);
     }

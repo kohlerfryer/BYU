@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_PersonAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-03T18:17:17" hostname="clwc-prog-5.byu.edu" time="0.017">
+<testsuite name="com.familymap.test_PersonAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-05T03:28:26" hostname="ImacAttack" time="0.023">
   <properties/>
-  <testcase name="testRead" classname="com.familymap.test_PersonAccess" time="0.011"/>
-  <testcase name="testCreate" classname="com.familymap.test_PersonAccess" time="0.006"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="testRead" classname="com.familymap.test_PersonAccess" time="0.015"/>
+  <testcase name="testCreate" classname="com.familymap.test_PersonAccess" time="0.008"/>
+  <system-out><![CDATA[ASDFasdfasfasdfasdf
+29
+SELECT * FROM person where id = 29
+ASDFasdfasfasdfasdf
+30
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

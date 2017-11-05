@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class AuthenticationAccess extends DataAccess{
 
     /** Reference to Singleton DB*/
-    final private String relation = "Authentication";
+    final private String relation = "authentication";
 
     public AuthenticationAccess(DBConnection db){
         super(db);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class PersonAccess extends DataAccess{
     
     /** Reference to Singleton DB*/
-    final private String relation = "Person";
+    final private String relation = "person";
 
     public PersonAccess(DBConnection dbConnection){
         super(dbConnection);
