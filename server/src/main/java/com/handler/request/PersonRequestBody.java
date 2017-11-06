@@ -3,7 +3,7 @@ package com.familymap;
 public class PersonRequestBody{
     private String personID;
 
-    personID(String personID){
+    PersonRequestBody(String personID){
         this.personID = personID;   
     }
 

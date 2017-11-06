@@ -1,3 +1,5 @@
+package com.familymap;
+
 public class LoadUser{
     private String userName;
     private String password;
@@ -12,7 +14,7 @@ public class LoadUser{
         this.password = password;
         this.email = email;
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.gender = gender;
         this.personID = personID;
     }
@@ -30,7 +32,7 @@ public class LoadUser{
         return this.firstName;
     }
     public String getLastName(){
-        return this.lastname;
+        return this.lastName;
     }
     public String getGender(){
         return this.gender;

@@ -28,24 +28,30 @@ public class UserAccess extends DataAccess{
     * @return User
     */
 //  String id, String username, String email, String personId
-    public User create(String username, String email, String personId, String password){
+    public User create(String username, String email, String firstName, String lastName, String gender, String password){
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}",
+            "{0}, {1}, {2}, {3}, {4}, {5}",
             "username",
             "email",
+            "first_name",
+            "last_name",
+            "gender",
             "person_id",
             "password"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}''",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
             username, 
-            email, 
+            email,
+            firstName,
+            lastName,
+            gender,
             personId, 
             Util.getHash(password)
         );
 
         String id = super.rawCreate(this.relation, attributes, values);
-        return new User(id, username, email, personId, password);
+        return new User(id, username, email, firstName, lastName, gender, password);
     }
 
     /** 
@@ -65,7 +71,10 @@ public class UserAccess extends DataAccess{
                 String email = result.getString("email");
                 String personId = result.getString("person_id");
                 String password = result.getString("password");
-                users.add(new User(id, username, email, personId, password));
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String gender = result.getString("gender");
+                users.add(new User(id, username, email, firstName, lastName, gender, password));
             }
         }catch(SQLException e){
             e.printStackTrace();

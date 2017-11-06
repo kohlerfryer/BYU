@@ -37,7 +37,6 @@ public class PersonService extends FamilyMapService{
     public PersonResponseBody getPerson(PersonRequestBody requestBody){   
         PersonResponseBody responseBody;
         try{
-            requestBody.validate(this.userAccess);
             ArrayList<Person> userList = personAccess.get("username", "=", requestBody.getPersonId());
             Person person = userList.get(0);
 
@@ -49,7 +48,7 @@ public class PersonService extends FamilyMapService{
                 person.getGender(),
                 person.getFatherId(),
                 person.getMotherId(),
-                person.getSpounseId()
+                person.getSpouseId()
             );
         }catch(InvalidRequestException e){
             responseBody = new PersonResponseBody(e.getMessage());

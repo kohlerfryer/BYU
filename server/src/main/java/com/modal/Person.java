@@ -8,6 +8,9 @@ public class Person{
     /** tuples unique identifier in relation */
     private String id;
 
+    /** username of person */
+    private String descendant;
+
     /** first name of person */
     private String firstName;
 
@@ -26,8 +29,9 @@ public class Person{
     /** referrs to spouse tuple of this person */
     private String spouseId;
     
-    public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+    public Person(String id, String descendant, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
         this.id = id;
+        this.descendant = descendant;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -36,8 +40,9 @@ public class Person{
         this.spouseId = spouseId;
     }
 
-    public Person(String id, String firstName, String lastName, String gender){
+    public Person(String id, String descendant, String firstName, String lastName, String gender){
         this.id = id;
+        this.descendant = descendant;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -45,6 +50,9 @@ public class Person{
        
     public String getId(){
         return this.id;
+    }
+    public String getDescendant(){
+        return this.descendant;
     }
     public String getFirstName(){
         return this.firstName;
@@ -65,6 +73,9 @@ public class Person{
         return this.spouseId;
     }
 
+   public void setDescendant(String descendant){
+        this.descendant = descendant;
+    }
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }

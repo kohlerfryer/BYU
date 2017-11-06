@@ -38,8 +38,23 @@ public class RegisterService extends FamilyMapService{
         RegisterResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
-            Person person = this.personAccess.create(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getGender(), null, null, null);
-            User user = this.userAccess.create(requestBody.getUsername(), requestBody.getEmail(), person.getId(), requestBody.getPassword());
+            User user = this.userAccess.create(
+                requestBody.getUsername(), 
+                requestBody.getEmail(), 
+                requestBody.getFirstName(), 
+                requestBody.getLastName(), 
+                requestBody.getGender(), 
+                requestBody.getPassword()
+            );
+            Person person = this.personAccess.create(
+                user.getUsername(),
+                requestBody.getFirstName(), 
+                requestBody.getLastName(), 
+                requestBody.getGender(), 
+                null, 
+                null, 
+                null
+            );
             Authentication authentication = this.authenticationAccess.create(user.getId());
             dataGenerator.generatePersonData(person, 4, 2017);
             responseBody = new RegisterResponseBody(authentication.getToken(), user.getUsername(), person.getId());

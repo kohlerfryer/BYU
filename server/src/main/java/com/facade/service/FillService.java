@@ -36,34 +36,37 @@ public class FillService extends FamilyMapService{
 
     public FillResponseBody fill(FillRequestBody requestBody){
 
+        boolean success = true;
         FillResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
-            this.clearPersonInfoForUser(requestBody.getUsername());
-            Person person = getPerson(requestBody.getPersonId());
+            this.clearPersonInfoForUser(requestBody.getUserName());
+            Person person = getPerson(requestBody.getUserName());
             dataGenerator.generatePersonData(person, requestBody.getGenerationCount(), 2017);
 
             ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());
             ArrayList<Event> newlyAddedEvents = eventAccess.get("person_id", "IN", Util.arrayListToString(ancestorIds));
 
-            responseBody = new FillResponseBody("Successfully added "+ ancestorIds.size() +" persons and "+ newlyAddedEvents.size() +" events to the database.");
+            responseBody = new FillResponseBody("Successfully added "+ ancestorIds.size() +" persons and "+ newlyAddedEvents.size() +" events to the database.", success);
         }catch(InvalidRequestException e){
-            responseBody = new FillResponseBody(e.getMessage());
+            success = false;
+            responseBody = new FillResponseBody(e.getMessage(), success);
         }catch(NullPointerException e){
-            responseBody = new FillResponseBody("Missing parameters");
+            success = false;
+            responseBody = new FillResponseBody("Missing parameters", success);
             e.printStackTrace();
         }
         return responseBody;
 
     }
 
-    private User getUser(String userName){
+    private User getUser(String username){
         ArrayList<User> userList = this.userAccess.get("username", "=", username);
         return userList.get(0);
     }
 
-    private User getPerson(String personId){
-        ArrayList<Person> personList = this.personAccess.get("id", "=", personId);
+    private Person getPerson(String username){
+        ArrayList<Person> personList = this.personAccess.get("desendant", "=", username);
         return personList.get(0);
     }
 

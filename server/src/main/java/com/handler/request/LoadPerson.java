@@ -1,3 +1,5 @@
+package com.familymap;
+
 public class LoadPerson{
     private String descendant;
     private String personID;
@@ -9,7 +11,7 @@ public class LoadPerson{
     private String spouse;
 
 
-    LoadUser(String descendant, String personID, String firstName, String lastname, String gender, String father, String mother, String spouse){
+    LoadPerson(String descendant, String personID, String firstName, String lastname, String gender, String father, String mother, String spouse){
         this.descendant = descendant;
         this.personID = personID;
         this.firstName = firstName;

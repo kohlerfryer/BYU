@@ -1,5 +1,6 @@
 package com.familymap;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -13,7 +14,9 @@ public class PersonResponseBody{
     private String father;
     private String mother;
     private String spouse;
-
+    private String message;
+    private boolean failure;
+    private Gson gson;
 
     PersonResponseBody(String descendant, String personID, String firstName, String lastname, String gender, String father, String mother, String spouse){
         this.descendant = descendant;
@@ -24,22 +27,32 @@ public class PersonResponseBody{
         this.father = father;
         this.mother = mother;
         this.spouse = spouse;
+        this.gson = new Gson();
+    }
+    PersonResponseBody(String message){
+        this.message = message;
+        this.failure = true;
     }
 
     public String toJsonString(){
-        return gson.toJson(this.toJson());
+        return this.gson.toJson(this.toJson());
     }
 
-    public String toJson(){
+    public JsonObject toJson(){
         JsonObject response = new JsonObject();
-        response.addProperty("descendant", this.descendant);
-        response.addProperty("personID", this.personID);
-        response.addProperty("firstName", this.firstName);
-        response.addProperty("lastname", this.lastname);
-        response.addProperty("gender", this.gender);
-        response.addProperty("father", this.father);
-        response.addProperty("mother", this.mother);
-        response.addProperty("spouse", this.spouse);
+        if(!this.failure){
+            response.addProperty("descendant", this.descendant);
+            response.addProperty("personID", this.personID);
+            response.addProperty("firstName", this.firstName);
+            response.addProperty("lastname", this.lastname);
+            response.addProperty("gender", this.gender);
+            response.addProperty("father", this.father);
+            response.addProperty("mother", this.mother);
+            response.addProperty("spouse", this.spouse);
+        }
+        else{
+            response.add("message", new JsonPrimitive(this.message));
+        }
         return response;
     }
 

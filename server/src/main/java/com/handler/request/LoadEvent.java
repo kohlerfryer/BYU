@@ -1,3 +1,5 @@
+package com.familymap;
+
 public class LoadEvent{
     private String eventID;
     private String personID;

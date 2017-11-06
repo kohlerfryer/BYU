@@ -9,6 +9,9 @@ import com.familymap.UserAccess;
 import com.familymap.Authentication;
 import com.familymap.AuthenticationAccess;
 import com.familymap.PersonAccess;
+import com.familymap.LoadEvent;
+import com.familymap.LoadPerson;
+import com.familymap.LoadUser;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
@@ -37,18 +40,18 @@ public class LoadService extends FamilyMapService{
     public LoadResponseBody load(LoadRequestBody requestBody){
 
         LoadResponseBody responseBody;
+        boolean success = true;
         try{
             requestBody.validate();
-            LoadPerson[] loadPersonArray = requestBody.getLoadPerson();
-            LoadEvent[] loadUserArray = requestBody.getLoadEvent();
-            LoadUser[] loadUserArray = requestBody.getLoadUser();
+            ArrayList<LoadPerson> loadPersonArray = requestBody.getLoadPerson();
+            ArrayList<LoadEvent> loadEventArray = requestBody.getLoadEvent();
+            ArrayList<LoadUser> loadUserArray = requestBody.getLoadUser();
             int personsCreated= 0;
             //public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
 
             for (LoadPerson loadPerson : loadPersonArray) {
                 personAccess.create(
                     loadPerson.getDescendant(),
-                    loadPerson.getPersonID(),
                     loadPerson.getFirstName(),
                     loadPerson.getLastName(),
                     loadPerson.getGender(),
@@ -61,7 +64,7 @@ public class LoadService extends FamilyMapService{
 
             //(String latitude, String longitude, String country, String city, String type, String year, String personId){
             int eventsCreated = 0;
-            for (LoadEvent loadEvent : loadUserArray) {
+            for (LoadEvent loadEvent : loadEventArray) {
                 personAccess.create(
                     loadEvent.getEventID(),
                     loadEvent.getLatitude(),
@@ -79,7 +82,6 @@ public class LoadService extends FamilyMapService{
                 userAccess.create(
                     loadUser.getUserName(),
                     loadUser.getEmail(),
-                    loadUser.getPersonID(),
                     loadUser.getFirstName(),
                     loadUser.getLastName(),
                     loadUser.getGender(),
@@ -87,11 +89,13 @@ public class LoadService extends FamilyMapService{
                 );
                 usersCreated++;
             }
-            responseBody = new LoadResponseBody("Successfully added "+ personsCreated +" users and "+ eventsCreated +" persons and "+ usersCreated +" events to the database.");
+            responseBody = new LoadResponseBody("Successfully added "+ personsCreated +" users and "+ eventsCreated +" persons and "+ usersCreated +" events to the database.", success);
         }catch(InvalidRequestException e){
-            responseBody = new LoadResponseBody(e.getMessage());
+            success = false;
+            responseBody = new LoadResponseBody(e.getMessage(), success);
         }catch(NullPointerException e){
-            responseBody = new LoadResponseBody("missing parameters");
+            success = false;
+            responseBody = new LoadResponseBody("missing parameters", success);
             e.printStackTrace();
         }
         return responseBody;

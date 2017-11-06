@@ -31,7 +31,7 @@ public class FillRequestBody{
     }
 
      
-    public String getUsername(){
+    public String getUserName(){
         return this.userName;
     }
     public int getGenerationCount(){

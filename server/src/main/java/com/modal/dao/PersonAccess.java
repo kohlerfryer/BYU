@@ -54,9 +54,10 @@ public class PersonAccess extends DataAccess{
     * @param spouseId referrs to spouse tuple of this person 
     * @return Person
     */
-    public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+    public Person create(String descendant, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
+            "descendant",
             "first_name",
             "last_name",
             "gender",
@@ -65,7 +66,8 @@ public class PersonAccess extends DataAccess{
             "spouse_id"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', {3}, {4}, {5}",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', {4}, {5}, {6}",
+            descendant,
             firstName, 
             lastName, 
             gender, 
@@ -75,7 +77,7 @@ public class PersonAccess extends DataAccess{
         );
         //System.out.println("**********************" + values);
         String id = super.rawCreate(this.relation, attributes, values);
-        return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId);
+        return new Person(id, descendant, firstName, lastName, gender, fatherId, motherId, spouseId);
     }
 
 
@@ -94,13 +96,14 @@ public class PersonAccess extends DataAccess{
         try{
             while(result.next()){
                 String id = result.getString("id");
+                String descendant = result.getString("descendant");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
                 String gender = result.getString("gender");
                 String fatherId = result.getString("father_id");
                 String motherId = result.getString("mother_id");
                 String spouseId = result.getString("spouse_id");
-                Person.add(new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId));
+                Person.add(new Person(id, descendant, firstName, lastName, gender, fatherId, motherId, spouseId));
             }
         }catch(SQLException e){
             e.printStackTrace();
