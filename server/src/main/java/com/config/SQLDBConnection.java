@@ -125,19 +125,21 @@ public class SQLDBConnection implements DBConnection{
     }
 
     public String createTuple(String relation, String attributes, String values){
+        String id = Util.generateRandomString();
         String query = MessageFormat.format(
-            "INSERT INTO {0} ({1}) VALUES ({2})",
+            "INSERT INTO {0} (id, {1}) VALUES ('"+ id +"', {2})",
             relation, attributes, values);
         String id  = this.executeAdd(query);
 	    return id;
     }
 
-    public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue){
+    public int deleteTuple(String relation, String key, String delimeter, String desiredValue){
         String query = MessageFormat.format(
-            "DELETE FROM {0} where {1} {2} ''{3}''",
+            "DELETE FROM {0} where {1} {2} {3}",
             relation, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
-	    return (rowsAffected > 0);
+        System.out.println(query);
+	    return rowsAffected;
     }
 
     public boolean truncateRelation(String relation){

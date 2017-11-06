@@ -10,7 +10,7 @@ import com.familymap.InvalidRequestException;
 import com.google.gson.Gson;
 
 
-import static com.familymap.DBConnectionFactory.*;
+//import static com.familymap.DBConnectionFactory.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

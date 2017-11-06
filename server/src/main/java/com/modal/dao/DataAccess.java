@@ -46,7 +46,7 @@ public class DataAccess{
         return this.dbConnection.updateTuple(relation, changes, key, delimeter, value);
     }
 
-    public boolean rawDelete(String relation, String key, String delimeter, String value){
+    public int rawDelete(String relation, String key, String delimeter, String value){
         return this.dbConnection.deleteTuple(relation, key, delimeter, value);
     }
 

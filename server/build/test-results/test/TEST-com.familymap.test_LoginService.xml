@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_LoginService" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-05T06:06:21" hostname="ImacAttack" time="0.463">
-  <properties/>
-  <testcase name="testSuccessfulLogin" classname="com.familymap.test_LoginService" time="0.442"/>
-  <testcase name="testUnsuccessfulLogin" classname="com.familymap.test_LoginService" time="0.021"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

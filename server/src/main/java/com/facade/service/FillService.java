@@ -6,9 +6,10 @@ import com.familymap.DataGenerator;
 import com.familymap.Person;
 import com.familymap.User;
 import com.familymap.UserAccess;
-import com.familymap.Authentication;
-import com.familymap.AuthenticationAccess;
+import com.familymap.Event;
+import com.familymap.EventAccess;
 import com.familymap.PersonAccess;
+import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
@@ -18,35 +19,46 @@ import java.lang.NullPointerException;
 import com.google.gson.Gson;
 
 
-public class RegisterService extends FillService{
+public class FillService extends FamilyMapService{
 
     UserAccess userAccess;
-    AuthenticationAccess authenticationAccess;
+    EventAccess eventAccess;
     PersonAccess personAccess;
     DataGenerator dataGenerator;
 
-    public RegisterService(){
+    public FillService(){
         super();
         this.userAccess = new UserAccess(this.dbConnection);
-        this.authenticationAccess = new AuthenticationAccess(this.dbConnection);
+        this.eventAccess = new EventAccess(this.dbConnection);
         this.personAccess = new PersonAccess(this.dbConnection);
         this.dataGenerator = new DataGenerator();
     }
 
-    public RegisterResponseBody register(RegisterRequestBody requestBody){
+    public FillResponseBody fill(FillRequestBody requestBody){
 
-        RegisterResponseBody responseBody;
+        FillResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
-            Person person = this.personAccess.create(requestBody.getFirstName(), requestBody.getLastName(), requestBody.getGender(), null, null, null);
-            User user = this.userAccess.create(requestBody.getUsername(), requestBody.getEmail(), person.getId(), requestBody.getPassword());
-            Authentication authentication = this.authenticationAccess.create(user.getId());
-            dataGenerator.generatePersonData(person, 4, 2017);
-            responseBody = new RegisterResponseBody(authentication.getToken(), user.getUsername(), person.getId());
+            
+            String personId = Util.getPersonIdFromUser(requestBody.getUsername())
+            Util.clearPersonData(person.getId());
+            dataGenerator.generatePersonData(person, requestBody.getGenerationCount(), 2017);
+
+            ancestorIds = personAccess.getAncestorIds(person.getId());
+            ancestorsAdded = ancestorIds.size();
+
+            //get number of added events
+            ArrayList<Event> newlyAddedEvents = eventAccess.get("person_id", "IN", Util.arrayListToString(ancestorIds));
+            System.out.println(Util.arrayListToString(ancestorIds));
+            int eventsAdded = newlyAddedEvents.size();
+
+            
+            responseBody = new FillResponseBody(ancestorsAdded,eventsAdded);
+            //System.out.println(responseBody);
         }catch(InvalidRequestException e){
-            responseBody = new RegisterResponseBody(e.getMessage());
+            responseBody = new FillResponseBody(e.getMessage());
         }catch(NullPointerException e){
-            responseBody = new RegisterResponseBody("Missing parameters");
+            responseBody = new FillResponseBody("Missing parameters");
             e.printStackTrace();
         }
         return responseBody;

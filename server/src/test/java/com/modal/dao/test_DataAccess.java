@@ -2,7 +2,7 @@ package com.familymap;
 
 import com.familymap.DBConnection;
 import com.familymap.DataAccess;
-import static com.familymap.DBConnectionFactory.*;
+//import static com.familymap.DBConnectionFactory.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

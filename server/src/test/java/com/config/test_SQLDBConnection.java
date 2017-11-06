@@ -1,7 +1,7 @@
 package com.familymap;
 
 import com.familymap.test_SQLDBConnection;
-import static com.familymap.DBConnectionFactory.*;
+//import static com.familymap.DBConnectionFactory.*;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;

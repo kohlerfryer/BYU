@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 
-
 /**
  * API's with DBConnection and returns/manages models
  */
@@ -127,6 +126,26 @@ public class PersonAccess extends DataAccess{
         //System.out.println("**********************" + changes);
         return super.rawUpdate(this.relation, changes, "id", "=", person.getId());
     }
+
+    /** 
+    * delete specific EventType
+    * @param eventType eventType to be deleted
+    * @return boolean whether deletion was successfull
+    */
+    public int delete(String key, String delimeter, String desiredValue){
+        return super.rawDelete(this.relation, key, delimeter, desiredValue);
+    }
+
+
+
+
+
+
+
+
+
+
+
     // /** 
     // * generates random data for a user up
     // * to desired generation length
@@ -134,6 +153,26 @@ public class PersonAccess extends DataAccess{
     // * @return void
     // */
     // public void generateFamilyData(int generationSize){}
+
+
+
+
+
+
+    public ArrayList<String> getAncestorIds(String personId){
+        ArrayList<String> idList = new ArrayList<String>();
+        if (personId != null){
+            ArrayList<Person> personList = this.get("id", "=", personId);
+            Person person = personList.get(0);
+            if(person.getFatherId() != null)
+                idList.add(person.getFatherId());
+            if(person.getMotherId() != null)
+                idList.add(person.getMotherId());
+            idList.addAll(getAncestorIds(person.getFatherId()));
+            idList.addAll(getAncestorIds(person.getMotherId()));
+        }
+        return idList;
+    }
 
 
 }

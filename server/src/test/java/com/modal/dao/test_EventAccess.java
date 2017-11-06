@@ -55,7 +55,7 @@ public class test_EventAccess {
     @Test
     public void testDelete() throws SQLException{
         Event event = this.eventAccess.create(this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
-	    assertTrue(this.eventAccess.delete(event));
+	    assertTrue(this.eventAccess.delete("id", "=", event.getId()));
     }
 
 }

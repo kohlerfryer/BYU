@@ -1,6 +1,7 @@
 package com.familymap;
 
 import java.util.Random;
+import java.util.ArrayList;
 import java.security.MessageDigest;
 import org.apache.commons.codec.binary.Hex;
 import java.util.Random;
@@ -38,5 +39,41 @@ public class Util{
     public static int getRandomNumber(int min, int max){
         return ThreadLocalRandom.current().nextInt(min, max-1);
     }
+
+    public static String arrayListToString(ArrayList list){
+        String listString = "(";
+        for (int i = 0; i < list.size(); i++) {
+            listString += i > 0 ? (", '" + list.get(i) + "'") : ("'" + list.get(i) + "'");
+        }
+        listString += ")";
+        return listString;
+    }
+
+    public static void clearPersonData(String personId){
+        DBConnection connection = DBSingleton.getInstance();
+        EventAcces eventAccess = new EventAccess(dbConnection);
+        PersonAccess personAccess = new PersonAccess(dbConnection);
+
+        ArrayList<String> ancestorIds = personAccess.getAncestorIds(personId);
+        int ancestorsAdded = ancestorIds.size();
+        eventAccess.delete("person_id", "IN", Util.arrayListToString(ancestorIds));
+        personAccess.delete("id", "IN", Util.arrayListToString(ancestorIds));
+    }
+
+    public static String getPersonIdFromUser(String username){
+        DBConnection connection = DBSingleton.getInstance();
+        EventAcces eventAccess = new EventAccess(dbConnection);
+        PersonAccess personAccess = new PersonAccess(dbConnection);
+        
+        ArrayList<User> userList = userAccess.get("username", "=", username);
+        User user = userList.get(0);
+        ArrayList<Person> personList = personAccess.get("id", "=", user.getPersonId());
+        Person person = personList.get(0);
+    }
+
+    // public static void printGsonObject(){
+    //    Gson gson = new Gson();
+    //    System.out.println(gson.toJson("abcd")); 
+    // }
 
 }

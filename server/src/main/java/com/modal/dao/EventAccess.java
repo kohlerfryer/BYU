@@ -94,7 +94,7 @@ public class EventAccess extends DataAccess{
     //         "city", event.getCity(),
     //         "type", event.getEventType(),
     //         "year", event.getYear()
-    //     );
+    //     );   
     //     return super.rawUpdate(this.relation, changes, "id", "=", event.getId());
     // }
 
@@ -103,8 +103,8 @@ public class EventAccess extends DataAccess{
     * @param eventType eventType to be deleted
     * @return boolean whether deletion was successfull
     */
-    public boolean delete(Event event){
-        return super.rawDelete(this.relation, "id", "=", event.getId());
+    public int delete(String key, String delimeter, String desiredValue){
+        return super.rawDelete(this.relation, key, delimeter, desiredValue);
     }
 
 }

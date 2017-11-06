@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_UserAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-05T03:28:26" hostname="ImacAttack" time="0.034">
-  <properties/>
-  <testcase name="testRead" classname="com.familymap.test_UserAccess" time="0.024"/>
-  <testcase name="testCreate" classname="com.familymap.test_UserAccess" time="0.009"/>
-  <system-out><![CDATA[SELECT * FROM user where id = 19
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -3,8 +3,9 @@ package com.familymap;
 import com.familymap.DBConnection;
 import com.familymap.Authentication;
 import com.familymap.AuthenticationAccess;
+import static com.familymap.DBSingleton.*;
 
-import static com.familymap.DBConnectionFactory.*;
+//import static com.familymap.DBConnectionFactory.*;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -24,7 +25,7 @@ public class test_ClearService{
 
     @Before
     public void setUp() {
-	SQLDBConnection connection = DBConnectionFactory.getMYSQLDBConnection();
+	    DBConnection connection = DBSingleton.getInstance();    
         this.clearService = new ClearService();
         this.authenticationAccess = new AuthenticationAccess(connection);
     }

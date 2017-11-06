@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class FillRequestBody{
     private String userName;
     private int generationCount;
+    private final int defaultGenerationCount = 4;
 
     //do to wierd BYU api standards, username must be userName
     public FillRequestBody(String userName, int generationCount){
@@ -33,8 +34,14 @@ public class FillRequestBody{
     public String getUsername(){
         return this.userName;
     }
-    public String getGenerationCount(){
-        return this.generationCount;
+    public int getGenerationCount(){
+        //JVM intitalizes gc to zero if 
+        //it is not initialzed elsewhere
+        if(this.generationCount == 0){
+            return this.defaultGenerationCount;
+        }else{
+            return this.generationCount;
+        }    
     }
 
 }

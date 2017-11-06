@@ -13,16 +13,12 @@ public class FillResponseBody{
         this.message = message;
     }
 
-    public String getAuthToken(){
-        return this.authToken;
-    }
-
-    public String getUserName(){
-        return this.userName;
-    }
-
     public boolean success(){
-        return (this.peopleAdded != null);
+        return (this.peopleAdded != 0);
+    }
+
+    public String toString(){
+        return "Successfully added "+ this.peopleAdded +" persons and "+ this.eventsAdded +" events to the database.";
     }
 
     //print method :) here
