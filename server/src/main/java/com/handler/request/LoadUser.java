@@ -3,11 +3,11 @@ public class LoadUser{
     private String password;
     private String email;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String gender;
     private String personID;
 
-    LoadUser(String userName, String password, String email, String firstName, String lastname, String gender, String personID){
+    LoadUser(String userName, String password, String email, String firstName, String lastName, String gender, String personID){
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -15,5 +15,27 @@ public class LoadUser{
         this.lastname = lastname;
         this.gender = gender;
         this.personID = personID;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+    public String getPassword(){
+        return this.password;
+    }
+    public String getEmail(){
+        return this.email;
+    }
+    public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){
+        return this.lastname;
+    }
+    public String getGender(){
+        return this.gender;
+    }
+    public String getPersonID(){
+        return this.personID;
     }
 }

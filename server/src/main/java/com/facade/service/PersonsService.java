@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 
-public class PersonService extends FamilyMapService{
+public class PersonsService extends FamilyMapService{
 
     UserAccess userAccess;
     AuthenticationAccess authenticationAccess;
@@ -34,27 +34,31 @@ public class PersonService extends FamilyMapService{
         this.dataGenerator = new DataGenerator();
     }
 
-    public PersonResponseBody getPerson(PersonRequestBody requestBody){   
-        PersonResponseBody responseBody;
+    public PersonsResponseBody getPersons(PersonRequestBody requestBody){   
+        //request body should be hacked-- get personid from auth token and make a body hehe
+        PersonsResponseBody responseBody;
+        PersonResponseBody[] responseBodies;
         try{
-            requestBody.validate(this.userAccess);
-            ArrayList<Person> userList = personAccess.get("username", "=", requestBody.getPersonId());
-            Person person = userList.get(0);
+            ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());            
+            ArrayList<Person> ancestors = personAccess.get("id", "IN", Util.arrayListToString(ancestorIds));
 
-            responseBody = new PersonResponseBody(
-                person.getDescendant(),
-                person.getId(),
-                person.getFirstName(),
-                person.getLastName(),
-                person.getGender(),
-                person.getFatherId(),
-                person.getMotherId(),
-                person.getSpounseId()
-            );
+            for(Person person : ancestors){
+                responseBodies[] = new PersonResponseBody(
+                    person.getDescendant(),
+                    person.getId(),
+                    person.getFirstName(),
+                    person.getLastName(),
+                    person.getGender(),
+                    person.getFatherId(),
+                    person.getMotherId(),
+                    person.getSpounseId()
+                );
+            }
+            responsebody = new PersonsResponseBody(responseBodies);
         }catch(InvalidRequestException e){
-            responseBody = new PersonResponseBody(e.getMessage());
+            responseBody = new PersonsResponseBody(e.getMessage());
         }catch(NullPointerException e){
-            responseBody = new PersonResponseBody("missing parameters");
+            responseBody = new PersonsResponseBody("missing parameters");
             e.printStackTrace();
         }
         return responseBody;

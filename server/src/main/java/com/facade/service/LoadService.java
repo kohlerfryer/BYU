@@ -42,18 +42,52 @@ public class LoadService extends FamilyMapService{
             LoadPerson[] loadPersonArray = requestBody.getLoadPerson();
             LoadEvent[] loadUserArray = requestBody.getLoadEvent();
             LoadUser[] loadUserArray = requestBody.getLoadUser();
+            int personsCreated= 0;
+            //public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+
             for (LoadPerson loadPerson : loadPersonArray) {
-                //personAccess.create();
+                personAccess.create(
+                    loadPerson.getDescendant(),
+                    loadPerson.getPersonID(),
+                    loadPerson.getFirstName(),
+                    loadPerson.getLastName(),
+                    loadPerson.getGender(),
+                    loadPerson.getFather(),
+                    loadPerson.getMother(),
+                    loadPerson.getSpouse()
+                );
+                personsCreated++;
             }
+
+            //(String latitude, String longitude, String country, String city, String type, String year, String personId){
+            int eventsCreated = 0;
             for (LoadEvent loadEvent : loadUserArray) {
-                //personAccess.create();
+                personAccess.create(
+                    loadEvent.getEventID(),
+                    loadEvent.getLatitude(),
+                    loadEvent.getLongitude(),
+                    loadEvent.getCountry(),    
+                    loadEvent.getCity(),
+                    loadEvent.getYear(),
+                    loadEvent.getPersonID()                                                                            
+                );
+                eventsCreated++;
             }
+            //public User create(String username, String email, String personId, String password){
+            int usersCreated = 0;
             for (LoadUser loadUser : loadUserArray) {
-                //personAccess.create();
+                userAccess.create(
+                    loadUser.getUserName(),
+                    loadUser.getEmail(),
+                    loadUser.getPersonID(),
+                    loadUser.getFirstName(),
+                    loadUser.getLastName(),
+                    loadUser.getGender(),
+                    loadUser.getPassword()
+                );
+                usersCreated++;
             }
-            
-            
-            responseBody = new LoadResponseBody("Successfully added "+ peopleAdded +" users and "+ eventsAdded +" persons and "+eventsAdded+" events to the database.");
+            responseBody = new LoadResponseBody("Successfully added "+ personsCreated +" users and "+ eventsCreated +" persons and "+ usersCreated +" events to the database.");
         }catch(InvalidRequestException e){
             responseBody = new LoadResponseBody(e.getMessage());
         }catch(NullPointerException e){

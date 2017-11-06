@@ -49,27 +49,6 @@ public class Util{
         return listString;
     }
 
-    public static void clearPersonData(String personId){
-        DBConnection connection = DBSingleton.getInstance();
-        EventAcces eventAccess = new EventAccess(dbConnection);
-        PersonAccess personAccess = new PersonAccess(dbConnection);
-
-        ArrayList<String> ancestorIds = personAccess.getAncestorIds(personId);
-        int ancestorsAdded = ancestorIds.size();
-        eventAccess.delete("person_id", "IN", Util.arrayListToString(ancestorIds));
-        personAccess.delete("id", "IN", Util.arrayListToString(ancestorIds));
-    }
-
-    public static String getPersonIdFromUser(String username){
-        DBConnection connection = DBSingleton.getInstance();
-        EventAcces eventAccess = new EventAccess(dbConnection);
-        PersonAccess personAccess = new PersonAccess(dbConnection);
-        
-        ArrayList<User> userList = userAccess.get("username", "=", username);
-        User user = userList.get(0);
-        ArrayList<Person> personList = personAccess.get("id", "=", user.getPersonId());
-        Person person = personList.get(0);
-    }
 
     // public static void printGsonObject(){
     //    Gson gson = new Gson();

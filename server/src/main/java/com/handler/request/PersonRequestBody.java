@@ -1,14 +1,13 @@
+package com.familymap;
+
 public class PersonRequestBody{
     private String personID;
 
     personID(String personID){
         this.personID = personID;   
     }
-    personID(){
-           
-    }
 
-    String getPersonId(){
+    public String getPersonId(){
         return this.personID;
     }
 }

@@ -19,4 +19,36 @@ public class LoadPerson{
         this.mother = mother;
         this.spouse = spouse;
     }
+
+    public String getDescendant(){
+        return this.descendant;
+    }
+
+    public String getPersonID(){
+        return this.personID;
+    }
+
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastname;
+    }
+
+    public String getGender(){
+        return this.gender;
+    }
+
+    public String getFather(){
+        return this.father;
+    }
+
+    public String getMother(){
+        return this.mother;
+    }
+
+    public String getSpouse(){
+        return this.spouse;
+    }
 }
