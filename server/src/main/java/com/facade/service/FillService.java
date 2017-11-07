@@ -43,7 +43,7 @@ public class FillService extends FamilyMapService{
             User user = getUser(requestBody.getUserName());
             this.clearPersonInfoForUser(user.getId());
             Person person = getPerson(user.getId());
-            dataGenerator.generatePersonData(person, requestBody.getGenerationCount(), 2017);
+            //dataGenerator.generatePersonData(person, requestBody.getGenerationCount(), 2017);
 
             ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());
             ArrayList<Event> newlyAddedEvents = eventAccess.get("person_id", "IN", ancestorIds);

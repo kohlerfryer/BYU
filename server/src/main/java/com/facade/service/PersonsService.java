@@ -39,9 +39,13 @@ public class PersonsService extends FamilyMapService{
         //request body should be hacked-- get personid from auth token and make a body hehe
         PersonsResponseBody responseBody;
         ArrayList<PersonResponseBody> responseBodies = new ArrayList<PersonResponseBody>();
+        ArrayList<Authentication> authenticationList = authenticationAccess.get("token", "=", requestBody.getToken());
+        Authentication authentication = authenticationList.get(0);
+        ArrayList<Person> personList = personAccess.get("descendant", "=", authentication.getUserId());
+        Person currentPerson = personList.get(0);
         try{
-            ArrayList<String> ancestorIds = personAccess.getAncestorIds(requestBody.getPersonId());            
-            ArrayList<Person> ancestors = personAccess.get("id", "IN", Util.arrayListToString(ancestorIds));
+            ArrayList<String> ancestorIds = personAccess.getAncestorIds(currentPerson.getId());            
+            ArrayList<Person> ancestors = personAccess.get("id", "IN", ancestorIds);
 
             for(Person person : ancestors){
                 responseBodies.add(new PersonResponseBody(

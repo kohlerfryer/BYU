@@ -103,17 +103,21 @@ public class DataGenerator{
 
     private void setAncestorData(Person person, int year){
         String personId = person.getId();
-        Event birth = this.generateBirthEvent(year, personId);
+        Event birth = this.generateBirthEvent(year, personId, null);
         int birthDate = Integer.valueOf(birth.getYear());
-        this.generateDeathEvent(birthDate, personId);
+        this.generateDeathEvent(birthDate, personId, null);
         if(Math.random() < 0.5){
-            this.generateBaptismEvent(birthDate, personId);  
+            this.generateBaptismEvent(birthDate, personId, null);  
         }
 
     }
 
     public void setPersonData(Person person, int year){
-        this.generateBirthEvent(year, person.getId()); 
+        Event birth = this.generateBirthEvent(year, person.getId(), person.getDescendant());
+        int birthDate = Integer.valueOf(birth.getYear());
+        if(Math.random() < 0.5){
+            this.generateBaptismEvent(birthDate, person.getId(), person.getDescendant());  
+        }
     }
 
 
@@ -129,7 +133,7 @@ public class DataGenerator{
 
 
 
-    private Event generateBirthEvent(int year, String personId){
+    private Event generateBirthEvent(int year, String personId, String userName){
         String birthYear = Integer.toString(this.generateBirthDate(year));
         String type = "birth";
         JsonObject location = this.generateLocation();
@@ -142,11 +146,11 @@ public class DataGenerator{
             type,
             birthYear,
             personId,
-            null
+            userName
         );
     }
 
-    private Event generateDeathEvent(int year, String personId){
+    private Event generateDeathEvent(int year, String personId, String userName){
         String deathYear = Integer.toString(this.generateDeathDate(year));
         String type = "death";
         JsonObject location = this.generateLocation();
@@ -159,11 +163,11 @@ public class DataGenerator{
             type,
             deathYear,
             personId,
-            null
+            userName
         );
     }
 
-    private Event generateBaptismEvent(int year, String personId){
+    private Event generateBaptismEvent(int year, String personId, String userName){
         String baptismYear = Integer.toString(this.generateBatismDate(year));
         String type = "baptism";
         JsonObject location = this.generateLocation();
@@ -176,7 +180,7 @@ public class DataGenerator{
             type,
             baptismYear,
             personId,
-            null
+            userName
         );
     }
 

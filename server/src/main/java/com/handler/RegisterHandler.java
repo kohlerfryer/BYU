@@ -1,8 +1,6 @@
 package com.familymap;
 
-// import java.io.*;
-// import java.net.*;
-// import com.sun.net.httpserver.*;
+
 import com.familymap.DBConnection;
 import com.familymap.FamilyMapHandler;
 import com.familymap.RegisterResponseBody;
@@ -36,18 +34,21 @@ public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
             RegisterResponseBody responseBody = registerService.register(requestBody);
 
             if(responseBody.success()){
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
             else{
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
             this.writeStringToOutputStream(gson.toJson(responseBody), exchange.getResponseBody());
 
         }catch(Exception e){
              e.printStackTrace();
+             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+        }finally{
+            exchange.getResponseBody().close();
+
         }
-        exchange.getResponseBody().close();
     
     }
 

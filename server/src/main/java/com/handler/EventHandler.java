@@ -1,13 +1,10 @@
 package com.familymap;
 
-// import java.io.*;
-// import java.net.*;
-// import com.sun.net.httpserver.*;
 import com.familymap.DBConnection;
 import com.familymap.FamilyMapHandler;
 import com.familymap.RegisterResponseBody;
 import com.familymap.RegisterRequestBody;
-import com.familymap.PersonsService;
+import com.familymap.EventsService;
 
 import java.net.HttpURLConnection;
 import com.google.gson.JsonParser;
@@ -22,7 +19,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 
 
-public class PersonHandler extends FamilyMapHandler implements HttpHandler{
+public class EventHandler extends FamilyMapHandler implements HttpHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -36,10 +33,10 @@ public class PersonHandler extends FamilyMapHandler implements HttpHandler{
             String token = reqHeaders.getFirst("Authorization");
             
             if(pathVariables.length == 3){
-                String personId = pathVariables[2];
-                handlePerson(exchange, token, personId);
+                String eventId = pathVariables[2];
+                handleEvent(exchange, token, eventId);
             }else{
-                handlePersons(exchange, token);
+                handleEvents(exchange, token);
             }
 
         }catch(Exception e){
@@ -51,29 +48,29 @@ public class PersonHandler extends FamilyMapHandler implements HttpHandler{
     
     }
 
-    public void handlePerson(HttpExchange exchange, String token, String personId) throws IOException {
+    public void handleEvent(HttpExchange exchange, String token, String eventId) throws IOException {
 
-        PersonRequestBody requestBody = new PersonRequestBody(personId, token);             
-        PersonService personService = new PersonService();
-        PersonResponseBody responseBody = personService.getPerson(requestBody);
+        EventRequestBody requestBody = new EventRequestBody(eventId, token);             
+        EventService eventService = new EventService();
+        EventResponseBody responseBody = eventService.getEvent(requestBody);
 
         if(responseBody.wasSuccessfull()){
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
         }
         else{
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }
         this.writeStringToOutputStream(responseBody.toJsonString(), exchange.getResponseBody());
     }
 
-    public void handlePersons(HttpExchange exchange, String token) throws IOException {
+    public void handleEvents(HttpExchange exchange, String token) throws IOException {
 
-        PersonRequestBody requestBody = new PersonRequestBody(token);             
-        PersonsService personsService = new PersonsService();
-        PersonsResponseBody responseBody = personsService.getPersons(requestBody);
+        EventRequestBody requestBody = new EventRequestBody(token);             
+        EventsService eventsService = new EventsService();
+        EventsResponseBody responseBody = eventsService.getEvents(requestBody);
 
         if(responseBody.wasSuccessfull()){
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_ACCEPTED, 0);
         }
         else{
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

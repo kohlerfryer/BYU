@@ -4,10 +4,12 @@ import java.io.PrintWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
+import java.util.ArrayList;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class FamilyMapHandler{
 
@@ -32,12 +34,6 @@ public class FamilyMapHandler{
         PrintWriter out = new PrintWriter(exchange.getResponseBody());
         out.print(response);
         out.close();
-    }
-
-    protected void validateAuthenticationToken(String token){
-        DBConnection dbConnection = DBSingleton.getInstance();
-        AuthenticationAccess authenticationAccess = new AuthenticationAccess(this.dbConnection);
-        authenticationAccess.get("token", "=", token);
     }
 
 

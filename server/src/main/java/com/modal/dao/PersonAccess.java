@@ -91,10 +91,20 @@ public class PersonAccess extends DataAccess{
     * @return String matching eventType
     */
 //     public Person(int id, Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){}
-
     public ArrayList<Person> get(String key, String delimeter, String desiredValue){
         desiredValue = MessageFormat.format(
             "''{0}''",
+            desiredValue
+        );
+        return this.preformGet(key, delimeter, desiredValue);
+    }
+    public ArrayList<Person> get(String key, String delimeter, ArrayList<String> desiredValues){
+        return this.preformGet(key, delimeter, Util.arrayListToString(desiredValues));
+    }
+
+    public ArrayList<Person> preformGet(String key, String delimeter, String desiredValue){
+        desiredValue = MessageFormat.format(
+            "{0}",
             desiredValue
         );
         ArrayList<Person> Person = new ArrayList<Person>();

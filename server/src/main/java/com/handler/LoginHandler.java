@@ -36,14 +36,15 @@ public class LoginHandler extends FamilyMapHandler implements HttpHandler{
             LoginResponseBody responseBody = loginService.login(requestBody);
 
             if(responseBody.wasSuccessfull()){
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
             else{
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
             this.writeStringToOutputStream(gson.toJson(responseBody), exchange.getResponseBody());
 
         }catch(Exception e){
+             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              e.printStackTrace();
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }

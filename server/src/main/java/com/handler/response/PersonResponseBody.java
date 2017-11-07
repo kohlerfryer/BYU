@@ -15,7 +15,6 @@ public class PersonResponseBody{
     private String mother;
     private String spouse;
     private String message;
-    private boolean failure;
     private Gson gson;
 
     PersonResponseBody(String descendant, String personID, String firstName, String lastname, String gender, String father, String mother, String spouse){
@@ -31,7 +30,6 @@ public class PersonResponseBody{
     }
     PersonResponseBody(String message){
         this.message = message;
-        this.failure = true;
     }
 
     public String toJsonString(){
@@ -40,7 +38,7 @@ public class PersonResponseBody{
 
     public JsonObject toJson(){
         JsonObject response = new JsonObject();
-        if(!this.failure){
+        if(this.wasSuccessfull()){
             response.addProperty("descendant", this.descendant);
             response.addProperty("personID", this.personID);
             response.addProperty("firstName", this.firstName);
@@ -54,6 +52,10 @@ public class PersonResponseBody{
             response.add("message", new JsonPrimitive(this.message));
         }
         return response;
+    }
+
+    public boolean wasSuccessfull(){
+        return (this.message == null);
     }
 
 }

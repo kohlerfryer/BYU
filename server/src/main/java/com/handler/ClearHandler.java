@@ -33,7 +33,7 @@ public class ClearHandler extends FamilyMapHandler implements HttpHandler{
             ClearResponseBody responseBody = clearService.clear();
 
             if(responseBody.wasSuccessfull()){
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
             else{
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
@@ -41,6 +41,7 @@ public class ClearHandler extends FamilyMapHandler implements HttpHandler{
             this.writeStringToOutputStream(responseBody.toJsonString(), exchange.getResponseBody());
 
         }catch(Exception e){
+             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              e.printStackTrace();
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }

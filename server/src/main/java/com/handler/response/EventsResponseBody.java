@@ -6,19 +6,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
-import com.familymap.PersonResponseBody;
+import com.familymap.EventResponseBody;
 
 
-public class PersonsResponseBody{
-    private ArrayList<PersonResponseBody> responseBodies;
+public class EventsResponseBody{
+    private ArrayList<EventResponseBody> responseBodies;
     private String message;
     private Gson gson;
 
-    PersonsResponseBody(ArrayList<PersonResponseBody> responseBodies){
+    EventsResponseBody(ArrayList<EventResponseBody> responseBodies){
         this.gson = new Gson();
         this.responseBodies = responseBodies;
     }
-    PersonsResponseBody(String message){
+    EventsResponseBody(String message){
         this.gson = new Gson();
         this.message = message;
     }
@@ -27,7 +27,7 @@ public class PersonsResponseBody{
         JsonObject response = new JsonObject();
         if(this.wasSuccessfull()){
             JsonArray dataArray = new JsonArray();
-            for(PersonResponseBody responseBody : this.responseBodies){
+            for(EventResponseBody responseBody : this.responseBodies){
                 dataArray.add(responseBody.toJson());
             }
             response.add("data", dataArray);

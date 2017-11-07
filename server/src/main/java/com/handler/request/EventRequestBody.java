@@ -1,20 +1,20 @@
 package com.familymap;
 
 
-public class PersonRequestBody{
-    private String username;
+public class EventRequestBody{
+    private String eventId;
     private String token;
 
-    PersonRequestBody(String username, String token){
-        this.username = username;
+    EventRequestBody(String eventId, String token){
+        this.eventId = eventId;
         this.token = token;
     }
-    PersonRequestBody(String token){
+    EventRequestBody(String token){
         this.token = token;
     }
 
-    public String getUsername(){
-        return this.username;
+    public String getEventId(){
+        return this.eventId;
     }
 
     public String getToken(){

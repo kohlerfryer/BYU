@@ -21,9 +21,18 @@ public class LoginRequestBody{
     }
 
     public void validate(UserAccess userAccess) throws InvalidRequestException{
+        this.validateInitialization();
         ArrayList<User> userList = userAccess.get("username", "=", this.userName);
         if(userList.size() == 0) throw new InvalidRequestException("invalid username"); 
         if(!userList.get(0).getPassword().equals(Util.getHash(this.password))) throw new InvalidRequestException("invalid password"); 
+    }
+
+    public void validateInitialization()throws InvalidRequestException{
+        if(
+            this.userName == null
+            ||
+            this.password == null
+        )throw new InvalidRequestException("Missing parameters");
     }
      
     public String getUsername(){

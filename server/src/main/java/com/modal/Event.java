@@ -45,7 +45,7 @@
      public String getId(){
 	 return this.id;
      }
-     public String getlatitude(){
+     public String getLatitude(){
 	 return this.latitude;
      }
      public String getLongitude(){

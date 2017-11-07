@@ -76,7 +76,7 @@ public class SQLDBConnection implements DBConnection{
     }
 
     private String executeAdd(String query) throws SQLException{
-        //System.out.println(query);
+        System.out.println(query);
         Connection connection = this.getConnection(this.databaseURL);
         String id = "-1";
         try {
@@ -93,7 +93,7 @@ public class SQLDBConnection implements DBConnection{
     }
 
      private int executeUpdate(String query){
-         //System.out.println(query);
+         System.out.println(query);
         int rowsAffected = 0;
         try{
             Connection connection = this.getConnection(this.databaseURL);
@@ -119,7 +119,7 @@ public class SQLDBConnection implements DBConnection{
             "UPDATE {0} SET {1} WHERE {2} {3} {4}",
             relation, setStatement, key, delimeter, desiredValue);
          int rowsAffected  = this.executeUpdate(query);
-         //System.out.println(query);
+         System.out.println(query);
 	    return (rowsAffected > 0);
     }
 
@@ -131,7 +131,7 @@ public class SQLDBConnection implements DBConnection{
         String query = MessageFormat.format(
             "INSERT INTO {0} ({1}) VALUES ({2})",
             relation, attributes, values);
-        //System.out.println(query);
+        System.out.println(query);
         int rowsAffected  = this.executeUpdate(query);
 	    return (rowsAffected > 0);
     }
@@ -141,7 +141,7 @@ public class SQLDBConnection implements DBConnection{
             "DELETE FROM {0} where {1} {2} {3}",
             relation, key, delimeter, desiredValue);
         int rowsAffected  = this.executeUpdate(query);
-        //System.out.println(query);
+        System.out.println(query);
 	    return rowsAffected;
     }
 

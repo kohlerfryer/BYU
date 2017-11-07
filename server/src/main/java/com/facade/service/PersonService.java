@@ -38,8 +38,10 @@ public class PersonService extends FamilyMapService{
         PersonResponseBody responseBody;
         try{
             requestBody.validate();
-            ArrayList<Person> userList = personAccess.get("username", "=", requestBody.getPersonId());
-            Person person = userList.get(0);
+            ArrayList<User> userList = userAccess.get("username", "=", requestBody.getUsername());
+            User user = userList.get(0);
+            ArrayList<Person> personList = personAccess.get("descendant", "=", user.getId());
+            Person person = personList.get(0);
 
             responseBody = new PersonResponseBody(
                 person.getDescendant(),
