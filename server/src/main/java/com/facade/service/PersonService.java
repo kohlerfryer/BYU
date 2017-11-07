@@ -37,6 +37,7 @@ public class PersonService extends FamilyMapService{
     public PersonResponseBody getPerson(PersonRequestBody requestBody){   
         PersonResponseBody responseBody;
         try{
+            requestBody.validate();
             ArrayList<Person> userList = personAccess.get("username", "=", requestBody.getPersonId());
             Person person = userList.get(0);
 

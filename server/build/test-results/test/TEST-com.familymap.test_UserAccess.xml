@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.familymap.test_UserAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:02:15" hostname="clwc-prog-5.byu.edu" time="0.016">
+  <properties/>
+  <testcase name="testRead" classname="com.familymap.test_UserAccess" time="0.01"/>
+  <testcase name="testCreate" classname="com.familymap.test_UserAccess" time="0.005"/>
+  <system-out><![CDATA[INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('LXZAOYE1G8UHZHPNH6', 'fakeUsername', 'mailme@mail.com', 'aaa', 'bbb', 'M', '533f6357e0210e67d91f651bc49e1278')
+INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('LXZAOYE1G8UHZHPNH6', 'fakeUsername', 'mailme@mail.com', 'aaa', 'bbb', 'M', '533f6357e0210e67d91f651bc49e1278')
+SELECT * FROM user where id = 'LXZAOYE1G8UHZHPNH6'
+INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('QXJJ5XHDPUQZC5YL2J', 'fakeUsername', 'mailme@mail.com', 'aaa', 'bbb', 'M', '533f6357e0210e67d91f651bc49e1278')
+INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('QXJJ5XHDPUQZC5YL2J', 'fakeUsername', 'mailme@mail.com', 'aaa', 'bbb', 'M', '533f6357e0210e67d91f651bc49e1278')
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

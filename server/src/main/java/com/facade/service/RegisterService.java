@@ -39,6 +39,7 @@ public class RegisterService extends FamilyMapService{
         try{
             requestBody.validate(this.userAccess);
             User user = this.userAccess.create(
+                Util.generateRandomString(),
                 requestBody.getUsername(), 
                 requestBody.getEmail(), 
                 requestBody.getFirstName(), 
@@ -47,15 +48,16 @@ public class RegisterService extends FamilyMapService{
                 requestBody.getPassword()
             );
             Person person = this.personAccess.create(
+                Util.generateRandomString(),
                 user.getUsername(),
                 requestBody.getFirstName(), 
                 requestBody.getLastName(), 
                 requestBody.getGender(), 
                 null, 
                 null, 
-                null
+                user.getId()
             );
-            Authentication authentication = this.authenticationAccess.create(user.getId());
+            Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), user.getId());
             dataGenerator.generatePersonData(person, 4, 2017);
             responseBody = new RegisterResponseBody(authentication.getToken(), user.getUsername(), person.getId());
         }catch(InvalidRequestException e){

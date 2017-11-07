@@ -32,7 +32,7 @@ public class test_ClearService{
 
     @Test
     public void testClear() {
-        Authentication authentication = this.authenticationAccess.create(this.userId);
+        Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), this.userId);
         clearService.clearData();
         ArrayList<Authentication> authenticationList = this.authenticationAccess.get("user_id", "=", userId);
         assertTrue(authenticationList.isEmpty());

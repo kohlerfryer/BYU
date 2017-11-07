@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.familymap.test_PersonAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:02:14" hostname="clwc-prog-5.byu.edu" time="0.017">
+  <properties/>
+  <testcase name="testRead" classname="com.familymap.test_PersonAccess" time="0.011"/>
+  <testcase name="testCreate" classname="com.familymap.test_PersonAccess" time="0.005"/>
+  <system-out><![CDATA[INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('LBL9ZXL0FHGAXX9T10', 'noob', 'noober', 'm', '1', '2', '3', '34234123423')
+INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('LBL9ZXL0FHGAXX9T10', 'noob', 'noober', 'm', '1', '2', '3', '34234123423')
+SELECT * FROM person where id = 'LBL9ZXL0FHGAXX9T10'
+INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('QRNJKT5RYPMANMXQCS', 'noob', 'noober', 'm', '1', '2', '3', '34234123423')
+INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('QRNJKT5RYPMANMXQCS', 'noob', 'noober', 'm', '1', '2', '3', '34234123423')
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -10,4 +10,8 @@ public class PersonRequestBody{
     public String getPersonId(){
         return this.personID;
     }
+
+    public void validate() throws InvalidRequestException{
+
+    }
 }

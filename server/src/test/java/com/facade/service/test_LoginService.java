@@ -36,12 +36,15 @@ public class test_LoginService{
     final private String personId = "3";
     final private String password = "hashthis";
     final private String invalidPassword = "asdfasasdf";
+    final private String firstName = "aaa";
+    final private String lastName = "bbb";
+    final private String gender = "M";
 
     @Before
     public void setUp() {
 	    DBConnection connection = DBSingleton.getInstance();
         this.userAccess = new UserAccess(connection);
-        User user = this.userAccess.create(this.username, this.email, this.personId, this.password);
+        User user = this.userAccess.create(Util.generateRandomString(), this.username, this.email, this.firstName, this.lastName, this.gender, this.password);
         this.loginService = new LoginService();
         this.validRequestBody = new LoginRequestBody(
             this.username,
@@ -51,7 +54,6 @@ public class test_LoginService{
             this.username,
             this.invalidPassword
         );
-
     }
 
     @Test

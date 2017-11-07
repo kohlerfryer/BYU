@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">3.679s</div>
+<div class="counter">0.038s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,15 +76,17 @@
 <a name="testSuccessfulFill"></a>
 <h3 class="failures">testSuccessfulFill</h3>
 <span class="code">
-<pre>java.lang.AssertionError
-	at org.junit.Assert.fail(Assert.java:86)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at org.junit.Assert.assertTrue(Assert.java:52)
-	at com.familymap.test_FillService.testSuccessfulFill(test_FillService.java:69)
+<pre>java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
+	at java.util.ArrayList.get(ArrayList.java:429)
+	at com.familymap.FillService.getPerson(FillService.java:70)
+	at com.familymap.FillService.clearPersonInfoForUser(FillService.java:74)
+	at com.familymap.FillService.fill(FillService.java:43)
+	at com.familymap.test_FillService.testSuccessfulFill(test_FillService.java:68)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
+	at java.lang.reflect.Method.invoke(Method.java:497)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
@@ -106,7 +108,7 @@
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
+	at java.lang.reflect.Method.invoke(Method.java:497)
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
 	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
@@ -116,7 +118,7 @@
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
+	at java.lang.reflect.Method.invoke(Method.java:497)
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
 	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:146)
@@ -124,10 +126,10 @@
 	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:404)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)
 	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)
-	at java.lang.Thread.run(Thread.java:748)
+	at java.lang.Thread.run(Thread.java:745)
 </pre>
 </span>
 </div>
@@ -144,7 +146,7 @@
 </thead>
 <tr>
 <td class="failures">testSuccessfulFill</td>
-<td>3.679s</td>
+<td>0.038s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -152,10 +154,12 @@
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>DELETE FROM event where person_id IN ('48', '33', '56', '49', '60', '57', '62', '61', '59', '58', '53', '50', '55', '54', '52', '51', '41', '34', '45', '42', '47', '46', '44', '43', '38', '35', '40', '39', '37', '36')
-DELETE FROM person where id IN ('48', '33', '56', '49', '60', '57', '62', '61', '59', '58', '53', '50', '55', '54', '52', '51', '41', '34', '45', '42', '47', '46', '44', '43', '38', '35', '40', '39', '37', '36')
-('79', '64', '87', '80', '91', '88', '93', '92', '90', '89', '84', '81', '86', '85', '83', '82', '72', '65', '76', '73', '78', '77', '75', '74', '69', '66', '71', '70', '68', '67')
-Successfully added 30 persons and 100 events to the database.
+<pre>INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('N6LKEOE96PTEB2IXKU', 'noob', 'noober', 'm', '1', '2', '3', 'kdfaskldjf343')
+INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('N6LKEOE96PTEB2IXKU', 'noob', 'noober', 'm', '1', '2', '3', 'kdfaskldjf343')
+INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('3U4VL72WWFH1CVLNLO', 'abu22', 'abu22@gmail.com', 'noob', 'noober', 'm', '000242dc7a5257e1f265578cdcc6c3fd')
+INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('3U4VL72WWFH1CVLNLO', 'abu22', 'abu22@gmail.com', 'noob', 'noober', 'm', '000242dc7a5257e1f265578cdcc6c3fd')
+SELECT * FROM user where username = 'abu22'
+SELECT * FROM person where descendant = 'abu22'
 </pre>
 </span>
 </div>
@@ -167,7 +171,7 @@ Successfully added 30 persons and 100 events to the database.
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.2.1</a> at Nov 5, 2017 5:16:49 PM</p>
+<a href="http://www.gradle.org">Gradle 4.2.1</a> at Nov 6, 2017 5:02:15 PM</p>
 </div>
 </div>
 </body>

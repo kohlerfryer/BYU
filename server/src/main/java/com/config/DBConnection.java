@@ -27,7 +27,7 @@ public interface DBConnection{
     * @param desiredValue dilimeted value
     * @return JsonObject Jsonified version of tuple
     */
-    public ResultSet getTuple(String relation, String key, String delimeter, String desiredValue);
+    public ResultSet getTuple(String relation, String key, String delimeter, String desiredValue) throws Exception;
 
     /**
     * gets first relation with specified value and then joins
@@ -56,7 +56,7 @@ public interface DBConnection{
     * @param tuple Jsonified version of tuple to update
     * @return int id of added row
     */
-    public String createTuple(String relation, String attributes, String values);
+    public boolean createTuple(String relation, String attributes, String values);
 
     /** 
     * truncates relation in DB
@@ -80,6 +80,6 @@ public interface DBConnection{
     * @param desiredValue dilimeted value    
     * @return boolean if deletion was successfull
     */
-    public boolean deleteTuple(String relation, String key, String delimeter, String desiredValue);
+    public int deleteTuple(String relation, String key, String delimeter, String desiredValue);
 
 }

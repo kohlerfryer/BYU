@@ -45,6 +45,7 @@ public class test_FillService{
     final private String username = "abu22";
     final private String email = "abu22@gmail.com";
     final private String password = "hashthis";
+    final private String descendant = "kdfaskldjf343";
     final private int generations = 4;
 
     @Before
@@ -52,8 +53,8 @@ public class test_FillService{
 	    DBConnection connection = DBSingleton.getInstance();
         this.userAccess = new UserAccess(connection);
         this.personAccess = new PersonAccess(connection);
-        Person person = this.personAccess.create(this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId);
-        this.userAccess.create(this.username, this.email, person.getId(), this.password);
+        Person person = this.personAccess.create(Util.generateRandomString(), this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId, this.descendant);
+        this.userAccess.create(Util.generateRandomString(), this.username, this.email, this.firstName, this.lastname, this.gender, this.password);
         this.fillService = new FillService();
         this.validRequestBody = new FillRequestBody(
             this.username,

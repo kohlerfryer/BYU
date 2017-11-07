@@ -1,5 +1,6 @@
 package com.familymap;
 
+import static com.familymap.Util.*;
 import com.familymap.DBConnection;
 import com.familymap.Event;
 import java.sql.ResultSet;
@@ -26,9 +27,12 @@ public class EventAccess extends DataAccess{
     * @return Event
     */
     //int id, int latitude, int longitude, String country, String city, int eventTypeId, Year year
-    public Event create(String latitude, String longitude, String country, String city, String type, String year, String personId){
+    public Event create(String id, String latitude, String longitude, String country, String city, String type, String year, String personId){
+        country = country.replace("'", "");
+        city = city.replace("'", "");
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+            "id",
             "latitude",
             "longitude",
             "country",
@@ -38,7 +42,8 @@ public class EventAccess extends DataAccess{
             "person_id"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}''",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}'', ''{7}''",
+            id,
             latitude, 
             longitude, 
             country, 
@@ -48,7 +53,7 @@ public class EventAccess extends DataAccess{
             personId
         );
 
-        String id = super.rawCreate(this.relation, attributes, values);
+        super.rawCreate(this.relation, attributes, values);
         return new Event(id, latitude, longitude, country, city, type, year, personId);
     }
 
@@ -60,9 +65,13 @@ public class EventAccess extends DataAccess{
     * @return ArrayList of Events
     */
     public ArrayList<Event> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         ArrayList<Event> events = new ArrayList<Event>();
         try{
+            ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
             while(result.next()){
                 String id = result.getString("id");
                 String latitude = result.getString("latitude");
@@ -74,9 +83,11 @@ public class EventAccess extends DataAccess{
                 String personId = result.getString("person_id");
                 events.add(new Event(id, latitude, longitude, country, city, type, year, personId));
             }
-        }catch(SQLException e){
+             result.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
         return events;
     }
 
@@ -104,6 +115,10 @@ public class EventAccess extends DataAccess{
     * @return boolean whether deletion was successfull
     */
     public int delete(String key, String delimeter, String desiredValue){
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         return super.rawDelete(this.relation, key, delimeter, desiredValue);
     }
 

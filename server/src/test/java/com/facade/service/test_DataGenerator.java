@@ -28,12 +28,13 @@ public class test_DataGenerator{
     final String fatherId = "1";
     final String motherId = "2";
     final String spouseId = "3";
+    final String descendant = "asdfasdf";
 
     @Before
     public void setUp() {
 	    DBConnection connection = DBSingleton.getInstance();
         this.personAccess = new PersonAccess(connection);
-        this.currentPerson = this.personAccess.create(this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId);
+        this.currentPerson = this.personAccess.create(Util.generateRandomString(), this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId, this.descendant);
         this.dataGenerator = new DataGenerator();
     }
 
@@ -45,7 +46,7 @@ public class test_DataGenerator{
 
     // @Test
     // public void testRead() throws SQLException {
-    //     Person person = this.personAccess.create(this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId);
+    //     Person person = this.personAccess.create(Util.generateRandomString(), this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId);
     //     ArrayList<Person> personDuplicateList = this.personAccess.get("id", "=", person.getId());
     //     assertEquals(person.getId(), personDuplicateList.get(0).getId());
     // }

@@ -28,9 +28,10 @@ public class UserAccess extends DataAccess{
     * @return User
     */
 //  String id, String username, String email, String personId
-    public User create(String username, String email, String firstName, String lastName, String gender, String password){
+    public User create(String id, String username, String email, String firstName, String lastName, String gender, String password){
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
+            "id",
             "username",
             "email",
             "first_name",
@@ -40,17 +41,17 @@ public class UserAccess extends DataAccess{
             "password"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}''",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}''",
+            id,
             username, 
             email,
             firstName,
             lastName,
             gender,
-            personId, 
             Util.getHash(password)
         );
 
-        String id = super.rawCreate(this.relation, attributes, values);
+        super.rawCreate(this.relation, attributes, values);
         return new User(id, username, email, firstName, lastName, gender, password);
     }
 
@@ -62,9 +63,13 @@ public class UserAccess extends DataAccess{
     * @return User
     */
     public ArrayList<User> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.rawGet(this.relation, key, delimeter, "'" +  desiredValue + "'");
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         ArrayList<User> users = new ArrayList<User>();
         try{
+            ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
             while(result.next()){
                 String id = result.getString("id");
                 String username = result.getString("username");
@@ -76,9 +81,11 @@ public class UserAccess extends DataAccess{
                 String gender = result.getString("gender");
                 users.add(new User(id, username, email, firstName, lastName, gender, password));
             }
-        }catch(SQLException e){
+            result.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
         return users;
     }
 

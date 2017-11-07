@@ -1,5 +1,7 @@
 package com.familymap;
 
+import com.familymap.ClearResponseBody;
+
 public class ClearService extends FamilyMapService{
     UserAccess userAccess;
     EventAccess eventAccess;
@@ -14,17 +16,15 @@ public class ClearService extends FamilyMapService{
     }
 
     public ClearResponseBody clearData(){
-        FillResponseBody responseBody;
+        ClearResponseBody responseBody;
+        boolean success = true;
         try{
-            requestBody.validate(this.userAccess);
             for (String relation : this.relations) {
                 this.dbConnection.truncateRelation(relation);
             }            
-            responseBody = new ClearResponseBody("Clear succeeded.");
-        }catch(InvalidRequestException e){
-            responseBody = new ClearResponseBody(e.getMessage());
+            responseBody = new ClearResponseBody("Clear succeeded.", success);
         }catch(NullPointerException e){
-            responseBody = new ClearResponseBody("Missing parameters");
+            responseBody = new ClearResponseBody("Missing parameters", success);
             e.printStackTrace();
         }
         return responseBody;

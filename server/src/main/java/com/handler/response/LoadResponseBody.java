@@ -8,10 +8,10 @@ import com.google.gson.JsonPrimitive;
 public class LoadResponseBody{
     private String message;
     private boolean failure;
-    private boolean message;
+    private boolean success;
     private Gson gson;
 
-    LoadResponseBody(String message, boolean failure){
+    LoadResponseBody(String message, boolean success){
         this.message = message;
         this.failure = failure;
         this.gson = new Gson();
@@ -24,7 +24,7 @@ public class LoadResponseBody{
     }
 
     public boolean success(){
-        return (!this.failure);
+        return success;
     }
 
 }

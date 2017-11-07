@@ -54,30 +54,32 @@ public class PersonAccess extends DataAccess{
     * @param spouseId referrs to spouse tuple of this person 
     * @return Person
     */
-    public Person create(String descendant, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+    public Person create(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
-            "descendant",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+            "id",
             "first_name",
             "last_name",
             "gender",
             "father_id",
             "mother_id",
-            "spouse_id"
+            "spouse_id",
+            "descendant"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', {4}, {5}, {6}",
-            descendant,
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', {4}, {5}, {6}, {7}",
+            id,
             firstName, 
             lastName, 
             gender, 
             fatherId != null ? "'" + fatherId + "'" : "NULL", 
             motherId != null ? "'" + motherId + "'" : "NULL", 
-            spouseId != null ? "'" + spouseId + "'" : "NULL"
+            spouseId != null ? "'" + spouseId + "'" : "NULL",
+            descendant != null ? "'" + descendant + "'" : "NULL"
         );
         //System.out.println("**********************" + values);
-        String id = super.rawCreate(this.relation, attributes, values);
-        return new Person(id, descendant, firstName, lastName, gender, fatherId, motherId, spouseId);
+        super.rawCreate(this.relation, attributes, values);
+        return new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId, descendant);
     }
 
 
@@ -91,9 +93,13 @@ public class PersonAccess extends DataAccess{
 //     public Person(int id, Name firstName, Name lastName, char gender, int fatherId, int motherId, int spouseId){}
 
     public ArrayList<Person> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         ArrayList<Person> Person = new ArrayList<Person>();
         try{
+            ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
             while(result.next()){
                 String id = result.getString("id");
                 String descendant = result.getString("descendant");
@@ -103,11 +109,13 @@ public class PersonAccess extends DataAccess{
                 String fatherId = result.getString("father_id");
                 String motherId = result.getString("mother_id");
                 String spouseId = result.getString("spouse_id");
-                Person.add(new Person(id, descendant, firstName, lastName, gender, fatherId, motherId, spouseId));
+                Person.add(new Person(id, firstName, lastName, gender, fatherId, motherId, spouseId, descendant));
             }
-        }catch(SQLException e){
+             result.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
         return Person;
     }
 
@@ -127,7 +135,11 @@ public class PersonAccess extends DataAccess{
             "spouse_id", person.getSpouseId() != null ? "'" + person.getSpouseId() + "'" : "NULL"
         );
         //System.out.println("**********************" + changes);
-        return super.rawUpdate(this.relation, changes, "id", "=", person.getId());
+        String desiredValue = MessageFormat.format(
+            "''{0}''",
+            person.getId()
+        );
+        return super.rawUpdate(this.relation, changes, "id", "=", desiredValue);
     }
 
     /** 
@@ -136,6 +148,10 @@ public class PersonAccess extends DataAccess{
     * @return boolean whether deletion was successfull
     */
     public int delete(String key, String delimeter, String desiredValue){
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         return super.rawDelete(this.relation, key, delimeter, desiredValue);
     }
 

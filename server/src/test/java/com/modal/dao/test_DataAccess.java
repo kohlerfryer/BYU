@@ -33,13 +33,13 @@ public class test_DataAccess {
 
     // @Test
     // public void testCreate() {
-    //     String id = this.dataAccess.create(this.relation, this.attributes, this.initialValues);
+    //     String id = this.dataAccess.create(Util.generateRandomString(), this.relation, this.attributes, this.initialValues);
     //     assertNotEquals(id, "-1");
     // }
 
     // @Test
     // public void testRead() throws SQLException {
-    //     String id = this.dataAccess.create(this.relation, this.attributes, this.initialValues);
+    //     String id = this.dataAccess.create(Util.generateRandomString(), this.relation, this.attributes, this.initialValues);
     //     ResultSet result = this.dataAccess.get(this.relation, this.key, this.delimeter, id);
     //     assertTrue(result.next());
     //     assertEquals(result.getString(this.attributes), this.initialComparisonValue);
@@ -47,13 +47,13 @@ public class test_DataAccess {
 
     // @Test
     // public void testUpdate() throws SQLException {
-    //     String id = this.dataAccess.create(this.relation, this.attributes, this.initialValues);
+    //     String id = this.dataAccess.create(Util.generateRandomString(), this.relation, this.attributes, this.initialValues);
 	//     assertTrue(this.dataAccess.update(this.relation, this.updateQuery, this.key, this.delimeter, id));
     // }
 
     // @Test
     // public void testDelete() throws SQLException{
-    //     String id = this.dataAccess.create(this.relation, this.attributes, this.initialValues);
+    //     String id = this.dataAccess.create(Util.generateRandomString(), this.relation, this.attributes, this.initialValues);
 	//     assertTrue(this.dataAccess.delete(this.relation, this.key, this.delimeter, id));
     // }
 

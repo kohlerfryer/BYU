@@ -66,7 +66,7 @@ public class FillService extends FamilyMapService{
     }
 
     private Person getPerson(String username){
-        ArrayList<Person> personList = this.personAccess.get("desendant", "=", username);
+        ArrayList<Person> personList = this.personAccess.get("descendant", "=", username);
         return personList.get(0);
     }
 

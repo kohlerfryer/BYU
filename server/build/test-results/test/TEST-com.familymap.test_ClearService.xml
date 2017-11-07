@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.familymap.test_ClearService" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:02:12" hostname="clwc-prog-5.byu.edu" time="0.121">
+  <properties/>
+  <testcase name="testClear" classname="com.familymap.test_ClearService" time="0.121"/>
+  <system-out><![CDATA[INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('UTXE4330XVGK3LLY76', 'ZBRYZ2SXV6M4Q04FDO', '7', '2017-11-06 17:02:12.674')
+INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('UTXE4330XVGK3LLY76', 'ZBRYZ2SXV6M4Q04FDO', '7', '2017-11-06 17:02:12.674')
+TRUNCATE Authentication
+TRUNCATE Event
+TRUNCATE Person
+TRUNCATE User
+SELECT * FROM authentication where user_id = '7'
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

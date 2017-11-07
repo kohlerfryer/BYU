@@ -29,7 +29,7 @@ public class Person{
     /** referrs to spouse tuple of this person */
     private String spouseId;
     
-    public Person(String id, String descendant, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
+    public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         this.id = id;
         this.descendant = descendant;
         this.firstName = firstName;

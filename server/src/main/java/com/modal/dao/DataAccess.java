@@ -26,7 +26,7 @@ public class DataAccess{
 //     * @param desiredValue dilimeted value
 //     * @return ResultSet
 //     */
-    public ResultSet rawGet(String relation, String key, String delimeter, String desiredValue){
+    public ResultSet rawGet(String relation, String key, String delimeter, String desiredValue)throws Exception{
         return this.dbConnection.getTuple(relation, key, delimeter, desiredValue);
     }
 
@@ -38,7 +38,7 @@ public class DataAccess{
 //     * @param desiredValue dilimeted value
 //     * @return ResultSet
 //     */
-    public String rawCreate(String relation, String attributes, String values){
+    public boolean rawCreate(String relation, String attributes, String values){
         return this.dbConnection.createTuple(relation, attributes, values);
     }
 

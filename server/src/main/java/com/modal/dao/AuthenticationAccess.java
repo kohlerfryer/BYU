@@ -2,6 +2,7 @@ package com.familymap;
 
 import com.familymap.DBConnection;
 import com.familymap.Authentication;
+import static com.familymap.Util.*;
 import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,24 +28,26 @@ public class AuthenticationAccess extends DataAccess{
     * @param timestamp creation date of token
     * @return Authentication
     */
-    public Authentication create(String userId){
+    public Authentication create(String id, String userId){
         //int id, String token, int userId, String timestamp
         String token = Util.generateRandomString();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}",
+            "{0}, {1}, {2}, {3}",
+            "id",
             "token",    
             "user_id",
             "time_stamp"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}''",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}''",
+            id,
             token, 
             userId,
             timestamp.toString()
         );
 
-        String id = super.rawCreate(this.relation, attributes, values);
+        super.rawCreate(this.relation, attributes, values);
         return new Authentication(id, token, userId, timestamp.toString());
     }
 
@@ -56,9 +59,13 @@ public class AuthenticationAccess extends DataAccess{
     * @return Authentication
     */
     public ArrayList<Authentication> get(String key, String delimeter, String desiredValue){
-        ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
+        desiredValue = MessageFormat.format(
+            "''{0}''",
+            desiredValue
+        );
         ArrayList<Authentication> authentications = new ArrayList<Authentication>();
         try{
+            ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
             while(result.next()){
                 String id = result.getString("id");
                 String token = result.getString("token");
@@ -66,9 +73,11 @@ public class AuthenticationAccess extends DataAccess{
                 String timestamp = result.getString("time_stamp");
                 authentications.add(new Authentication(id, token, userId, timestamp));
             }
-        }catch(SQLException e){
+            result.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
         return authentications;
     }
 

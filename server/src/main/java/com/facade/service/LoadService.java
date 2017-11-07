@@ -42,15 +42,16 @@ public class LoadService extends FamilyMapService{
         LoadResponseBody responseBody;
         boolean success = true;
         try{
-            requestBody.validate();
-            ArrayList<LoadPerson> loadPersonArray = requestBody.getLoadPerson();
-            ArrayList<LoadEvent> loadEventArray = requestBody.getLoadEvent();
-            ArrayList<LoadUser> loadUserArray = requestBody.getLoadUser();
+            //requestBody.validate();
+            ArrayList<LoadPerson> loadPersonArray = requestBody.getLoadPersons();
+            ArrayList<LoadEvent> loadEventArray = requestBody.getLoadEvents();
+            ArrayList<LoadUser> loadUserArray = requestBody.getLoadUsers();
             int personsCreated= 0;
             //public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
 
             for (LoadPerson loadPerson : loadPersonArray) {
                 personAccess.create(
+                    Util.generateRandomString(),
                     loadPerson.getDescendant(),
                     loadPerson.getFirstName(),
                     loadPerson.getLastName(),
@@ -66,6 +67,7 @@ public class LoadService extends FamilyMapService{
             int eventsCreated = 0;
             for (LoadEvent loadEvent : loadEventArray) {
                 personAccess.create(
+                    Util.generateRandomString(),
                     loadEvent.getEventID(),
                     loadEvent.getLatitude(),
                     loadEvent.getLongitude(),
@@ -80,6 +82,7 @@ public class LoadService extends FamilyMapService{
             int usersCreated = 0;
             for (LoadUser loadUser : loadUserArray) {
                 userAccess.create(
+                    Util.generateRandomString(),
                     loadUser.getUserName(),
                     loadUser.getEmail(),
                     loadUser.getFirstName(),
@@ -90,9 +93,6 @@ public class LoadService extends FamilyMapService{
                 usersCreated++;
             }
             responseBody = new LoadResponseBody("Successfully added "+ personsCreated +" users and "+ eventsCreated +" persons and "+ usersCreated +" events to the database.", success);
-        }catch(InvalidRequestException e){
-            success = false;
-            responseBody = new LoadResponseBody(e.getMessage(), success);
         }catch(NullPointerException e){
             success = false;
             responseBody = new LoadResponseBody("missing parameters", success);

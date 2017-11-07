@@ -9,7 +9,6 @@ import com.familymap.UserAccess;
 import com.familymap.Authentication;
 import com.familymap.AuthenticationAccess;
 import com.familymap.PersonAccess;
-import com.familymap.PersonsRequestBody;
 import com.familymap.PersonsResponseBody;
 
 import com.google.gson.JsonObject;
@@ -39,7 +38,7 @@ public class PersonsService extends FamilyMapService{
     public PersonsResponseBody getPersons(PersonRequestBody requestBody){   
         //request body should be hacked-- get personid from auth token and make a body hehe
         PersonsResponseBody responseBody;
-        ArrayList<PersonResponseBody> responseBodies;
+        ArrayList<PersonResponseBody> responseBodies = new ArrayList<PersonResponseBody>();
         try{
             ArrayList<String> ancestorIds = personAccess.getAncestorIds(requestBody.getPersonId());            
             ArrayList<Person> ancestors = personAccess.get("id", "IN", Util.arrayListToString(ancestorIds));
@@ -57,8 +56,6 @@ public class PersonsService extends FamilyMapService{
                 ));
             }
             responseBody = new PersonsResponseBody(responseBodies);
-        }catch(InvalidRequestException e){
-            responseBody = new PersonsResponseBody(e.getMessage());
         }catch(NullPointerException e){
             responseBody = new PersonsResponseBody("missing parameters");
             e.printStackTrace();

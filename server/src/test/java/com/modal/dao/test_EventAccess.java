@@ -34,28 +34,28 @@ public class test_EventAccess {
 
     @Test
     public void testCreate() {
-        Event event = this.eventAccess.create(this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
+        Event event = this.eventAccess.create(Util.generateRandomString(), this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
         assertEquals(event.getCountry(), this.country);
     }
 
     @Test
     public void testRead() throws SQLException {
-        Event event = this.eventAccess.create(this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
+        Event event = this.eventAccess.create(Util.generateRandomString(), this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
         ArrayList<Event> eventDuplicateList = this.eventAccess.get("id", "=", event.getId());
         assertEquals(event.getId(), eventDuplicateList.get(0).getId());
     }
 
     // @Test
     // public void testUpdate() throws SQLException {
-    //     Event event = this.eventAccess.create(this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
+    //     Event event = this.eventAccess.create(Util.generateRandomString(), this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
     //     event.setType(this.updatedType);
 	//     assertTrue(this.eventAccess.update(event));
     // }
 
     @Test
     public void testDelete() throws SQLException{
-        Event event = this.eventAccess.create(this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
-	    assertTrue(this.eventAccess.delete("id", "=", event.getId()));
+        Event event = this.eventAccess.create(Util.generateRandomString(), this.latitude, this.longitude, this.country, this.city, this.type, this.year, this.personId);
+	    assertTrue( this.eventAccess.delete("id", "=", event.getId())   > 0);
     }
 
 }

@@ -63,7 +63,7 @@ public class DataGenerator{
 
     private Person generateParentData(String lastName, String gender, int generations, int year){
         year -=40;
-        Person currentPerson = this.personAccess.create(this.generateFirstName(gender), lastName, gender, null, null, null);
+        Person currentPerson = this.personAccess.create(Util.generateRandomString(), this.generateFirstName(gender), lastName, gender, null, null, null, null);
         this.setAncestorData(currentPerson, year);
         if(generations >  0){
             Person mother = generateParentData(this.generateLastName(), "F", generations -1, year);
@@ -134,6 +134,7 @@ public class DataGenerator{
         String type = "birth";
         JsonObject location = this.generateLocation();
         return this.eventAccess.create(
+            Util.generateRandomString(),
             location.get("latitude").getAsString(), 
             location.get("longitude").getAsString(), 
             location.get("country").getAsString(), 
@@ -149,6 +150,7 @@ public class DataGenerator{
         String type = "death";
         JsonObject location = this.generateLocation();
         return this.eventAccess.create(
+            Util.generateRandomString(),
             location.get("latitude").getAsString(), 
             location.get("longitude").getAsString(), 
             location.get("country").getAsString(), 
@@ -164,6 +166,7 @@ public class DataGenerator{
         String type = "baptism";
         JsonObject location = this.generateLocation();
         return this.eventAccess.create(
+            Util.generateRandomString(),
             location.get("latitude").getAsString(), 
             location.get("longitude").getAsString(), 
             location.get("country").getAsString(), 
@@ -179,6 +182,7 @@ public class DataGenerator{
         String type = "marriage";
         JsonObject location = this.generateLocation();
         this.eventAccess.create(
+            Util.generateRandomString(),
             location.get("latitude").getAsString(), 
             location.get("longitude").getAsString(), 
             location.get("country").getAsString(), 
@@ -188,6 +192,7 @@ public class DataGenerator{
             malePersonId
         );
         return this.eventAccess.create(
+            Util.generateRandomString(),
             location.get("latitude").getAsString(), 
             location.get("longitude").getAsString(), 
             location.get("country").getAsString(), 

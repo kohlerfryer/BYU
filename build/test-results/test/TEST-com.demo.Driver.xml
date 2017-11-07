@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.demo.Driver" tests="2" skipped="0" failures="1" errors="0" timestamp="2017-11-02T22:40:42" hostname="clwc-prog-5.byu.edu" time="0.003">
+<testsuite name="com.demo.Driver" tests="2" skipped="0" failures="1" errors="0" timestamp="2017-11-06T18:32:49" hostname="clwc-prog-5.byu.edu" time="0.003">
   <properties/>
   <testcase name="testFromDriver" classname="com.demo.Driver" time="0.002">
     <failure message="java.lang.AssertionError" type="java.lang.AssertionError">java.lang.AssertionError
@@ -37,7 +37,7 @@
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
 	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
 	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
-	at com.sun.proxy.$Proxy1.processTestClass(Unknown Source)
+	at com.sun.proxy.$Proxy3.processTestClass(Unknown Source)
 	at org.gradle.api.internal.tasks.testing.worker.TestWorker.processTestClass(TestWorker.java:108)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -56,7 +56,7 @@
 	at java.lang.Thread.run(Thread.java:745)
 </failure>
   </testcase>
-  <testcase name="testInvalidWords" classname="com.demo.Driver" time="0.0"/>
+  <testcase name="testInvalidWords" classname="com.demo.Driver" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

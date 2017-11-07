@@ -22,24 +22,29 @@ public class test_UserAccess{
     final String username = "fakeUsername";
     final String password = "hashme";
     final String email = "mailme@mail.com";
-    final String personId = "1";
+    final String firstName = "aaa";
+    final String lastName = "bbb";
+    final String gender = "M";
+    private String id;
 //    public User create(String username, String email, String personId, String password){
 
     @Before
     public void setUp() {
 	    DBConnection connection = DBSingleton.getInstance();
         this.userAccess = new UserAccess(connection);
+        this.id = Util.generateRandomString();
     }
+//    public User create(String id, String username, String email, String firstName, String lastName, String gender, String password){
 
     @Test
     public void testCreate() {
-        User user = this.userAccess.create(this.username, this.email, this.personId, this.password);
-        assertEquals(user.getPersonId(), this.personId);
+        User user = this.userAccess.create(this.id, this.username, this.email, this.firstName, this.lastName, this.gender, this.password);
+        assertEquals(user.getId(), this.id);
     }
 
     @Test
     public void testRead() throws SQLException {
-        User user = this.userAccess.create(this.username, this.email, this.personId, this.password);
+        User user = this.userAccess.create(this.id, this.username, this.email, this.firstName, this.lastName, this.gender, this.password);
         ArrayList<User> userDuplicateList = this.userAccess.get("id", "=", user.getId());
         assertEquals(user.getId(), userDuplicateList.get(0).getId());
     }

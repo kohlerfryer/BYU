@@ -1,17 +1,31 @@
-public class LoadRequestBody{
-    private LoadUsers loadUsers[];
-    private LoadPerson loadPerson[];
-    private LoadEvent loadEvent[];
+package com.familymap;
 
-    LoadRequestBody(LoadUsers[] loadUsers, LoadPerson[] loadPerson, LoadEvent[] loadEvent){
+import com.familymap.LoadUser;
+import com.familymap.LoadPerson;
+import com.familymap.LoadEvent;
+import java.util.ArrayList;
+
+public class LoadRequestBody{
+    private ArrayList<LoadUser> loadUsers;
+    private ArrayList<LoadPerson> loadPersons;
+    private ArrayList<LoadEvent> loadEvents;
+
+    LoadRequestBody(ArrayList<LoadUser> loadUsers, ArrayList<LoadPerson>  loadPersons, ArrayList<LoadEvent> loadEvents){
         this.loadUsers = loadUsers;
-        this.loadPerson = loadPerson;
-        this.loadEvent = loadEvent;
+        this.loadPersons = loadPersons;
+        this.loadEvents = loadEvents;
     }
 
-    // public void validate() throws InvalidRequestException{
+    public ArrayList<LoadUser> getLoadUsers(){
+        return this.loadUsers;
+    }
+    public ArrayList<LoadPerson> getLoadPersons(){
+        return this.loadPersons;
+    }
+    public ArrayList<LoadEvent> getLoadEvents(){
+        return this.loadEvents;
+    }
 
-    // }
 
 }
 
