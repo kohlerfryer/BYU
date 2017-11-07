@@ -8,7 +8,7 @@ ALTER TABLE person MODIFY spouse_id TEXT;
 ALTER TABLE person ADD descendant TEXT;
 
 ALTER TABLE user MODIFY id VARCHAR(250);
-ALTER TABLE user MODIFY person_id TEXT;
+ALTER TABLE user DROP person_id;
 ALTER TABLE user MODIFY username TEXT;
 ALTER TABLE user MODIFY email TEXT;
 ALTER TABLE user MODIFY password TEXT;

@@ -22,4 +22,8 @@ public class ClearResponseBody{
         return gson.toJson(response);
     }
 
+    public boolean wasSuccessfull(){
+        return this.success;
+    }
+
 }

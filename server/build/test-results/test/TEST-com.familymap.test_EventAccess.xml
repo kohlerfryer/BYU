@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_EventAccess" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:02:14" hostname="clwc-prog-5.byu.edu" time="0.031">
+<testsuite name="com.familymap.test_EventAccess" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:40:41" hostname="clwc-prog-5.byu.edu" time="0.034">
   <properties/>
-  <testcase name="testRead" classname="com.familymap.test_EventAccess" time="0.012"/>
+  <testcase name="testRead" classname="com.familymap.test_EventAccess" time="0.015"/>
   <testcase name="testCreate" classname="com.familymap.test_EventAccess" time="0.006"/>
-  <testcase name="testDelete" classname="com.familymap.test_EventAccess" time="0.013"/>
-  <system-out><![CDATA[INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('6IBUP7GX6KEGUWX9UH', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('6IBUP7GX6KEGUWX9UH', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-SELECT * FROM event where id = '6IBUP7GX6KEGUWX9UH'
-INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('IH4JS0O4RIG1QWD0YB', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('IH4JS0O4RIG1QWD0YB', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('EGOQ9DI3POSE682VII', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-INSERT INTO event (id, latitude, longitude, country, city, type, year, person_id) VALUES ('EGOQ9DI3POSE682VII', '10000000', '2000000', 'Peru', 'Arequipa', 'wedding', '2017', '3')
-DELETE FROM event where id = 'EGOQ9DI3POSE682VII'
-DELETE FROM event where id = 'EGOQ9DI3POSE682VII'
-]]></system-out>
+  <testcase name="testDelete" classname="com.familymap.test_EventAccess" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

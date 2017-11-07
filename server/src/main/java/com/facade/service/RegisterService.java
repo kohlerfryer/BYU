@@ -38,6 +38,7 @@ public class RegisterService extends FamilyMapService{
         RegisterResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
+            String hashedPassword = Util.getHash(requestBody.getPassword());
             User user = this.userAccess.create(
                 Util.generateRandomString(),
                 requestBody.getUsername(), 
@@ -45,7 +46,7 @@ public class RegisterService extends FamilyMapService{
                 requestBody.getFirstName(), 
                 requestBody.getLastName(), 
                 requestBody.getGender(), 
-                requestBody.getPassword()
+                hashedPassword
             );
             Person person = this.personAccess.create(
                 Util.generateRandomString(),

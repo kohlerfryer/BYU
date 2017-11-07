@@ -21,16 +21,20 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 
 
-public class ClearHandler extends FamilyMapHandler implements HttpHandler{
+public class FillHandler extends FamilyMapHandler implements HttpHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().toLowerCase().equals("post"))return; 
         
         try{
-            ClearService clearService = new ClearService();
+            String pathInfo = exchage.getPathInfo();
+            String[] pathVariables = pathInfo.split("\\/", -1);
+
+            FillService fillService = new FillService(pathVariables[0], pathVariables[1]);
+            FillRequestBody requestBody = new FillRequestBody();
             Headers reqestHeaders = exchange.getRequestHeaders();
-            ClearResponseBody responseBody = clearService.clear();
+            FillResponseBody responseBody = fillService.fill(requestBody);
 
             if(responseBody.wasSuccessfull()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

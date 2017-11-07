@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_AuthenticationAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:02:12" hostname="clwc-prog-5.byu.edu" time="0.351">
+<testsuite name="com.familymap.test_AuthenticationAccess" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-11-07T00:40:39" hostname="clwc-prog-5.byu.edu" time="0.347">
   <properties/>
-  <testcase name="testRead" classname="com.familymap.test_AuthenticationAccess" time="0.341"/>
+  <testcase name="testRead" classname="com.familymap.test_AuthenticationAccess" time="0.336"/>
   <testcase name="testCreate" classname="com.familymap.test_AuthenticationAccess" time="0.01"/>
-  <system-out><![CDATA[INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('2EXS65M8WCFT6TWKV5', '2BLCGRKO8VFNBVR504', '1', '2017-11-06 17:02:12.323')
-INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('2EXS65M8WCFT6TWKV5', '2BLCGRKO8VFNBVR504', '1', '2017-11-06 17:02:12.323')
-SELECT * FROM authentication where id = '2EXS65M8WCFT6TWKV5'
-INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('A7ZOUHFH983KM6N211', 'Y5VI3E76UTSS77PP2T', '1', '2017-11-06 17:02:12.661')
-INSERT INTO authentication (id, token, user_id, time_stamp) VALUES ('A7ZOUHFH983KM6N211', 'Y5VI3E76UTSS77PP2T', '1', '2017-11-06 17:02:12.661')
-]]></system-out>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

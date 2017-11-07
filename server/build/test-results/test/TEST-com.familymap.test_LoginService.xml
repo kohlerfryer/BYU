@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_LoginService" tests="2" skipped="0" failures="1" errors="0" timestamp="2017-11-07T00:02:14" hostname="clwc-prog-5.byu.edu" time="0.03">
+<testsuite name="com.familymap.test_LoginService" tests="2" skipped="0" failures="1" errors="0" timestamp="2017-11-07T00:40:41" hostname="clwc-prog-5.byu.edu" time="0.032">
   <properties/>
   <testcase name="testSuccessfulLogin" classname="com.familymap.test_LoginService" time="0.017">
     <failure message="java.lang.AssertionError: expected:&lt;abu22&gt; but was:&lt;null&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;abu22&gt; but was:&lt;null&gt;
@@ -57,14 +57,8 @@
 	at java.lang.Thread.run(Thread.java:745)
 </failure>
   </testcase>
-  <testcase name="testUnsuccessfulLogin" classname="com.familymap.test_LoginService" time="0.013"/>
-  <system-out><![CDATA[INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('M713S6X6SNA62MTLKP', 'abu22', 'abu22@gmail.com', 'aaa', 'bbb', 'M', '000242dc7a5257e1f265578cdcc6c3fd')
-INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('M713S6X6SNA62MTLKP', 'abu22', 'abu22@gmail.com', 'aaa', 'bbb', 'M', '000242dc7a5257e1f265578cdcc6c3fd')
-SELECT * FROM user where username = 'abu22'
-INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('AW0E2D15ZHU8WY5CVZ', 'abu22', 'abu22@gmail.com', 'aaa', 'bbb', 'M', '000242dc7a5257e1f265578cdcc6c3fd')
-INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('AW0E2D15ZHU8WY5CVZ', 'abu22', 'abu22@gmail.com', 'aaa', 'bbb', 'M', '000242dc7a5257e1f265578cdcc6c3fd')
-SELECT * FROM user where username = 'abu22'
-]]></system-out>
+  <testcase name="testUnsuccessfulLogin" classname="com.familymap.test_LoginService" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[java.lang.NullPointerException
 	at com.familymap.LoginRequestBody.validate(LoginRequestBody.java:26)
 	at com.familymap.LoginService.login(LoginService.java:41)

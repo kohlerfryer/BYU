@@ -15,16 +15,17 @@ public class ClearService extends FamilyMapService{
         super();
     }
 
-    public ClearResponseBody clearData(){
+    public ClearResponseBody clear(){
         ClearResponseBody responseBody;
         boolean success = true;
         try{
             for (String relation : this.relations) {
                 this.dbConnection.truncateRelation(relation);
-            }            
+            }
             responseBody = new ClearResponseBody("Clear succeeded.", success);
         }catch(NullPointerException e){
-            responseBody = new ClearResponseBody("Missing parameters", success);
+            success = false;
+            responseBody = new ClearResponseBody("Server Error", success);
             e.printStackTrace();
         }
         return responseBody;

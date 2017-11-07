@@ -31,7 +31,7 @@ public class LoginResponseBody{
         return this.message;
     }
 
-    public boolean success(){
+    public boolean wasSuccessfull(){
         return (this.authToken != null);
     }
 

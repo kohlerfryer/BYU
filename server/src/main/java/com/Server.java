@@ -1,6 +1,9 @@
 package com.familymap;
 
 import com.familymap.RegisterHandler;
+import com.familymap.IndexHandler;
+import com.familymap.ClearHandler;
+import com.familymap.LoginHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -18,10 +21,11 @@ public class Server {
     }
 
     private static void initializeHanlders(HttpServer server){
+        server.createContext("/", new IndexHandler());
         server.createContext("/user/register", new RegisterHandler());
-        // server.createContext("user/login", new LoginHandler());
-        // server.createContext("/clear",  new ClearHandler());
-        // server.createContext("/fill", new FillHandler());
+        server.createContext("/user/login", new LoginHandler());
+        server.createContext("/clear",  new ClearHandler());
+        server.createContext("/fill", new FillHandler());
         // server.createContext("/event", new EventHandler());
         // server.createContext("/person", new PersonHandler());
         // server.createContext("/load", new LoadHandler());

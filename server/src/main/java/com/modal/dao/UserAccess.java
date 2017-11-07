@@ -37,7 +37,6 @@ public class UserAccess extends DataAccess{
             "first_name",
             "last_name",
             "gender",
-            "person_id",
             "password"
         );
         String values = MessageFormat.format(
@@ -48,7 +47,7 @@ public class UserAccess extends DataAccess{
             firstName,
             lastName,
             gender,
-            Util.getHash(password)
+            password
         );
 
         super.rawCreate(this.relation, attributes, values);

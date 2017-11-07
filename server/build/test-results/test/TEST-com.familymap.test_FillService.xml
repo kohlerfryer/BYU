@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.familymap.test_FillService" tests="1" skipped="0" failures="1" errors="0" timestamp="2017-11-07T00:02:14" hostname="clwc-prog-5.byu.edu" time="0.038">
+<testsuite name="com.familymap.test_FillService" tests="1" skipped="0" failures="1" errors="0" timestamp="2017-11-07T00:40:41" hostname="clwc-prog-5.byu.edu" time="0.028">
   <properties/>
-  <testcase name="testSuccessfulFill" classname="com.familymap.test_FillService" time="0.038">
+  <testcase name="testSuccessfulFill" classname="com.familymap.test_FillService" time="0.028">
     <failure message="java.lang.IndexOutOfBoundsException: Index: 0, Size: 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
 	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
 	at java.util.ArrayList.get(ArrayList.java:429)
@@ -58,12 +58,6 @@
 	at java.lang.Thread.run(Thread.java:745)
 </failure>
   </testcase>
-  <system-out><![CDATA[INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('N6LKEOE96PTEB2IXKU', 'noob', 'noober', 'm', '1', '2', '3', 'kdfaskldjf343')
-INSERT INTO person (id, first_name, last_name, gender, father_id, mother_id, spouse_id, descendant) VALUES ('N6LKEOE96PTEB2IXKU', 'noob', 'noober', 'm', '1', '2', '3', 'kdfaskldjf343')
-INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('3U4VL72WWFH1CVLNLO', 'abu22', 'abu22@gmail.com', 'noob', 'noober', 'm', '000242dc7a5257e1f265578cdcc6c3fd')
-INSERT INTO user (id, username, email, first_name, last_name, gender, person_id) VALUES ('3U4VL72WWFH1CVLNLO', 'abu22', 'abu22@gmail.com', 'noob', 'noober', 'm', '000242dc7a5257e1f265578cdcc6c3fd')
-SELECT * FROM user where username = 'abu22'
-SELECT * FROM person where descendant = 'abu22'
-]]></system-out>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -5,8 +5,8 @@ package com.familymap;
 // import com.sun.net.httpserver.*;
 import com.familymap.DBConnection;
 import com.familymap.FamilyMapHandler;
-import com.familymap.RegisterResponseBody;
-import com.familymap.RegisterRequestBody;
+import com.familymap.LoginResponseBody;
+import com.familymap.LoginRequestBody;
 
 import java.net.HttpURLConnection;
 import com.google.gson.JsonParser;
@@ -21,24 +21,27 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 
 
-public class ClearHandler extends FamilyMapHandler implements HttpHandler{
+public class LoginHandler extends FamilyMapHandler implements HttpHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().toLowerCase().equals("post"))return; 
         
         try{
-            ClearService clearService = new ClearService();
+            Gson gson = new Gson();
+            String requestBodyString = this.getRequestBody(exchange);
+            LoginRequestBody requestBody = gson.fromJson(requestBodyString, LoginRequestBody.class); 
+            LoginService loginService = new LoginService();
             Headers reqestHeaders = exchange.getRequestHeaders();
-            ClearResponseBody responseBody = clearService.clear();
+            LoginResponseBody responseBody = loginService.login(requestBody);
 
             if(responseBody.wasSuccessfull()){
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             }
             else{
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
-            this.writeStringToOutputStream(responseBody.toJsonString(), exchange.getResponseBody());
+            this.writeStringToOutputStream(gson.toJson(responseBody), exchange.getResponseBody());
 
         }catch(Exception e){
              e.printStackTrace();

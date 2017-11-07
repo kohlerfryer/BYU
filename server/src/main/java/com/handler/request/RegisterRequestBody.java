@@ -28,7 +28,8 @@ public class RegisterRequestBody{
 
     public void validate(UserAccess userAccess) throws InvalidRequestException{
         ArrayList<User> userList = userAccess.get("username", "=", this.userName);
-        if(userList.size() > 0) throw new InvalidRequestException("username taken"); 
+        if(userList.size() > 0) throw new InvalidRequestException("username taken");
+        if(this.gender != "m" && this.gender != "f") throw new InvalidRequestException("invalid gender type");
     }
      
     public String getUsername(){
