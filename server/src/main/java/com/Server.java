@@ -13,7 +13,7 @@ import com.sun.net.httpserver.HttpServer;
 public class Server {
 
     public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 20);
         //HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(portNumber)), MAX_WAITING_CONNECTIONS);
         initializeHanlders(server);
         server.setExecutor(null);
@@ -26,9 +26,10 @@ public class Server {
         server.createContext("/user/login", new LoginHandler());
         server.createContext("/clear",  new ClearHandler());
         server.createContext("/fill", new FillHandler());
+        server.createContext("/load", new LoadHandler());
+        server.createContext("/person", new PersonHandler());
+        
         // server.createContext("/event", new EventHandler());
-        // server.createContext("/person", new PersonHandler());
-        // server.createContext("/load", new LoadHandler());
     }
 
 }

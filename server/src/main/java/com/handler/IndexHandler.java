@@ -20,14 +20,11 @@ public class IndexHandler extends FamilyMapHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().toLowerCase().equals("get"))return; 
-        String pathInfo = exchage.getPathInfo();
-        String[] pathVariables = pathInfo.split("\\/", -1);
         String seperator = System.getProperty("file.separator");
         URI uri = exchange.getRequestURI();
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
         String filePathString;
-        System.out.println(String.valueOf(uri));
         if(String.valueOf(uri).equals("/")){
             filePathString = "www/index.html";
         }else{
@@ -36,7 +33,6 @@ public class IndexHandler extends FamilyMapHandler implements HttpHandler{
     
        
         try{
-            System.out.println(filePathString);
             Path filePath = FileSystems.getDefault().getPath(filePathString);
             Files.copy(filePath, exchange.getResponseBody());
         }catch (NoSuchFileException e){

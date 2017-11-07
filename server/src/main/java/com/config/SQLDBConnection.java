@@ -110,7 +110,7 @@ public class SQLDBConnection implements DBConnection{
             "SELECT * FROM {0} where {1} {2} {3}",
             relation, key, delimeter, desiredValue);
         ResultSet results = this.executeQuery(query);
-        //System.out.println(query);
+        System.out.println(query);
         return results;
     }
     

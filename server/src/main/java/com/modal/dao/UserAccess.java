@@ -73,7 +73,6 @@ public class UserAccess extends DataAccess{
                 String id = result.getString("id");
                 String username = result.getString("username");
                 String email = result.getString("email");
-                String personId = result.getString("person_id");
                 String password = result.getString("password");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");

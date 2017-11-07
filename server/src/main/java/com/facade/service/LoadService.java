@@ -6,8 +6,8 @@ import com.familymap.DataGenerator;
 import com.familymap.Person;
 import com.familymap.User;
 import com.familymap.UserAccess;
-import com.familymap.Authentication;
-import com.familymap.AuthenticationAccess;
+import com.familymap.Event;
+import com.familymap.EventAccess;
 import com.familymap.PersonAccess;
 import com.familymap.LoadEvent;
 import com.familymap.LoadPerson;
@@ -25,14 +25,14 @@ import com.google.gson.Gson;
 public class LoadService extends FamilyMapService{
 
     UserAccess userAccess;
-    AuthenticationAccess authenticationAccess;
+    EventAccess eventAccess;
     PersonAccess personAccess;
     DataGenerator dataGenerator;
 
     public LoadService(){
         super();
         this.userAccess = new UserAccess(this.dbConnection);
-        this.authenticationAccess = new AuthenticationAccess(this.dbConnection);
+        this.eventAccess = new EventAccess(this.dbConnection);
         this.personAccess = new PersonAccess(this.dbConnection);
         this.dataGenerator = new DataGenerator();
     }
@@ -43,9 +43,9 @@ public class LoadService extends FamilyMapService{
         boolean success = true;
         try{
             //requestBody.validate();
-            ArrayList<LoadPerson> loadPersonArray = requestBody.getLoadPersons();
-            ArrayList<LoadEvent> loadEventArray = requestBody.getLoadEvents();
-            ArrayList<LoadUser> loadUserArray = requestBody.getLoadUsers();
+            LoadPerson[] loadPersonArray = requestBody.getLoadPersons();
+            LoadEvent[] loadEventArray = requestBody.getLoadEvents();
+            LoadUser[] loadUserArray = requestBody.getLoadUsers();
             int personsCreated= 0;
             //public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
 
@@ -63,18 +63,18 @@ public class LoadService extends FamilyMapService{
                 personsCreated++;
             }
 
-            //(String latitude, String longitude, String country, String city, String type, String year, String personId){
             int eventsCreated = 0;
             for (LoadEvent loadEvent : loadEventArray) {
-                personAccess.create(
+                eventAccess.create(
                     Util.generateRandomString(),
-                    loadEvent.getEventID(),
                     loadEvent.getLatitude(),
                     loadEvent.getLongitude(),
                     loadEvent.getCountry(),    
                     loadEvent.getCity(),
+                    loadEvent.getEventType(),
                     loadEvent.getYear(),
-                    loadEvent.getPersonID()                                                                            
+                    loadEvent.getPersonID(),
+                    loadEvent.getDescendant()                                                                      
                 );
                 eventsCreated++;
             }

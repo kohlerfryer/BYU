@@ -28,7 +28,11 @@
      /** person attatched to event */
      private String personId;
 
-     public Event(String id, String latitude, String longitude, String country, String city, String type, String year, String personId){
+     /** user attatched to event */
+     private String descendant;
+     
+
+     public Event(String id, String latitude, String longitude, String country, String city, String type, String year, String personId, String descendant){
          this.id = id;
          this.latitude = latitude;
          this.longitude = longitude;
@@ -62,6 +66,10 @@
      public String getPersonId(){
 	 return this.personId;
      }
+     public String getDescendant(){
+	 return this.descendant;
+     }
+
 
      public void setlatitude(String latitude){
 	 this.latitude = latitude;
@@ -83,6 +91,9 @@
      }
      public void setPersonId(String personId){
 	 this.personId = personId;
+     }
+     public void setDescendant(String descendant){
+	 this.descendant = descendant;
      }
   
  }

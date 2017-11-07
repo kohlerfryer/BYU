@@ -23,7 +23,7 @@ public class LoadResponseBody{
         return this.gson.toJson(response);
     }
 
-    public boolean success(){
+    public boolean wasSuccessfull(){
         return success;
     }
 

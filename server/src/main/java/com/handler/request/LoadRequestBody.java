@@ -6,96 +6,66 @@ import com.familymap.LoadEvent;
 import java.util.ArrayList;
 
 public class LoadRequestBody{
-    private ArrayList<LoadUser> loadUsers;
-    private ArrayList<LoadPerson> loadPersons;
-    private ArrayList<LoadEvent> loadEvents;
+    private LoadUser[] users;
+    private LoadPerson[] persons;
+    private LoadEvent[] events;
 
-    LoadRequestBody(ArrayList<LoadUser> loadUsers, ArrayList<LoadPerson>  loadPersons, ArrayList<LoadEvent> loadEvents){
-        this.loadUsers = loadUsers;
-        this.loadPersons = loadPersons;
-        this.loadEvents = loadEvents;
+    LoadRequestBody(LoadUser[] users, LoadPerson[]  persons, LoadEvent[] events){
+        this.users = users;
+        this.persons = persons;
+        this.events = events;
     }
 
-    public ArrayList<LoadUser> getLoadUsers(){
-        return this.loadUsers;
+    public LoadUser[] getLoadUsers(){
+        return this.users;
     }
-    public ArrayList<LoadPerson> getLoadPersons(){
-        return this.loadPersons;
+    public LoadPerson[] getLoadPersons(){
+        return this.persons;
     }
-    public ArrayList<LoadEvent> getLoadEvents(){
-        return this.loadEvents;
+    public LoadEvent[] getLoadEvents(){
+        return this.events;
     }
 
 
 }
 
-
-//                 "descendant": "susan" 
-//                     "eventID": "251837d7", 
-//                     "personID": "7255e93e", 
-//                     "latitude": 65.6833, 
-//                     "longitude": -17.9, 
-//                     "country": "Iceland", 
-//                     "city": "Akureyri", 
-//                     "eventType": "birth", 
-//                     "year": 1912, 
-
 // {
-//     "users":[
+// 	"users":[
 //                 {
 //                     "userName": "susan", 
 //                     "password": "mysecret", 
 //                     "email": "susan@gmail.com",
 //                     "firstName": "Susan", 
 //                     "lastName": "Ellis",
-//                     "gender": "f" 
-//                     "personID": "asdfasdf"
-//                 },
-//                 {
-//                     "userName": "susan",
-//                     "password": "mysecret", 
-//                     "email": "susan@gmail.com", 
-//                     "firstName": "Susan",
-//                     "lastName": "Ellis", 
-//                     "gender": "f" 
+//                     "gender": "f" ,
 //                     "personID": "asdfasdf"
 //                 }
-//     ],
-//     "persons":[ 
+// 	],
+// 	"persons":[
 //                 {
 //                     "descendant": "susan", 
 //                     "personID": "7255e93e", 
 //                     "firstName": "Stuart",
 //                     "lastName": "Klocke", 
 //                     "gender": "m", 
-//                     “father”: “7255e93e”
-//                     “mother”: “f42126c8” 
-//                     "spouse":"f42126c8" 
-//                 },
-//                 {
-//                     "descendant": "susan", 
-//                     "personID": "7255e93e", 
-//                     "firstName": "Stuart",
-//                     "lastName": "Klocke", 
-//                     "gender": "m", 
-//                     “father”: “7255e93e”
-//                     “mother”: “f42126c8” 
+//                     "father": "7255e93e",
+//                     "mother": "f42126c8" ,
 //                     "spouse":"f42126c8" 
 //                 }
-//     ],
-//     "events": [
+// 	],
+// 	"events":[
 //                 {
-//                     "descendant": "susan" 
+//                     "descendant": "susan",
 //                     "eventID": "251837d7", 
 //                     "personID": "7255e93e", 
-//                     "latitude": 65.6833, 
-//                     "longitude": -17.9, 
+//                     "latitude": "65.6833", 
+//                     "longitude": "-17.9", 
 //                     "country": "Iceland", 
 //                     "city": "Akureyri", 
-//                     "eventType": "birth", 
-//                     "year": 1912, 
+//                     "eventType": "birth",
+//                     "year": "1912"
 //                 }
-//     ]
+// 	]
 // }
 
 

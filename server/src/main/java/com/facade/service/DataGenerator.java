@@ -141,7 +141,8 @@ public class DataGenerator{
             location.get("city").getAsString(), 
             type,
             birthYear,
-            personId
+            personId,
+            null
         );
     }
 
@@ -157,7 +158,8 @@ public class DataGenerator{
             location.get("city").getAsString(), 
             type,
             deathYear,
-            personId
+            personId,
+            null
         );
     }
 
@@ -173,7 +175,8 @@ public class DataGenerator{
             location.get("city").getAsString(), 
             type,
             baptismYear,
-            personId
+            personId,
+            null
         );
     }
 
@@ -189,7 +192,8 @@ public class DataGenerator{
             location.get("city").getAsString(), 
             type,
             marriageYear,
-            malePersonId
+            malePersonId,
+            null
         );
         return this.eventAccess.create(
             Util.generateRandomString(),
@@ -199,7 +203,8 @@ public class DataGenerator{
             location.get("city").getAsString(), 
             type,
             marriageYear,
-            womanPersonId
+            womanPersonId,
+            null
         );
     }
 

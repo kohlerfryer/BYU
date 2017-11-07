@@ -21,5 +21,9 @@ public class FillResponseBody{
         response.addProperty("message", this.message);
         return gson.toJson(response);
     }
+    
+    public boolean wasSuccessfull(){
+        return this.success;
+    }
 
 }

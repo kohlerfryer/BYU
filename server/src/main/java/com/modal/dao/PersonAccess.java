@@ -154,7 +154,9 @@ public class PersonAccess extends DataAccess{
         );
         return super.rawDelete(this.relation, key, delimeter, desiredValue);
     }
-
+    public int delete(String key, String delimeter,  ArrayList<String> desiredValues){
+        return super.rawDelete(this.relation, key, delimeter, Util.arrayListToString(desiredValues));
+    }
 
 
 
@@ -175,22 +177,26 @@ public class PersonAccess extends DataAccess{
 
 
 
-
-
-
+    // public ArrayList<String> getAncestorIds(String personId){
+    //     ArrayList<String> ids = new ArrayList<String>();
+    //     ids.add(personId);
+    //     ids.addAll(getParentsIds(personId));
+    //     return ids;
+    // }
+//getParentsIds
     public ArrayList<String> getAncestorIds(String personId){
-        ArrayList<String> idList = new ArrayList<String>();
+        ArrayList<String> ids = new ArrayList<String>();
         if (personId != null){
             ArrayList<Person> personList = this.get("id", "=", personId);
             Person person = personList.get(0);
             if(person.getFatherId() != null)
-                idList.add(person.getFatherId());
+                ids.add(person.getFatherId());
             if(person.getMotherId() != null)
-                idList.add(person.getMotherId());
-            idList.addAll(getAncestorIds(person.getFatherId()));
-            idList.addAll(getAncestorIds(person.getMotherId()));
+                ids.add(person.getMotherId());
+            ids.addAll(getAncestorIds(person.getFatherId()));
+            ids.addAll(getAncestorIds(person.getMotherId()));
         }
-        return idList;
+        return ids;
     }
 
 

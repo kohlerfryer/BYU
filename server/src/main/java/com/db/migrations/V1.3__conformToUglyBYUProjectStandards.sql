@@ -25,6 +25,7 @@ ALTER TABLE event MODIFY city TEXT;
 ALTER TABLE event MODIFY year TEXT;
 ALTER TABLE event MODIFY person_id TEXT;
 ALTER TABLE event MODIFY type TEXT;
+ALTER TABLE event ADD descendant TEXT;
 
 ALTER TABLE authentication MODIFY id VARCHAR(250);
 ALTER TABLE authentication MODIFY user_id TEXT;

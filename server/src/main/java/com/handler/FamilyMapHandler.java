@@ -34,5 +34,11 @@ public class FamilyMapHandler{
         out.close();
     }
 
+    protected void validateAuthenticationToken(String token){
+        DBConnection dbConnection = DBSingleton.getInstance();
+        AuthenticationAccess authenticationAccess = new AuthenticationAccess(this.dbConnection);
+        authenticationAccess.get("token", "=", token);
+    }
+
 
 }

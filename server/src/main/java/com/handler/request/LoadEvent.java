@@ -1,6 +1,7 @@
 package com.familymap;
 
 public class LoadEvent{
+    private String descendant;
     private String eventID;
     private String personID;
     private String latitude;
@@ -10,7 +11,8 @@ public class LoadEvent{
     private String eventType;
     private String year;
 
-    LoadEvent(String eventID, String personID, String latitude, String longitude, String country, String city, String eventType, String year){
+    LoadEvent(String descendant, String eventID, String personID, String latitude, String longitude, String country, String city, String eventType, String year){
+        this.descendant = descendant;
         this.eventID = eventID;
         this.personID = personID;
         this.latitude = latitude;
@@ -21,6 +23,9 @@ public class LoadEvent{
         this.year = year;        
     }
 
+    public String getDescendant(){
+        return this.descendant;
+    }
     public String getEventID(){
         return this.eventID;
     }
@@ -47,3 +52,4 @@ public class LoadEvent{
     }
 
 }
+

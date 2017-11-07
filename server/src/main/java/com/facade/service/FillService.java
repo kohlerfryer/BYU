@@ -40,14 +40,15 @@ public class FillService extends FamilyMapService{
         FillResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
-            this.clearPersonInfoForUser(requestBody.getUserName());
-            Person person = getPerson(requestBody.getUserName());
+            User user = getUser(requestBody.getUserName());
+            this.clearPersonInfoForUser(user.getId());
+            Person person = getPerson(user.getId());
             dataGenerator.generatePersonData(person, requestBody.getGenerationCount(), 2017);
 
             ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());
-            ArrayList<Event> newlyAddedEvents = eventAccess.get("person_id", "IN", Util.arrayListToString(ancestorIds));
+            ArrayList<Event> newlyAddedEvents = eventAccess.get("person_id", "IN", ancestorIds);
 
-            responseBody = new FillResponseBody("Successfully added "+ ancestorIds.size() +" persons and "+ newlyAddedEvents.size() +" events to the database.", success);
+            responseBody = new FillResponseBody("Successfully added "+ (ancestorIds.size()+1) +" persons and "+ newlyAddedEvents.size() +" events to the database.", success);
         }catch(InvalidRequestException e){
             success = false;
             responseBody = new FillResponseBody(e.getMessage(), success);
@@ -65,21 +66,21 @@ public class FillService extends FamilyMapService{
         return userList.get(0);
     }
 
-    private Person getPerson(String username){
-        ArrayList<Person> personList = this.personAccess.get("descendant", "=", username);
+    private Person getPerson(String userId){
+        ArrayList<Person> personList = this.personAccess.get("descendant", "=", userId);
         return personList.get(0);
     }
 
-    private void clearPersonInfoForUser(String username){
-        String userPersonId = this.getPerson(username).getId();
+    private void clearPersonInfoForUser(String userId){
+        String userPersonId = this.getPerson(userId).getId();
         this.clearPersonData(userPersonId);
     }
 
     private void clearPersonData(String personId){
         ArrayList<String> ancestorIds = this.personAccess.getAncestorIds(personId);
         int ancestorsAdded = ancestorIds.size();
-        this.eventAccess.delete("person_id", "IN", Util.arrayListToString(ancestorIds));
-        this.personAccess.delete("id", "IN", Util.arrayListToString(ancestorIds));
+        this.eventAccess.delete("person_id", "IN", ancestorIds);
+        this.personAccess.delete("id", "IN", ancestorIds);
     }
 
 

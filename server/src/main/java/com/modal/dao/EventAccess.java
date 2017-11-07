@@ -27,11 +27,11 @@ public class EventAccess extends DataAccess{
     * @return Event
     */
     //int id, int latitude, int longitude, String country, String city, int eventTypeId, Year year
-    public Event create(String id, String latitude, String longitude, String country, String city, String type, String year, String personId){
+    public Event create(String id, String latitude, String longitude, String country, String city, String type, String year, String personId, String descendant){
         country = country.replace("'", "");
         city = city.replace("'", "");
         String attributes = MessageFormat.format(
-            "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}",
+            "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}",
             "id",
             "latitude",
             "longitude",
@@ -39,10 +39,11 @@ public class EventAccess extends DataAccess{
             "city",
             "type",
             "year",
-            "person_id"
+            "person_id",
+            "descendant"
         );
         String values = MessageFormat.format(
-            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}'', ''{7}''",
+            "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}'', ''{7}'', {8}",
             id,
             latitude, 
             longitude, 
@@ -50,11 +51,12 @@ public class EventAccess extends DataAccess{
             city, 
             type, 
             year,
-            personId
+            personId,
+            descendant != null ? "'" + descendant + "'" : "NULL"
         );
 
         super.rawCreate(this.relation, attributes, values);
-        return new Event(id, latitude, longitude, country, city, type, year, personId);
+        return new Event(id, latitude, longitude, country, city, type, year, personId, descendant);
     }
 
     /** 
@@ -69,6 +71,13 @@ public class EventAccess extends DataAccess{
             "''{0}''",
             desiredValue
         );
+        return this.preformGet(key, delimeter, desiredValue);
+    }
+    public ArrayList<Event> get(String key, String delimeter, ArrayList<String> desiredValues){
+        return this.preformGet(key, delimeter, Util.arrayListToString(desiredValues));
+    }
+
+    public ArrayList<Event> preformGet(String key, String  delimeter, String desiredValue){
         ArrayList<Event> events = new ArrayList<Event>();
         try{
             ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
@@ -81,7 +90,8 @@ public class EventAccess extends DataAccess{
                 String type = result.getString("type");
                 String year = result.getString("year");
                 String personId = result.getString("person_id");
-                events.add(new Event(id, latitude, longitude, country, city, type, year, personId));
+                String descendant = result.getString("descendant");
+                events.add(new Event(id, latitude, longitude, country, city, type, year, personId, descendant));
             }
              result.close();
         }catch(Exception e){
@@ -120,6 +130,9 @@ public class EventAccess extends DataAccess{
             desiredValue
         );
         return super.rawDelete(this.relation, key, delimeter, desiredValue);
+    }
+    public int delete(String key, String delimeter,  ArrayList<String> desiredValues){
+        return super.rawDelete(this.relation, key, delimeter, Util.arrayListToString(desiredValues));
     }
 
 }
