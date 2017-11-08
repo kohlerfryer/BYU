@@ -13,7 +13,7 @@ public class LoadResponseBody{
 
     LoadResponseBody(String message, boolean success){
         this.message = message;
-        this.failure = failure;
+        this.success = success;
         this.gson = new Gson();
     }
 

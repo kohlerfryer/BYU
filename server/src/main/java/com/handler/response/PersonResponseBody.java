@@ -30,6 +30,7 @@ public class PersonResponseBody{
     }
     PersonResponseBody(String message){
         this.message = message;
+        this.gson = new Gson();
     }
 
     public String toJsonString(){
@@ -49,7 +50,7 @@ public class PersonResponseBody{
             response.addProperty("spouse", this.spouse);
         }
         else{
-            response.add("message", new JsonPrimitive(this.message));
+            response.addProperty("message",this.message);
         }
         return response;
     }

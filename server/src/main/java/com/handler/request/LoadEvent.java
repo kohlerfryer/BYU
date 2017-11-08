@@ -1,5 +1,7 @@
 package com.familymap;
 
+import java.util.ArrayList;
+
 public class LoadEvent{
     private String descendant;
     private String eventID;
@@ -21,6 +23,32 @@ public class LoadEvent{
         this.city = city;
         this.eventType = eventType;
         this.year = year;        
+    }
+
+    public void validate(UserAccess userAccess) throws InvalidRequestException{
+       this.validateInitialization();
+    }
+
+    public void validateInitialization() throws InvalidRequestException{
+        if(
+            this.descendant == null
+            ||
+            this.eventID == null
+            ||
+            this.personID == null
+            || 
+            this.latitude == null
+            ||
+            this.longitude == null
+            || 
+            this.country == null
+            || 
+            this.city == null
+            || 
+            this.eventType == null
+            || 
+            this.year == null
+        )throw new InvalidRequestException("Missing parameters");
     }
 
     public String getDescendant(){

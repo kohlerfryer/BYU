@@ -37,10 +37,8 @@ public class PersonService extends FamilyMapService{
     public PersonResponseBody getPerson(PersonRequestBody requestBody){   
         PersonResponseBody responseBody;
         try{
-            requestBody.validate();
-            ArrayList<User> userList = userAccess.get("username", "=", requestBody.getUsername());
-            User user = userList.get(0);
-            ArrayList<Person> personList = personAccess.get("descendant", "=", user.getId());
+            requestBody.validate(this.authenticationAccess, this.personAccess);
+            ArrayList<Person> personList = personAccess.get("id", "=", requestBody.getPersonId());
             Person person = personList.get(0);
 
             responseBody = new PersonResponseBody(
@@ -54,6 +52,7 @@ public class PersonService extends FamilyMapService{
                 person.getSpouseId()
             );
         }catch(InvalidRequestException e){
+            System.out.println(e.getMessage());
             responseBody = new PersonResponseBody(e.getMessage());
         }catch(NullPointerException e){
             responseBody = new PersonResponseBody("missing parameters");

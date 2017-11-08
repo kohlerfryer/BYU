@@ -13,5 +13,11 @@ dependencies {
    compile "junit:junit:4.12"
 }
 
+run {
+    if (project.hasProperty("appArgs")) {
+        args Eval.me(appArgs)
+    }
+}
+
 mainClassName = "com.familymap.Server"
 

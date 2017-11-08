@@ -41,7 +41,6 @@ public class ClearHandler extends FamilyMapHandler implements HttpHandler{
             this.writeStringToOutputStream(responseBody.toJsonString(), exchange.getResponseBody());
 
         }catch(Exception e){
-             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              e.printStackTrace();
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }

@@ -28,6 +28,7 @@ public class LoadService extends FamilyMapService{
     EventAccess eventAccess;
     PersonAccess personAccess;
     DataGenerator dataGenerator;
+    ClearService ClearService;
 
     public LoadService(){
         super();
@@ -35,34 +36,48 @@ public class LoadService extends FamilyMapService{
         this.eventAccess = new EventAccess(this.dbConnection);
         this.personAccess = new PersonAccess(this.dbConnection);
         this.dataGenerator = new DataGenerator();
+        this.ClearService = new ClearService();
     }
 
     public LoadResponseBody load(LoadRequestBody requestBody){
-
+        this.ClearService.clear();
         LoadResponseBody responseBody;
         boolean success = true;
         try{
-            //requestBody.validate();
+            requestBody.validate(this.userAccess);
             LoadPerson[] loadPersonArray = requestBody.getLoadPersons();
             LoadEvent[] loadEventArray = requestBody.getLoadEvents();
             LoadUser[] loadUserArray = requestBody.getLoadUsers();
             int personsCreated= 0;
-            //public Person create(String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId){
-
+//    public User create(String username, String email, String firstName, String lastName, String gender, String password, String personId){
+            int usersCreated = 0;
+            for (LoadUser loadUser : loadUserArray) {
+                userAccess.create(
+                    loadUser.getUserName(),
+                    loadUser.getEmail(),
+                    loadUser.getFirstName(),
+                    loadUser.getLastName(),
+                    loadUser.getGender(),
+                    Util.getHash(loadUser.getPassword()),
+                    loadUser.getFirstName()+loadUser.getLastName()
+                );
+                usersCreated++;
+            }
+//String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
             for (LoadPerson loadPerson : loadPersonArray) {
                 personAccess.create(
-                    Util.generateRandomString(),
-                    loadPerson.getDescendant(),
+                    (loadPerson.getFirstName()+loadPerson.getLastName()),
                     loadPerson.getFirstName(),
                     loadPerson.getLastName(),
                     loadPerson.getGender(),
                     loadPerson.getFather(),
                     loadPerson.getMother(),
-                    loadPerson.getSpouse()
+                    loadPerson.getSpouse(),
+                    loadPerson.getDescendant()
                 );
                 personsCreated++;
             }
-
+//tring id, String latitude, String longitude, String country, String city, String type, String year, String personId, String descendant
             int eventsCreated = 0;
             for (LoadEvent loadEvent : loadEventArray) {
                 eventAccess.create(
@@ -78,21 +93,11 @@ public class LoadService extends FamilyMapService{
                 );
                 eventsCreated++;
             }
-            //public User create(String username, String email, String personId, String password){
-            int usersCreated = 0;
-            for (LoadUser loadUser : loadUserArray) {
-                userAccess.create(
-                    Util.generateRandomString(),
-                    loadUser.getUserName(),
-                    loadUser.getEmail(),
-                    loadUser.getFirstName(),
-                    loadUser.getLastName(),
-                    loadUser.getGender(),
-                    loadUser.getPassword()
-                );
-                usersCreated++;
-            }
-            responseBody = new LoadResponseBody("Successfully added "+ personsCreated +" users and "+ eventsCreated +" persons and "+ usersCreated +" events to the database.", success);
+
+            responseBody = new LoadResponseBody("Successfully added "+ usersCreated +" users and "+ personsCreated +" persons and "+ eventsCreated +" events to the database.", success);
+        }catch(InvalidRequestException e){
+            success = false;
+            responseBody = new LoadResponseBody(e.getMessage(), success);
         }catch(NullPointerException e){
             success = false;
             responseBody = new LoadResponseBody("missing parameters", success);

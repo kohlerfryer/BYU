@@ -9,6 +9,7 @@ public class LoadRequestBody{
     private LoadUser[] users;
     private LoadPerson[] persons;
     private LoadEvent[] events;
+    private String success;
 
     LoadRequestBody(LoadUser[] users, LoadPerson[]  persons, LoadEvent[] events){
         this.users = users;
@@ -24,6 +25,19 @@ public class LoadRequestBody{
     }
     public LoadEvent[] getLoadEvents(){
         return this.events;
+    }
+
+    public void validate(UserAccess userAccess) throws InvalidRequestException{
+        boolean validFields = true;
+            for (LoadPerson person : persons) {
+                person.validate(userAccess);
+            }
+            for (LoadUser user : users) {
+                user.validate(userAccess);
+            }
+            for (LoadEvent event : events) {
+                event.validate(userAccess);
+            }
     }
 
 
@@ -44,6 +58,16 @@ public class LoadRequestBody{
 // 	"persons":[
 //                 {
 //                     "descendant": "susan", 
+//                     "personID": "SusanEllis", 
+//                     "firstName": "Stuart",
+//                     "lastName": "Klocke", 
+//                     "gender": "m", 
+//                     "father": "7255e93e",
+//                     "mother": "f42126c8" ,
+//                     "spouse":"f42126c8" 
+//                 },
+//                 {
+//                     "descendant": "susan", 
 //                     "personID": "7255e93e", 
 //                     "firstName": "Stuart",
 //                     "lastName": "Klocke", 
@@ -57,6 +81,17 @@ public class LoadRequestBody{
 //                 {
 //                     "descendant": "susan",
 //                     "eventID": "251837d7", 
+//                     "personID": "7255e93e", 
+//                     "latitude": "65.6833", 
+//                     "longitude": "-17.9", 
+//                     "country": "Iceland", 
+//                     "city": "Akureyri", 
+//                     "eventType": "birth",
+//                     "year": "1912"
+//                 },
+//                 {
+//                     "descendant": "susan",
+//                     "eventID": "3333e4343", 
 //                     "personID": "7255e93e", 
 //                     "latitude": "65.6833", 
 //                     "longitude": "-17.9", 

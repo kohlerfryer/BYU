@@ -35,17 +35,22 @@ public class PersonsService extends FamilyMapService{
         this.dataGenerator = new DataGenerator();
     }
 
-    public PersonsResponseBody getPersons(PersonRequestBody requestBody){   
-        //request body should be hacked-- get personid from auth token and make a body hehe
+    public PersonsResponseBody getPersons(PersonRequestBody requestBody){
         PersonsResponseBody responseBody;
-        ArrayList<PersonResponseBody> responseBodies = new ArrayList<PersonResponseBody>();
-        ArrayList<Authentication> authenticationList = authenticationAccess.get("token", "=", requestBody.getToken());
-        Authentication authentication = authenticationList.get(0);
-        ArrayList<Person> personList = personAccess.get("descendant", "=", authentication.getUserId());
-        Person currentPerson = personList.get(0);
+
         try{
-            ArrayList<String> ancestorIds = personAccess.getAncestorIds(currentPerson.getId());            
-            ArrayList<Person> ancestors = personAccess.get("id", "IN", ancestorIds);
+            requestBody.validate();
+
+            ArrayList<PersonResponseBody> responseBodies = new ArrayList<PersonResponseBody>();
+            ArrayList<Authentication> authenticationList = authenticationAccess.get("token", "=", requestBody.getToken());
+            Authentication authentication = authenticationList.get(0);
+            // ArrayList<Person> personList = personAccess.get("descendant", "=", authentication.getUserId());
+            // Person currentPerson = personList.get(0);
+
+            // ArrayList<String> ancestorIds = personAccess.getAncestorIds(currentPerson.getId());            
+            // ArrayList<Person> ancestors = personAccess.get("id", "IN", ancestorIds);
+
+            ArrayList<Person> ancestors = personAccess.get("descendant", "=", authentication.getUserId());
 
             for(Person person : ancestors){
                 responseBodies.add(new PersonResponseBody(
@@ -60,6 +65,8 @@ public class PersonsService extends FamilyMapService{
                 ));
             }
             responseBody = new PersonsResponseBody(responseBodies);
+        }catch(InvalidRequestException e){
+            responseBody = new PersonsResponseBody(e.getMessage());
         }catch(NullPointerException e){
             responseBody = new PersonsResponseBody("missing parameters");
             e.printStackTrace();

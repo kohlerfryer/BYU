@@ -38,16 +38,17 @@ public class EventsService extends FamilyMapService{
     public EventsResponseBody getEvents(EventRequestBody requestBody){   
 
         EventsResponseBody responseBody;
-        ArrayList<EventResponseBody> responseBodies = new ArrayList<EventResponseBody>();
-        ArrayList<Authentication> authenticationList = authenticationAccess.get("token", "=", requestBody.getToken());
-        Authentication authentication = authenticationList.get(0);
-        ArrayList<Person> personList = personAccess.get("descendant", "=", authentication.getUserId());
-        Person person = personList.get(0);
-
         try{
-            ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());            
-            ArrayList<Event> events = eventAccess.get("person_id", "IN", ancestorIds);
-
+            requestBody.validate();
+            ArrayList<EventResponseBody> responseBodies = new ArrayList<EventResponseBody>();
+            ArrayList<Authentication> authenticationList = authenticationAccess.get("token", "=", requestBody.getToken());
+            Authentication authentication = authenticationList.get(0);
+            // ArrayList<Person> personList = personAccess.get("descendant", "=", authentication.getUserId());
+            // Person person = personList.get(0);
+            // ArrayList<String> ancestorIds = personAccess.getAncestorIds(person.getId());            
+            // ArrayList<Event> events = eventAccess.get("person_id", "IN", ancestorIds);
+            // ArrayList<Person> ancestors = personAccess.get("descendant", "=", authentication.getUserId());
+            ArrayList<Event> events = eventAccess.get("descendant", "=", authentication.getUserId());
             for(Event event : events){
                 responseBodies.add(new EventResponseBody(
                     event.getDescendant(),
@@ -61,6 +62,8 @@ public class EventsService extends FamilyMapService{
                 ));
             }
             responseBody = new EventsResponseBody(responseBodies);
+        }catch(InvalidRequestException e){
+            responseBody = new EventsResponseBody(e.getMessage());
         }catch(NullPointerException e){
             responseBody = new EventsResponseBody("missing parameters");
             e.printStackTrace();

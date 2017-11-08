@@ -44,7 +44,6 @@ public class LoginHandler extends FamilyMapHandler implements HttpHandler{
             this.writeStringToOutputStream(gson.toJson(responseBody), exchange.getResponseBody());
 
         }catch(Exception e){
-             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              e.printStackTrace();
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }

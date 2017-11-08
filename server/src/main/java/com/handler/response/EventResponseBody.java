@@ -30,6 +30,7 @@ public class EventResponseBody{
     }
     EventResponseBody(String message){
         this.message = message;
+        this.gson = new Gson();
     }
 
     public String toJsonString(){

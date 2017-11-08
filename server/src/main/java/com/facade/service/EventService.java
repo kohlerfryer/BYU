@@ -37,7 +37,7 @@ public class EventService extends FamilyMapService{
     public EventResponseBody getEvent(EventRequestBody requestBody){   
         EventResponseBody responseBody;
         try{
-            requestBody.validate();
+            requestBody.validate(this.authenticationAccess, this.eventAccess);
             ArrayList<Event> eventList = eventAccess.get("id", "=", requestBody.getEventId());
             Event event = eventList.get(0);
 //String descendant, String eventID, String latitude, String longitude, String country, String city, String eventType, String year){

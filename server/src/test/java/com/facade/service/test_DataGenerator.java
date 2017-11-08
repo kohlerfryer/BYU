@@ -34,13 +34,13 @@ public class test_DataGenerator{
     public void setUp() {
 	    DBConnection connection = DBSingleton.getInstance();
         this.personAccess = new PersonAccess(connection);
-        this.currentPerson = this.personAccess.create(Util.generateRandomString(), this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId, this.descendant);
+        this.currentPerson = this.personAccess.create(this.firstName+this.lastname, this.firstName, this.lastname, this.gender, this.fatherId, this.motherId, this.spouseId, this.descendant);
         this.dataGenerator = new DataGenerator();
     }
 
     @Test
     public void testGenerate() {
-       dataGenerator.generatePersonData(this.currentPerson,4, 2000);
+       dataGenerator.generatePersonData(this.currentPerson,4, 2000, "Asdfasdf");
        assertTrue(false);
     }
 

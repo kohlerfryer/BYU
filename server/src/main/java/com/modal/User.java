@@ -5,9 +5,6 @@ package com.familymap;
 */
 public class User{
 
-    /** tuples unique identifier in relation */
-    private String id;
-
     /** Username of user */
     private String username;
 
@@ -26,26 +23,26 @@ public class User{
     /** users hashed password */
     private String password;
 
-    public User(String id, String username, String email, String firstName, String lastName, String gender, String password){
-        this.id = id;
+    /** users hashed password */
+    private String personId;
+
+    public User(String username, String email, String firstName, String lastName, String gender, String password, String personId){
         this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.password = password;
+        this.personId = personId;
     }
     
-    public String getId(){
-        return this.id;
-    }
     public String getUsername(){
         return this.username;
     }
     public String getEmail(){
         return this.email;
     }
-   public String firstName(){
+   public String getFirstName(){
         return this.firstName;
     }
    public String getLastName(){
@@ -57,7 +54,9 @@ public class User{
    public String getPassword(){
         return this.password;
     }
-   
+   public String getPersonId(){
+        return this.personId;
+    }
    
     public void setUsername(String username){
         this.username = username;
@@ -76,6 +75,9 @@ public class User{
     }
     public void setGender(String password){
         this.password = password;
+    }
+    public void setPersonId(String personId){
+        this.personId = personId;
     }
 }
 

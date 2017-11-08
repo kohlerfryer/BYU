@@ -28,30 +28,30 @@ public class UserAccess extends DataAccess{
     * @return User
     */
 //  String id, String username, String email, String personId
-    public User create(String id, String username, String email, String firstName, String lastName, String gender, String password){
+    public User create(String username, String email, String firstName, String lastName, String gender, String password, String personId){
         String attributes = MessageFormat.format(
             "{0}, {1}, {2}, {3}, {4}, {5}, {6}",
-            "id",
             "username",
             "email",
             "first_name",
             "last_name",
             "gender",
-            "password"
+            "password",
+            "person_id"
         );
         String values = MessageFormat.format(
             "''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'', ''{5}'', ''{6}''",
-            id,
             username, 
             email,
             firstName,
             lastName,
             gender,
-            password
+            password,
+            personId
         );
 
         super.rawCreate(this.relation, attributes, values);
-        return new User(id, username, email, firstName, lastName, gender, password);
+        return new User(username, email, firstName, lastName, gender, password, personId);
     }
 
     /** 
@@ -70,14 +70,14 @@ public class UserAccess extends DataAccess{
         try{
             ResultSet result = super.rawGet(this.relation, key, delimeter, desiredValue);
             while(result.next()){
-                String id = result.getString("id");
                 String username = result.getString("username");
                 String email = result.getString("email");
                 String password = result.getString("password");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
                 String gender = result.getString("gender");
-                users.add(new User(id, username, email, firstName, lastName, gender, password));
+                String personId = result.getString("person_id");
+                users.add(new User(username, email, firstName, lastName, gender, password, personId));
             }
             result.close();
         }catch(Exception e){

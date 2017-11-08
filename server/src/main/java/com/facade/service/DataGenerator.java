@@ -44,30 +44,40 @@ public class DataGenerator{
 
 
 
+//String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
 
-    public void generatePersonData(Person person, int generations, int year){
+    public void generatePersonData(User user, int generations, int year, String descendant){
         year-=40;
-        ArrayList<Person> result = this.personAccess.get("id", "=", person.getId());
-        Person currentPerson = result.get(0);
-        this.setPersonData(currentPerson, year);
-        Person mother = generateParentData(this.generateLastName(), "F", generations -1, year);
-        Person father = generateParentData(person.getLastName(), "M", generations -1, year);
+        Person person = this.personAccess.create(
+            user.getFirstName()+ user.getLastName(), 
+            user.getFirstName(), 
+            user.getLastName(),
+            user.getGender(),
+            null,
+            null,
+            null,
+            user.getUsername()
+        );
+        this.setPersonData(person, year);
+        Person mother = generateParentData(this.generateLastName(), "F", generations -1, year, descendant);
+        Person father = generateParentData(person.getLastName(), "M", generations -1, year, descendant);
         father.setSpouseId(mother.getId());
         mother.setSpouseId(father.getId());
-        currentPerson.setMotherId(mother.getId());
-        currentPerson.setFatherId(father.getId());
-        this.personAccess.update(currentPerson);
+        person.setMotherId(mother.getId());
+        person.setFatherId(father.getId());
+        this.personAccess.update(person);
         this.personAccess.update(father);
         this.personAccess.update(mother);
     }
 
-    private Person generateParentData(String lastName, String gender, int generations, int year){
+    private Person generateParentData(String lastName, String gender, int generations, int year, String descendant){
         year -=40;
-        Person currentPerson = this.personAccess.create(Util.generateRandomString(), this.generateFirstName(gender), lastName, gender, null, null, null, null);
-        this.setAncestorData(currentPerson, year);
+        String firstName = this.generateFirstName(gender);
+        Person currentPerson = this.personAccess.create(firstName+lastName, firstName, lastName, gender, null, null, null, descendant);
+        this.setAncestorData(currentPerson, year, descendant);
         if(generations >  0){
-            Person mother = generateParentData(this.generateLastName(), "F", generations -1, year);
-            Person father = generateParentData(lastName, "M", generations -1, year);
+            Person mother = generateParentData(this.generateLastName(), "F", generations -1, year, descendant);
+            Person father = generateParentData(lastName, "M", generations -1, year, descendant);
             father.setSpouseId(mother.getId());
             mother.setSpouseId(father.getId());
             currentPerson.setMotherId(mother.getId());
@@ -76,7 +86,7 @@ public class DataGenerator{
             this.personAccess.update(father);
             this.personAccess.update(mother);
             this.personAccess.update(currentPerson);
-            this.generateMarriageEvent(year, mother.getId(), father.getId());
+            this.generateMarriageEvent(year, mother.getId(), father.getId(), descendant);
         }
         return currentPerson;
     }
@@ -101,13 +111,13 @@ public class DataGenerator{
 
     
 
-    private void setAncestorData(Person person, int year){
+    private void setAncestorData(Person person, int year, String userName){
         String personId = person.getId();
-        Event birth = this.generateBirthEvent(year, personId, null);
+        Event birth = this.generateBirthEvent(year, personId, userName);
         int birthDate = Integer.valueOf(birth.getYear());
-        this.generateDeathEvent(birthDate, personId, null);
+        this.generateDeathEvent(birthDate, personId, userName);
         if(Math.random() < 0.5){
-            this.generateBaptismEvent(birthDate, personId, null);  
+            this.generateBaptismEvent(birthDate, personId, userName);  
         }
 
     }
@@ -184,7 +194,7 @@ public class DataGenerator{
         );
     }
 
-    private Event generateMarriageEvent(int year, String womanPersonId, String malePersonId){
+    private Event generateMarriageEvent(int year, String womanPersonId, String malePersonId, String userName){
         String marriageYear = Integer.toString(this.generateBirthDate(year));
         String type = "marriage";
         JsonObject location = this.generateLocation();
@@ -197,7 +207,7 @@ public class DataGenerator{
             type,
             marriageYear,
             malePersonId,
-            null
+            userName
         );
         return this.eventAccess.create(
             Util.generateRandomString(),
@@ -208,7 +218,7 @@ public class DataGenerator{
             type,
             marriageYear,
             womanPersonId,
-            null
+            userName
         );
     }
 

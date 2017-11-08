@@ -25,9 +25,10 @@ public class FillRequestBody{
     }
 
     public void validate(UserAccess userAccess) throws InvalidRequestException{
+        System.out.println(this.userName);
         ArrayList<User> userList = userAccess.get("username", "=", this.userName);
         if(userList.size() == 0) throw new InvalidRequestException("invalid username"); 
-        if(this.generationCount < 0) throw new InvalidRequestException("invalid generation count"); 
+        if(this.generationCount != 0 && this.generationCount < 1) throw new InvalidRequestException("invalid generation count"); 
     }
 
      

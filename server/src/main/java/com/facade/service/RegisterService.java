@@ -39,28 +39,32 @@ public class RegisterService extends FamilyMapService{
         try{
             requestBody.validate(this.userAccess);
             String hashedPassword = Util.getHash(requestBody.getPassword());
+            String personId = Util.generateRandomString();
+//    public User create(String username, String email, String firstName, String lastName, String gender, String password, String personId){
+
             User user = this.userAccess.create(
-                Util.generateRandomString(),
                 requestBody.getUsername(), 
                 requestBody.getEmail(), 
                 requestBody.getFirstName(), 
                 requestBody.getLastName(), 
                 requestBody.getGender(), 
-                hashedPassword
+                hashedPassword,
+                personId
             );
-            Person person = this.personAccess.create(
-                Util.generateRandomString(),
-                user.getUsername(),
-                requestBody.getFirstName(), 
-                requestBody.getLastName(), 
-                requestBody.getGender(), 
-                null, 
-                null, 
-                user.getId()
-            );
-            Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), user.getId());
-            dataGenerator.generatePersonData(person, 4, 2017);
-            responseBody = new RegisterResponseBody(authentication.getToken(), user.getUsername(), person.getId());
+//    public Person create(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
+            // Person person = this.personAccess.create(
+            //     requestBody.getFirstName()+requestBody.getLastName(),
+            //     requestBody.getFirstName(), 
+            //     requestBody.getLastName(), 
+            //     requestBody.getGender(), 
+            //     null, 
+            //     null,
+            //     null,
+            //     requestBody.getUsername()
+            // );
+            Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), requestBody.getUsername());
+            dataGenerator.generatePersonData(user, 4, 2017, requestBody.getUsername());
+            responseBody = new RegisterResponseBody(authentication.getToken(), requestBody.getUsername(), requestBody.getFirstName() + requestBody.getLastName());
         }catch(InvalidRequestException e){
             responseBody = new RegisterResponseBody(e.getMessage());
         }catch(NullPointerException e){

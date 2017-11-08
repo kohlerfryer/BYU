@@ -43,7 +43,6 @@ public class RegisterHandler extends FamilyMapHandler implements HttpHandler{
 
         }catch(Exception e){
              e.printStackTrace();
-             this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
              exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
         }finally{
             exchange.getResponseBody().close();

@@ -41,7 +41,6 @@ public class IndexHandler extends FamilyMapHandler implements HttpHandler{
         }catch (Exception e){
             e.printStackTrace();
         }finally{
-            this.writeStringToOutputStream(RequestBodyHelper.getBasicError(), exchange.getResponseBody());
             exchange.getResponseBody().close();
             exchange.getResponseBody().close();
         }

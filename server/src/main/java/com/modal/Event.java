@@ -40,6 +40,7 @@
          this.city = city;
          this.type = type;
          this.year = year;
+         this.descendant = descendant;
      }
 
      public String getId(){

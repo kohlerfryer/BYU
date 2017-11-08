@@ -7,15 +7,15 @@ ALTER TABLE person MODIFY mother_id TEXT;
 ALTER TABLE person MODIFY spouse_id TEXT;
 ALTER TABLE person ADD descendant TEXT;
 
-ALTER TABLE user MODIFY id VARCHAR(250);
+ALTER TABLE user DROP id;
 ALTER TABLE user DROP person_id;
-ALTER TABLE user MODIFY username TEXT;
+ALTER TABLE user MODIFY username VARCHAR(250) PRIMARY KEY;
 ALTER TABLE user MODIFY email TEXT;
 ALTER TABLE user MODIFY password TEXT;
 ALTER TABLE user ADD first_name TEXT;
 ALTER TABLE user ADD last_name TEXT;
 ALTER TABLE user ADD gender TEXT;
-
+ALTER TABLE user ADD person_id TEXT;
 
 ALTER TABLE event MODIFY id VARCHAR(250);
 ALTER TABLE event MODIFY latitude REAL;
