@@ -39,10 +39,11 @@ public class LoginService extends FamilyMapService{
         LoginResponseBody responseBody;
         try{
             requestBody.validate(this.userAccess);
-            ArrayList<Person> personList = personAccess.get("descendant", "=", requestBody.getUsername());
-            Person person = personList.get(0);
+            //wrong person yo
+            ArrayList<User> userList = this.userAccess.get("username", "=", requestBody.getUsername());
+            User user = userList.get(0);
             Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), requestBody.getUsername());
-            responseBody = new LoginResponseBody(authentication.getToken(), requestBody.getUsername(), person.getId());
+            responseBody = new LoginResponseBody(authentication.getToken(), requestBody.getUsername(), user.getFirstName() + user.getLastName());
         }catch(InvalidRequestException e){
             responseBody = new LoginResponseBody(e.getMessage());
         }catch(NullPointerException e){
