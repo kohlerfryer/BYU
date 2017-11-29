@@ -2,6 +2,7 @@ package familymapapp.HTTP;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.net.URL;
 import java.util.Map;
 
 import java.util.function.Consumer;
+
+import familymapapp.UTIL.Util;
 
 /**
  * Created by kittykatt on 11/12/17.
@@ -58,12 +61,11 @@ public class GetRequest extends AsyncTask<URL, Integer, HTTPResponse> {
             else {
                 inputStream = urlConnection.getErrorStream();
             }
-            response = convertInputStreamToString(inputStream);
+            response = Util.convertInputStreamToString(inputStream);
 
         } catch (Exception e) {
-            Log.d("ERROR", e.getLocalizedMessage());
-            //TODO CLEAN THIS UP YO
-            response = "{'message': '"+e.getLocalizedMessage()+"'}";
+            Pair<String, String> errorKeyValue = new Pair("message", e.getLocalizedMessage());
+            response = Util.createJsonString(errorKeyValue);
         }
         return new HTTPResponse(success, response);
     }
@@ -74,17 +76,7 @@ public class GetRequest extends AsyncTask<URL, Integer, HTTPResponse> {
 
     }
 
-    //TODO MAKE THIS IN UTIL CLASS :)
-    private static String convertInputStreamToString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
+
 
 }
 

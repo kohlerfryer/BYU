@@ -15,29 +15,20 @@ import java.util.function.Consumer;
 import familymapapp.HTTP.PostRequest;
 import familymapapp.Request.PersonRequestBody;
 import familymapapp.Request.RegisterRequestBody;
+import familymapapp.UTIL.Util;
 
 public class RegisterService {
-//
-//    private String stringifyJsonObject(Object object){
-////        JsonObject response = new JsonObject();
-////        response.addProperty("message", this.message);
-//        return gson.toJson(object);
-//    }
 
     //TODO -- make response objects
     public static void register(String serverHost, String serverPort, RegisterRequestBody requestBody, Context context){
-        Log.d("asdf", "http://"+serverHost+":"+serverPort+"/user/register");
-        Gson gson = new Gson();
         Consumer<String> success = (data) -> {
-            JsonObject response = new JsonParser().parse(data).getAsJsonObject();
-            PersonRequestBody personRequestBody = new PersonRequestBody(response.get("authToken").getAsString(), response.get("personID").getAsString());
+            PersonRequestBody personRequestBody = new PersonRequestBody(Util.getValueFromJson(data, "authToken"), Util.getValueFromJson(data, "personID"));
             PersonService.get(personRequestBody, context);
         };
         Consumer<String> failure = (data) -> {
-            JsonObject response = new JsonParser().parse(data).getAsJsonObject();
-            Toast.makeText(context, response.get("message").getAsString(), 30000).show();
+            Toast.makeText(context, Util.getValueFromJson(data, "message"), 30000).show();
         };
-        String stringifiedRequestBody = gson.toJson(requestBody);
+        String stringifiedRequestBody = Util.covertObjectToJsonString(requestBody);
 
         PostRequest loginRequest = new PostRequest(stringifiedRequestBody, "application/json", success, failure, null);
         try{

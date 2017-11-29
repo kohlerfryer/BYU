@@ -16,6 +16,7 @@ import familymapapp.HTTP.GetRequest;
 import familymapapp.HTTP.PostRequest;
 import familymapapp.Request.PersonRequestBody;
 import familymapapp.Request.RegisterRequestBody;
+import familymapapp.UTIL.Util;
 
 public class PersonService {
 
@@ -23,10 +24,8 @@ public class PersonService {
     public static void get(PersonRequestBody requestBody, Context context){
         JsonObject person;
         //todo make model for person -- -make all service classes unison and clean :_
-        Gson gson = new Gson();
         Consumer<String> success = (data) -> {
-            JsonObject response = new JsonParser().parse(data).getAsJsonObject();
-            Toast.makeText(context, "firstname: " + response.get("firstName").getAsString() + "\n lastname: " + response.get("lastname").getAsString(), 30000).show();
+            Toast.makeText(context, "firstname: " + Util.getValueFromJson(data, "firstName") + "\n lastname: " + Util.getValueFromJson(data, "lastname"), 30000).show();
         };
         Consumer<String> failure = (data) -> {
             JsonObject response = new JsonParser().parse(data).getAsJsonObject();

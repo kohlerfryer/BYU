@@ -2,18 +2,17 @@ package familymapapp.HTTP;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+import android.util.Pair;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
+
 
 import java.util.function.Consumer;
+
+import familymapapp.UTIL.Util;
 
 /**
  * Created by kittykatt on 11/12/17.
@@ -29,7 +28,6 @@ public class PostRequest extends AsyncTask<URL, Integer, HTTPResponse> {
     private String contentType;
 
     public PostRequest(String postData, String contentType, Consumer<String> successCallback, Consumer<String> failureCallback, String authenticationToken) {
-
         this.postData = postData;
         this.contentType = contentType;
         this.successCallback = successCallback;
@@ -68,12 +66,12 @@ public class PostRequest extends AsyncTask<URL, Integer, HTTPResponse> {
             else {
                 inputStream = urlConnection.getErrorStream();
             }
-            response = convertInputStreamToString(inputStream);
+
+            response = Util.convertInputStreamToString(inputStream);
 
         } catch (Exception e) {
-            Log.d("ERROR", e.getLocalizedMessage());
-            //TODO CLEAN THIS UP YO
-            response = "{'message': '"+e.getLocalizedMessage()+"'}";
+            Pair<String, String> errorKeyValue = new Pair("message", e.getLocalizedMessage());
+            response = Util.createJsonString(errorKeyValue);
         }
         return new HTTPResponse(success, response);
     }
@@ -85,16 +83,6 @@ public class PostRequest extends AsyncTask<URL, Integer, HTTPResponse> {
     }
 
 
-    private static String convertInputStreamToString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
 
 }
 
