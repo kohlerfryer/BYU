@@ -27,6 +27,11 @@ public class Util {
         return sb.toString();
     }
 
+    public static Object convertJsonStringToObject(String jsonString, Class type){
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, type);
+    }
+
     public static String getValueFromJson(String jsonString, String key){
         JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
         String value = json.get(key).getAsString();

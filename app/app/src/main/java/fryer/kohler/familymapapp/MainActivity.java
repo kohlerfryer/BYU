@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void handleLoginSuccess(String personId, String authenticationToken) {
 
         Consumer<String> success = (data) -> {
-            EventsResponse response = new EventsResponse(data);
+            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
             TemporaryPersonData.getInstance().setEvents(response.getEvents());
             switchFragment(new MapFragment());
         };
