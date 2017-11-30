@@ -1,10 +1,9 @@
 package familymapapp.Modal;
 
-import android.app.usage.UsageEvents;
+import familymapapp.Modal.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.familymap.Event;
 
 /**
  * Created by programmer on 11/29/17.
@@ -13,7 +12,7 @@ import com.familymap.Event;
 public class TemporaryPersonData {
 
 
-    private HashMap<String, ArrayList<Event>> events;
+    private ArrayList<Event> events;
     private static TemporaryPersonData data = null;
 
     protected TemporaryPersonData() {
@@ -27,7 +26,7 @@ public class TemporaryPersonData {
         return data;
     }
 
-    public setEvents(HashMap<String, ArrayList<Event>> events){
+    public void setEvents(ArrayList<Event> events){
         this.events = events;
     }
 

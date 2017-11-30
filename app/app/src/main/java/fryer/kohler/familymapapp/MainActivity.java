@@ -1,16 +1,25 @@
 package fryer.kohler.familymapapp;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.widget.Toast;
+
+import java.util.function.Consumer;
+
+import familymapapp.Modal.TemporaryPersonData;
+import familymapapp.Response.EventsResponse;
+import familymapapp.Service.EventsService;
+import familymapapp.UTIL.Util;
 
 import static fryer.kohler.familymapapp.R.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginFragment.LoginFragmentHandler {
 
 
     @Override
@@ -27,19 +36,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
         //do the stuff above :)
 
-
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -62,5 +58,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //TODO USE RSPONSE OBJECT
+    @Override
+    public void handleLoginSuccess(String personId, String authenticationToken) {
+
+        Consumer<String> success = (data) -> {
+            Toast.makeText(this, "what the: "+ data, 30000).show();
+            EventsResponse response = new EventsResponse(data);
+            TemporaryPersonData.getInstance().setEvents(response.getEvents());
+            switchFragment(new MapFragment());
+        };
+
+        Consumer<String> failure = (data) -> {
+            Toast.makeText(this, "what the: "+ data, 30000).show();
+            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
+        };
+        Toast.makeText(this, "handling login success", 30000).show();
+        EventsService.get(authenticationToken, success, failure);
+        //EventsResponse response = ActivityService.getActivities(authenticationToken);
+        //generate person data
+        //switch to map fragment
+    }
+
+    public void switchFragment(Fragment fragment){
+        //tODO dispose of code dupllication
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(id.main_layout, fragment);
+        fragmentTransaction.commit();
     }
 }

@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Server Host:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="10.0.2.2" />
 
         <EditText
             android:id="@+id/server_port_input"
@@ -23,7 +24,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Server Port:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="8000" />
 
         <EditText
             android:id="@+id/username_input"
@@ -31,7 +33,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="User Name::"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="aa" />
 
         <EditText
             android:id="@+id/password_input"
@@ -39,7 +42,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="password" />
 
         <EditText
             android:id="@+id/first_name_input"
@@ -47,7 +51,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="First Name:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="joto" />
 
         <EditText
             android:id="@+id/last_name_input"
@@ -55,7 +60,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Last Name:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="we" />
 
         <EditText
             android:id="@+id/email_input"
@@ -63,7 +69,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email:"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="jw@gmail.com" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/gender_input_group"

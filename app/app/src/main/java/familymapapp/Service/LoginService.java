@@ -23,14 +23,9 @@ public class LoginService {
     private static final String slug = "/user/login";
 
     //TODO -- make server response objects
-    public static void login(String serverHost, String serverPort, LoginRequestBody requestBody, Context context){
-        Consumer<String> success = (data) -> {
-            PersonRequestBody personRequestBody = new PersonRequestBody(Util.getValueFromJson(data, "authToken"), Util.getValueFromJson(data, "personID"));
-            PersonService.get(personRequestBody, context);
-        };
-        Consumer<String> failure = (data) -> {
-            Toast.makeText(context, Util.getValueFromJson(data, "message"), 30000).show();
-        };
+    //todo make server host and port a global variable
+    public static void login(String serverHost, String serverPort, LoginRequestBody requestBody, Consumer<String> success, Consumer<String> failure){
+
         String stringifiedRequestBody = Util.covertObjectToJsonString(requestBody);
 
         PostRequest loginRequest = new PostRequest(stringifiedRequestBody, "application/json", success, failure, null);

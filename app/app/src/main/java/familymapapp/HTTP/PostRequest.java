@@ -59,11 +59,12 @@ public class PostRequest extends AsyncTask<URL, Integer, HTTPResponse> {
 
             int statusCode = urlConnection.getResponseCode();
             InputStream inputStream;
-            if (statusCode == HttpURLConnection.HTTP_OK) {
+            if (statusCode == HttpURLConnection.HTTP_OK || statusCode == HttpURLConnection.HTTP_ACCEPTED) {
                 success = true;
                 inputStream = urlConnection.getInputStream();
             }
             else {
+
                 inputStream = urlConnection.getErrorStream();
             }
 
