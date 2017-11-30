@@ -65,21 +65,16 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void handleLoginSuccess(String personId, String authenticationToken) {
 
         Consumer<String> success = (data) -> {
-            Toast.makeText(this, "what the: "+ data, 30000).show();
             EventsResponse response = new EventsResponse(data);
             TemporaryPersonData.getInstance().setEvents(response.getEvents());
             switchFragment(new MapFragment());
         };
 
         Consumer<String> failure = (data) -> {
-            Toast.makeText(this, "what the: "+ data, 30000).show();
             Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
-        Toast.makeText(this, "handling login success", 30000).show();
+        
         EventsService.get(authenticationToken, success, failure);
-        //EventsResponse response = ActivityService.getActivities(authenticationToken);
-        //generate person data
-        //switch to map fragment
     }
 
     public void switchFragment(Fragment fragment){

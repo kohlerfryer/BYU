@@ -14,7 +14,7 @@ public class Server {
 
     public static void main(String[] args) throws Exception {
         int portNumber = Integer.valueOf(args[0]);
-        HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 50);
+        HttpServer server = HttpServer.create(new InetSocketAddress(portNumber), 200);
         //HttpServer server = HttpServer.create(new InetSocketAddress(Integer.parseInt(portNumber)), MAX_WAITING_CONNECTIONS);
         initializeHanlders(server);
         server.setExecutor(null);

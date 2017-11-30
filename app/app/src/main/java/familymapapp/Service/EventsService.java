@@ -24,7 +24,7 @@ public class EventsService {
 
         GetRequest getRequest = new GetRequest("application/json", success, failure, authenticationToken);
         try{
-            URL url = new URL("http://10.0.2.2:8080/event/");
+            URL url = new URL("http://10.0.2.2:8000/event");
             getRequest.execute(url);
         }catch(Exception e){
 

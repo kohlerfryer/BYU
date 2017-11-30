@@ -14,9 +14,7 @@ dependencies {
 }
 
 run {
-    if (project.hasProperty("appArgs")) {
-        args Eval.me(appArgs)
-    }
+    args = ["8000"]
 }
 
 mainClassName = "com.familymap.Server"
