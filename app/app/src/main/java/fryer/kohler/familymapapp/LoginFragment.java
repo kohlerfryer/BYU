@@ -159,8 +159,9 @@ public class LoginFragment extends Fragment {
         registerButton = (Button) view.findViewById(R.id.register_button);
         loginButton = (Button) view.findViewById(R.id.login_button);
 
-        registerButton.setEnabled(false);
-        loginButton.setEnabled(false);
+        //todo uncomment these
+        //registerButton.setEnabled(false);
+        //loginButton.setEnabled(false);
 
         EditText[] registerFields = new EditText[]{
             this.serverHostInput,

@@ -50,7 +50,8 @@ public class EventService extends FamilyMapService{
                 event.getCountry(),
                 event.getCity(),
                 event.getEventType(),
-                event.getYear()
+                event.getYear(),
+                event.getPersonId()
             );
         }catch(InvalidRequestException e){
             responseBody = new EventResponseBody(e.getMessage());

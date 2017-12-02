@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,6 +16,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import familymapapp.Modal.Event;
+import familymapapp.Modal.TemporaryPersonData;
 
 
 /**
@@ -26,6 +31,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
+    TextView eventTitleTextView;
+    TextView eventBodyTextView;
+    ImageView genderImage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +46,13 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
 
-        return v;
+        return view;
     }
 
     @Override
@@ -56,7 +65,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
         // Retrieve the data from the marker.
         Integer clickCount = (Integer) marker.getTag();
-
+        Event event = (Event) marker.getTag();
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the
@@ -67,10 +76,20 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        TemporaryPersonData personData = TemporaryPersonData.getInstance();
+        for(Event event : personData.getEvents()){
+            Double longitude = Double.parseDouble(event.getLongitude());
+            Double lattitude = Double.parseDouble(event.getLatitude());
+            LatLng lattitudeLongitude = new LatLng(lattitude, longitude);
+            String title = event.getEventType();
+            //.icon(BitmapDescriptorFactory.defaultMarker(color)));
+            Marker marker = googleMap.addMarker(new MarkerOptions()
+                    .position(lattitudeLongitude)
+                    .title(title));
+            marker.setTag(event);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lattitudeLongitude));
+        }
+
     }
 
 }

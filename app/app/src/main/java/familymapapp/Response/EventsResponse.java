@@ -11,14 +11,14 @@ import familymapapp.Modal.Event;
 
 public class EventsResponse {
 
-    Event[] events;
+    Event[] data;
 
-    public EventsResponse(Event[] events){
-        this.events = events;
+    public EventsResponse(Event[] data){
+        this.data = data;
         //parse json and get response;
     }
 
-    public ArrayList<Event> getEvents(){
-        return null;
+    public Event[] getEvents(){
+        return data;
     }
 }

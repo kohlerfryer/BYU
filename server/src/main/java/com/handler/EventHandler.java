@@ -74,6 +74,7 @@ public class EventHandler extends FamilyMapHandler implements HttpHandler{
         else{
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
         }
+        System.out.println(responseBody.toJsonString());
         this.writeStringToOutputStream(responseBody.toJsonString(), exchange.getResponseBody());
     }
 

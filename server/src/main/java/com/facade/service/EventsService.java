@@ -58,7 +58,8 @@ public class EventsService extends FamilyMapService{
                     event.getCountry(),
                     event.getCity(),
                     event.getEventType(),
-                    event.getYear()                
+                    event.getYear(),
+                    event.getPersonId()            
                 ));
             }
             responseBody = new EventsResponseBody(responseBodies);

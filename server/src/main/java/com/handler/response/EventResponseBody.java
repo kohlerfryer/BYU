@@ -15,9 +15,10 @@ public class EventResponseBody{
     private String eventType;
     private String year;
     private String message;
+    private String personId;
     private Gson gson;
 
-    EventResponseBody(String descendant, String eventID, String latitude, String longitude, String country, String city, String eventType, String year){
+    EventResponseBody(String descendant, String eventID, String latitude, String longitude, String country, String city, String eventType, String year, String personId){
         this.descendant = descendant;
         this.eventID = eventID;
         this.latitude = latitude;
@@ -26,6 +27,7 @@ public class EventResponseBody{
         this.city = city;
         this.eventType = eventType;
         this.year = year;
+        this.personId = personId;
         this.gson = new Gson();
     }
     EventResponseBody(String message){
@@ -40,14 +42,16 @@ public class EventResponseBody{
     public JsonObject toJson(){
         JsonObject response = new JsonObject();
         if(this.wasSuccessfull()){
-            response.addProperty("descendant", this.descendant);
-            response.addProperty("eventID", this.eventID);
+            response.addProperty("id", this.eventID);
             response.addProperty("latitude", this.latitude);
             response.addProperty("longitude", this.longitude);
             response.addProperty("country", this.country);
             response.addProperty("city", this.city);
-            response.addProperty("eventType", this.eventType);
+            response.addProperty("type", this.eventType);
             response.addProperty("year", this.year);
+            response.addProperty("personId", this.year);
+            response.addProperty("descendant", this.descendant);
+
         }
         else{
             response.add("message", new JsonPrimitive(this.message));

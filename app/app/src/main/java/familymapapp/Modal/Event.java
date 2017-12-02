@@ -31,7 +31,7 @@ package familymapapp.Modal;
      /** user attatched to event */
      private String descendant;
      
-
+//{"id":"03VL7DFJXKB56KIC5W","":"52.5167","longitude":"13.3833","country":"Germany","city":"Berlin","type":"baptism","year":"1832","personId":"1832","descendant":"aa"}
      public Event(String id, String latitude, String longitude, String country, String city, String type, String year, String personId, String descendant){
          this.id = id;
          this.latitude = latitude;
@@ -40,6 +40,7 @@ package familymapapp.Modal;
          this.city = city;
          this.type = type;
          this.year = year;
+         this.personId = personId;
          this.descendant = descendant;
      }
 

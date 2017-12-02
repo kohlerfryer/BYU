@@ -4,7 +4,9 @@ package fryer.kohler.familymapapp;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -67,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void handleLoginSuccess(String personId, String authenticationToken) {
 
         Consumer<String> success = (data) -> {
+            Log.d("debug", data);
             EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
+            //Log.d("debug1", response.getEvents().length);
             TemporaryPersonData.getInstance().setEvents(response.getEvents());
-            switchFragment();
+            switchFragment(new MapFragment());
         };
 
         Consumer<String> failure = (data) -> {
@@ -79,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         EventsService.get(authenticationToken, success, failure);
     }
 
-    public void switchFragment(){
+    public void switchFragment(Fragment fragment){
         //tODO dispose of code dupllication
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(id.main_layout, new MapFragment());
+        fragmentTransaction.replace(id.main_layout, fragment);
         fragmentTransaction.commit();
     }
 }
