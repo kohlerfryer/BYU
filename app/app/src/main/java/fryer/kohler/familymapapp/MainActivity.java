@@ -1,14 +1,15 @@
 package fryer.kohler.familymapapp;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.function.Consumer;
 
@@ -27,14 +28,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         //if token expire then
         LoginFragment fragment = new LoginFragment();
-        fragmentTransaction.add(id.main_layout, fragment);
+        fragmentTransaction.replace(id.main_layout, fragment);
         fragmentTransaction.commit();
         //do the stuff above :)
+
 
     }
 
@@ -67,21 +69,22 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         Consumer<String> success = (data) -> {
             EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
             TemporaryPersonData.getInstance().setEvents(response.getEvents());
-            switchFragment(new MapFragment());
+            switchFragment();
         };
 
         Consumer<String> failure = (data) -> {
             Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
-        
+
         EventsService.get(authenticationToken, success, failure);
     }
 
-    public void switchFragment(Fragment fragment){
+    public void switchFragment(){
         //tODO dispose of code dupllication
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(id.main_layout, fragment);
+
+        fragmentTransaction.replace(id.main_layout, new MapFragment());
         fragmentTransaction.commit();
     }
 }
