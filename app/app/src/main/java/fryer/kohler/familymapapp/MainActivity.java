@@ -1,6 +1,7 @@
 package fryer.kohler.familymapapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,21 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.function.Consumer;
 
+import familymapapp.Modal.Event;
 import familymapapp.Modal.TemporaryPersonData;
 import familymapapp.Response.EventsResponse;
 import familymapapp.Service.EventsService;
+import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Util;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static fryer.kohler.familymapapp.R.*;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.LoginFragmentHandler {
+public class MainActivity extends AppCompatActivity implements LoginFragment.LoginFragmentHandler, MapFragment.MapFragmentHandler {
 
+    public static final String EXTRA_MESSAGE = "fryer.kohler.familymapapp.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +74,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     @Override
     public void handleLoginSuccess(String personId, String authenticationToken) {
 
+        Settings settings = Settings.getInstance();
+        settings.setAuthenticationToken(authenticationToken);
+
         Consumer<String> success = (data) -> {
+            //todo clean up auth token handling, its gross
             Log.d("debug", data);
             EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
             //Log.d("debug1", response.getEvents().length);
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
             Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
 
-        EventsService.get(authenticationToken, success, failure);
+        EventsService.get(success, failure);
     }
 
     public void switchFragment(Fragment fragment){
@@ -90,5 +100,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
         fragmentTransaction.replace(id.main_layout, fragment);
         fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void handleEventDetailsClick(Event event) {
+        Intent intent = new Intent(this, PersonActivity.class);
+        Log.d("debug", event.getPersonId());
+        intent.putExtra(EXTRA_MESSAGE, event.getPersonId());
+        startActivity(intent);
     }
 }

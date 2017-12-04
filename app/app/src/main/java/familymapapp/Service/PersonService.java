@@ -16,24 +16,19 @@ import familymapapp.HTTP.GetRequest;
 import familymapapp.HTTP.PostRequest;
 import familymapapp.Request.PersonRequestBody;
 import familymapapp.Request.RegisterRequestBody;
+import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Util;
 
 public class PersonService {
 
     //TODO -- make response objects
-    public static void get(PersonRequestBody requestBody, Context context){
+    public static void get(String personId, Consumer<String> success, Consumer<String> failure){
         JsonObject person;
         //todo make model for person -- -make all service classes unison and clean :_
-        Consumer<String> success = (data) -> {
-            Toast.makeText(context, "firstname: " + Util.getValueFromJson(data, "firstName") + "\n lastname: " + Util.getValueFromJson(data, "lastname"), 30000).show();
-        };
-        Consumer<String> failure = (data) -> {
-            JsonObject response = new JsonParser().parse(data).getAsJsonObject();
-            Toast.makeText(context, response.get("message").getAsString(), 30000).show();
-        };
-        GetRequest getRequest = new GetRequest("application/json", success, failure, requestBody.getAuthenticationToken());
+        Settings settings = Settings.getInstance();
+        GetRequest getRequest = new GetRequest("application/json", success, failure, settings.getAuthenticationToken());
         try{
-            URL url = new URL("http://10.0.2.2:8080/person/"+requestBody.getPersonId());
+            URL url = new URL("http://10.0.2.2:8000/person/"+personId);
             getRequest.execute(url);
         }catch(Exception e){
 

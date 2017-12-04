@@ -49,7 +49,7 @@ public class EventResponseBody{
             response.addProperty("city", this.city);
             response.addProperty("type", this.eventType);
             response.addProperty("year", this.year);
-            response.addProperty("personId", this.year);
+            response.addProperty("personId", this.personId);
             response.addProperty("descendant", this.descendant);
 
         }

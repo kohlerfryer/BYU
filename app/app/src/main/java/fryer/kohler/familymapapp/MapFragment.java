@@ -1,18 +1,20 @@
 package fryer.kohler.familymapapp;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.support.v4.app.Fragment;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,6 +36,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     TextView eventTitleTextView;
     TextView eventBodyTextView;
     ImageView genderImage;
+    LinearLayout eventDetailsLayout;
+    Event eventInScope;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +51,23 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
+        eventTitleTextView = (TextView) view.findViewById(R.id.event_title_text);
+        eventBodyTextView = (TextView) view.findViewById(R.id.event_body_text);
+        genderImage = (ImageView) view.findViewById(R.id.gender_image);
+        eventDetailsLayout = (LinearLayout) view.findViewById(R.id.event_details_box);
 
+        eventDetailsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(eventInScope != null){
+                    MapFragmentHandler mapFragmentHandler = (MapFragmentHandler) getActivity();
+                    mapFragmentHandler.handleEventDetailsClick(eventInScope);
+                }
+            }
+        });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         return view;
@@ -64,8 +82,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public boolean onMarkerClick(final Marker marker) {
 
         // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
         Event event = (Event) marker.getTag();
+        this.eventInScope = event;
+        eventTitleTextView.setText(event.getPersonId());
+        eventBodyTextView.setText(event.getEventType() + ":" + event.getCity() + "," + event.getCountry() + "(" + event.getYear() + ")");
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the
@@ -76,6 +96,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
+        googleMap.setOnMarkerClickListener(this);
         TemporaryPersonData personData = TemporaryPersonData.getInstance();
         for(Event event : personData.getEvents()){
             Double longitude = Double.parseDouble(event.getLongitude());
@@ -90,6 +111,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(lattitudeLongitude));
         }
 
+    }
+
+    public interface MapFragmentHandler{
+        public void handleEventDetailsClick(Event event);
     }
 
 }

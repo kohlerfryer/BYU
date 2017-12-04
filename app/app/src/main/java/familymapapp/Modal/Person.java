@@ -1,4 +1,4 @@
-package com.familymap;
+package familymapapp.Modal;
 
 /**
 * represents a single Person tuple
