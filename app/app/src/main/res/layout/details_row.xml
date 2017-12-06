@@ -6,7 +6,7 @@
     android:clickable="true">
 
     <ImageView
-        android:id="@+id/picture"
+        android:id="@+id/icon"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
@@ -19,7 +19,7 @@
          />
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/first_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -27,13 +27,13 @@
         android:text="Content"
         android:textSize="12sp"
         android:paddingLeft="5dp"
-        android:layout_below="@+id/user_name"
+        android:layout_below="@+id/second_field"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="16dp" />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/second_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
@@ -42,7 +42,7 @@
         android:textSize="14sp"
         android:paddingLeft="5dp"
 
-        android:layout_alignTop="@+id/picture"
+        android:layout_alignTop="@+id/icon"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="72dp"

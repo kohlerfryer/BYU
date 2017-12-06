@@ -2,6 +2,7 @@ package fryer.kohler.familymapapp;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -9,16 +10,17 @@ import android.widget.TextView;
  */
 
 public class DetailsRowViewHolder extends ViewHolder implements View.OnClickListener{
-    TextView user_name;
-    TextView content;
+    TextView first_field;
+    TextView second_field;
+    ImageView icon;
 
 
     public DetailsRowViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
-        user_name=(TextView)itemView.findViewById(R.id.user_name);
-        content=(TextView)itemView.findViewById(R.id.content);
-
+        first_field = (TextView)itemView.findViewById(R.id.first_field);
+        second_field = (TextView)itemView.findViewById(R.id.second_field);
+        icon = (ImageView)itemView.findViewById(R.id.icon);
     }
 
 
