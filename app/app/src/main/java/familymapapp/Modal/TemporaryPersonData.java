@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class TemporaryPersonData {
 
 
-    private Event[] events;
+    private ArrayList<Event> events;
     private static TemporaryPersonData data = null;
 
     protected TemporaryPersonData() {
@@ -26,12 +26,23 @@ public class TemporaryPersonData {
         return data;
     }
 
-    public void setEvents(Event[] events){
+    public void setEvents(ArrayList<Event> events){
         this.events = events;
     }
 
-    public Event[] getEvents(){
+    public ArrayList<Event> getEvents(){
+
         return this.events;
+    }
+
+    public ArrayList<Event> getPersonEvents(String personId){
+        ArrayList<Event> personEvents = new ArrayList<Event>();
+        for(Event event : this.events){
+            if(event.getPersonId().equals(personId)){
+                personEvents.add(event);
+            }
+        }
+        return personEvents;
     }
 
 }

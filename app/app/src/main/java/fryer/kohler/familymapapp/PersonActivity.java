@@ -42,6 +42,8 @@ public class PersonActivity extends AppCompatActivity {
         detailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row);
         detailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailsRowAdapter = new DetailsRowAdapter(this);
+        detailsRowAdapter.setRowContent();
+        detailsRowRecyclerView.setAdapter(detailsRowAdapter);
         Log.d("debug", personId);
         this.loadPerson(personId);
     }
@@ -61,22 +63,22 @@ public class PersonActivity extends AppCompatActivity {
         PersonService.get(personId, success, failure);
     }
 
-    public void getPersonEvents(String personId){
-
-        Consumer<String> success = (data) -> {
-            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
-            Event[] events = response.getEvents();
-
-            detailsRowAdapter.setRowContent();
-            detailsRowRecyclerView.setAdapter(detailsRowAdapter);
-        };
-
-        Consumer<String> failure = (data) -> {
-            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
-        };
-
-        EventsService.get(success, failure);
-    }
+//    public void getPersonEvents(String personId){
+//
+//        Consumer<String> success = (data) -> {
+//            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
+//            Event[] events = response.getEvents();
+//
+//            detailsRowAdapter.setRowContent();
+//            detailsRowRecyclerView.setAdapter(detailsRowAdapter);
+//        };
+//
+//        Consumer<String> failure = (data) -> {
+//            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
+//        };
+//
+//        EventsService.get(success, failure);
+//    }
 
 
     public static ArrayList<Triplet<String, String, Integer>> convertEventsToTriplets (Event[] events){
