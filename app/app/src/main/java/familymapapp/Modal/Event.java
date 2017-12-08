@@ -1,9 +1,12 @@
 package familymapapp.Modal;
 
- /**
+import fryer.kohler.familymapapp.DetailsRowViewHolder;
+import fryer.kohler.familymapapp.R;
+
+/**
  * represents a single Event tuple
  */
- public class Event{
+ public class Event implements DetailsRowDataObject{
      /** tuples unique identifier in relation */
      private String id;
 
@@ -44,7 +47,23 @@ package familymapapp.Modal;
          this.descendant = descendant;
      }
 
-     public String getId(){
+    @Override
+    public String getFirstRow() {
+
+         return getEventType() + ":" + getCity() + ", " + getCountry() + "(" + getYear() + ")" ;
+    }
+
+    @Override
+    public String getSecondRow() {
+         return getPersonId();
+    }
+
+    @Override
+    public int getIcon() {
+        return R.drawable.common_google_signin_btn_icon_dark_normal;
+    }
+
+    public String getId(){
 	 return this.id;
      }
      public String getLatitude(){

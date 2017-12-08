@@ -35,11 +35,12 @@ public class TemporaryPersonData {
         return this.events;
     }
 
-    public ArrayList<Event> getPersonEvents(String personId){
-        ArrayList<Event> personEvents = new ArrayList<Event>();
+    public ArrayList<DetailsRowDataObject> getPersonEventDetailsRowObjects(String personId){
+        ArrayList<DetailsRowDataObject> personEvents = new ArrayList<DetailsRowDataObject>();
         for(Event event : this.events){
             if(event.getPersonId().equals(personId)){
-                personEvents.add(event);
+                DetailsRowDataObject data = (DetailsRowDataObject) event;
+                personEvents.add(data);
             }
         }
         return personEvents;

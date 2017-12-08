@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import familymapapp.Modal.DetailsRowDataObject;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.Person;
 import familymapapp.Modal.TemporaryPersonData;
@@ -24,7 +26,7 @@ import familymapapp.Response.EventsResponse;
 import familymapapp.Service.EventsService;
 import familymapapp.Service.PersonService;
 import familymapapp.UTIL.Settings;
-import familymapapp.UTIL.Triplet;
+import familymapapp.UTIL.Quadruplet;
 import familymapapp.UTIL.Util;
 
 public class PersonActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class PersonActivity extends AppCompatActivity {
     Person person;
     RecyclerView detailsRowRecyclerView;
     DetailsRowAdapter detailsRowAdapter;
+    TemporaryPersonData personData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,15 @@ public class PersonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_person);
         Intent intent = getIntent();
         String personId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        personData = TemporaryPersonData.getInstance();
         detailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row);
         detailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailsRowAdapter = new DetailsRowAdapter(this);
-        detailsRowAdapter.setRowContent();
-        detailsRowRecyclerView.setAdapter(detailsRowAdapter);
-        Log.d("debug", personId);
+        loadPerson(personId);
+        //detailsRowAdapter.setRowContent();
+        //detailsRowRecyclerView.setAdapter(detailsRowAdapter);
+        //Log.d("debug", personId);
         this.loadPerson(personId);
     }
 
@@ -52,8 +58,13 @@ public class PersonActivity extends AppCompatActivity {
         Consumer<String> success = (data) -> {
             Log.d("debug", data);
             person = (Person) Util.convertJsonStringToObject(data, Person.class);
-            //ArrayList<Triplet<String, String, Integer>> data = convertEventsToTriplets()
-            Log.d("debug", person.getGender());
+
+            Log.d("debug", "person id" + person.getId());
+            ArrayList<DetailsRowDataObject> personEvents = personData.getPersonEventDetailsRowObjects(person.getId());
+
+            detailsRowAdapter.setRowContent(personEvents, onClickCallBack);
+            detailsRowRecyclerView.setAdapter(detailsRowAdapter);
+            //Log.d("debug", person.getGender());
 
         };
 
@@ -62,6 +73,10 @@ public class PersonActivity extends AppCompatActivity {
         };
         PersonService.get(personId, success, failure);
     }
+
+    private Consumer<String> onClickCallBack = (id) -> {
+        Log.d("debug", "YYYYYEESIRRRR" + id);
+    };
 
 //    public void getPersonEvents(String personId){
 //
@@ -81,12 +96,13 @@ public class PersonActivity extends AppCompatActivity {
 //    }
 
 
-    public static ArrayList<Triplet<String, String, Integer>> convertEventsToTriplets (Event[] events){
-        ArrayList<Triplet<String, String, Integer>> triplets = new ArrayList<Triplet<String, String, Integer>>();
-        for(Event event: events) {
-            triplets.add(new Triplet<String, String, Integer>(event.getEventType(), event.getCity(), R.drawable.common_google_signin_btn_text_dark_focused));
-        }
-        return triplets;
-    }
+//    public static ArrayList<Quadruplet<String, String, Integer, Runnable>> convertEventsToQuadruplets (ArrayList<Event> events){
+//        ArrayList<Quadruplet<String, String, Integer, Runnable>> quadruplets = new ArrayList<Quadruplet<String, String, Integer, Runnable>>();
+//        for(Event event: events) {
+//
+//            quadruplets.add(new Quadruplet<String, String, Integer, Runnable>(event.getEventType(), event.getCity(), R.drawable.common_google_signin_btn_text_dark_focused, onClickCallBack));
+//        }
+//        return quadruplets;
+//    }
 
 }

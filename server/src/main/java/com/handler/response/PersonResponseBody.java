@@ -41,13 +41,13 @@ public class PersonResponseBody{
         JsonObject response = new JsonObject();
         if(this.wasSuccessfull()){
             response.addProperty("descendant", this.descendant);
-            response.addProperty("personID", this.personID);
+            response.addProperty("id", this.personID);
             response.addProperty("firstName", this.firstName);
             response.addProperty("lastname", this.lastname);
             response.addProperty("gender", this.gender);
-            response.addProperty("father", this.father);
-            response.addProperty("mother", this.mother);
-            response.addProperty("spouse", this.spouse);
+            response.addProperty("fatherId", this.father);
+            response.addProperty("motherId", this.mother);
+            response.addProperty("spouseId", this.spouse);
         }
         else{
             response.addProperty("message",this.message);

@@ -28,7 +28,7 @@ public class Person{
 
     /** referrs to spouse tuple of this person */
     private String spouseId;
-    
+    //{"descendant":"aa","personID":"HueyMurchison","firstName":"Huey","lastname":"Murchison","gender":"M","spouse":"LonnaWilhite"}
     public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         this.id = id;
         this.descendant = descendant;
