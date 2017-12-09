@@ -28,7 +28,10 @@ public class DataTree {
     public static void initialize(ArrayList<Event> events){
         branches = new HashMap<String, DataBranch>();
         for(Event event : events){
-            branches.put(event.getPersonId(), new DataBranch(event));
+            if(!branches.containsKey(event.getPersonId())){
+                branches.put(event.getPersonId(), new DataBranch(event.getPersonId()));
+            }
+            branches.get(event.getPersonId()).addEvent(event);
         }
     }
 
