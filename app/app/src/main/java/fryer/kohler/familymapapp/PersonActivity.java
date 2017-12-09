@@ -44,13 +44,11 @@ public class PersonActivity extends AppCompatActivity {
         String personId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         personData = TemporaryPersonData.getInstance();
-        detailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row);
+        detailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row_events);
         detailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailsRowAdapter = new DetailsRowAdapter(this);
         loadPerson(personId);
-        //detailsRowAdapter.setRowContent();
-        //detailsRowRecyclerView.setAdapter(detailsRowAdapter);
-        //Log.d("debug", personId);
+
         this.loadPerson(personId);
     }
 
@@ -64,7 +62,6 @@ public class PersonActivity extends AppCompatActivity {
 
             detailsRowAdapter.setRowContent(personEvents, onClickCallBack);
             detailsRowRecyclerView.setAdapter(detailsRowAdapter);
-            //Log.d("debug", person.getGender());
 
         };
 

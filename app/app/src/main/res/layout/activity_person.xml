@@ -4,28 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fryer.kohler.familymapapp.PersonActivity">
+    >
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <EditText
+            android:id="@+id/first_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="First Name:" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/details_row"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </android.support.v7.widget.RecyclerView>
+        <EditText
+            android:id="@+id/last_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="Last Name:"
+            tools:text="Last Name:" />
+
+        <EditText
+            android:id="@+id/gender_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="Gender:"
+            tools:text="Gender:" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LIFE EVENTS"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/details_row_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FAMILY"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/details_row_family"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>
