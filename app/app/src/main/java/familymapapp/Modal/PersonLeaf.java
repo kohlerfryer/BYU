@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class PersonLeaf implements DataLeaf{
 
     private Person person;
+    private final String META_TYPE = "type";
 
     public PersonLeaf(Person person){
         this.person = person;
@@ -22,6 +23,7 @@ public class PersonLeaf implements DataLeaf{
         Person father = null;
         if(person.getFatherId() != null){
             father = DataTree.getInstance().getPerson(person.getFatherId());
+            //father.metaData.put(META_TYPE, "Father");
         }
         return father;
     }
@@ -30,14 +32,16 @@ public class PersonLeaf implements DataLeaf{
         Person mother = null;
         if(person.getMotherId() != null){
             mother = DataTree.getInstance().getPerson(person.getMotherId());
+            //mother.metaData.put(META_TYPE, "Mother");
         }
         return mother;
     }
 
     public Person getSpouse(){
         Person spouse = null;
-        if(person.getMotherId() != null){
+        if(person.getSpouseId() != null){
             spouse = DataTree.getInstance().getPerson(person.getSpouseId());
+            //spouse.metaData.put(META_TYPE, "Spouse");
         }
         return spouse;
     }

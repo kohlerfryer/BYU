@@ -67,19 +67,24 @@ public class DataTree {
     public ArrayList<Person> getFamily(String personId, String... filters) {
         ArrayList<Person> combinedPersons = new ArrayList<Person>();
         if(branches.get(personId) != null){
-            combinedPersons.add(getPersonsFather(personId));
-            combinedPersons.add(getPersonsMother(personId));
-            combinedPersons.add(getPersonsSpouse(personId));
-            combinedPersons.addAll(getPersonsChildren(personId));
+            if(getPersonsFather(personId) != null){
+                combinedPersons.add(getPersonsFather(personId));
+            }
+            if(getPersonsMother(personId) != null){
+                combinedPersons.add(getPersonsMother(personId));
+            }
+            if(getPersonsSpouse(personId) != null){
+                combinedPersons.add(getPersonsSpouse(personId));
+            }
+            if(getPersonsChildren(personId) != null){
+                combinedPersons.addAll(getPersonsChildren(personId));
+            }
         }
         return combinedPersons;
     }
 
     private Person getPersonsFather(String personId) {
-        //Person father;
-        //if(branches.get(personId) != null){
-            return branches.get(personId).getPersonLeaf().getFather();
-        //}
+        return branches.get(personId).getPersonLeaf().getFather();
     }
 
     private Person getPersonsMother(String personId) {
@@ -97,11 +102,10 @@ public class DataTree {
             String potentialChildFatherId = branch.getPerson().getFatherId();
             String potentialChildMotherId = branch.getPerson().getMotherId();
             String potentialChildId = branch.getPerson().getId();
-            if(parentId.equals(potentialChildFatherId)){
-                children.add(getPerson(potentialChildId));
-            }
-            else if(parentId.equals(potentialChildMotherId)){
-                children.add(getPerson(potentialChildId));
+            if(parentId.equals(potentialChildFatherId) || parentId.equals(potentialChildMotherId)){
+                Person child = getPerson(potentialChildId);
+                //child.metaData.put("type", "child");
+                children.add(child);
             }
         }
         Log.d("debug", children.size() + " ***************************************************");

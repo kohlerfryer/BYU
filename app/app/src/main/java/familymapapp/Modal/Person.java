@@ -1,5 +1,7 @@
 package familymapapp.Modal;
 
+import java.util.HashMap;
+
 /**
 * represents a single Person tuple
 */
@@ -28,6 +30,10 @@ public class Person implements DetailsRowDataObject{
 
     /** referrs to spouse tuple of this person */
     private String spouseId;
+
+    /** extra info about person for handling state */
+    public HashMap<String, String> metaData;
+
     public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         this.id = id;
         this.descendant = descendant;
@@ -37,6 +43,7 @@ public class Person implements DetailsRowDataObject{
         this.fatherId = fatherId;
         this.motherId = motherId;
         this.spouseId = spouseId;
+        metaData = new HashMap<String, String>();
     }
 
     public Person(String id, String descendant, String firstName, String lastName, String gender){
@@ -54,7 +61,8 @@ public class Person implements DetailsRowDataObject{
 
     @Override
     public String getSecondRow() {
-        return "****";
+        return "******";
+                //metaData.get("type");
     }
 
     @Override

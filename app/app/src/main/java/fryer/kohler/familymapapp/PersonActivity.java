@@ -31,6 +31,8 @@ import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Quadruplet;
 import familymapapp.UTIL.Util;
 
+import static fryer.kohler.familymapapp.MainActivity.EXTRA_MESSAGE;
+
 public class PersonActivity extends AppCompatActivity {
 
     Person person;
@@ -48,7 +50,7 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
         Intent intent = getIntent();
-        String personId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String personId = intent.getStringExtra(EXTRA_MESSAGE);
 
         firstNameTextView = (TextView) findViewById(R.id.first_name_text);
         lastNameTextView = (TextView) findViewById(R.id.last_name_text);
@@ -82,10 +84,10 @@ public class PersonActivity extends AppCompatActivity {
                     dataTree.getFamily(person.getId(), DataTree.activeEventTypes)
             );
 
-            eventDetailsRowAdapter.setRowContent(personEvents, onClickCallBack);
+            eventDetailsRowAdapter.setRowContent(personEvents, eventOnClickCallBack);
             eventDetailsRowRecyclerView.setAdapter(eventDetailsRowAdapter);
 
-            personDetailsRowAdapter.setRowContent(family, onClickCallBack);
+            personDetailsRowAdapter.setRowContent(family, personOnClickCallBack);
             personDetailsRowRecyclerView.setAdapter(personDetailsRowAdapter);
 
         };
@@ -96,10 +98,17 @@ public class PersonActivity extends AppCompatActivity {
         PersonService.get(personId, success, failure);
     }
 
-    private Consumer<String> onClickCallBack = (id) -> {
-        Log.d("debug", "YYYYYEESIRRRR" + id);
+    private Consumer<String> personOnClickCallBack = (personId) -> {
+        //Log.d("debug", "YYYYYEESIRRRR" + id);
+        Intent intent = new Intent(this, PersonActivity.class);
+        Log.d("debug", personId);
+        intent.putExtra(EXTRA_MESSAGE, personId);
+        startActivity(intent);
     };
 
+    private Consumer<String> eventOnClickCallBack = (eventIid) -> {
+        //Log.d("debug", "YYYYYEESIRRRR" + id);
+    };
 
 
 }

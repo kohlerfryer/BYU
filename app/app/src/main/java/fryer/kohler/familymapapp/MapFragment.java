@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     TextView eventTitleTextView;
     TextView eventBodyTextView;
+    Button filterButton;
     ImageView genderImage;
     LinearLayout eventDetailsLayout;
     Event eventInScope;
@@ -56,6 +58,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         eventBodyTextView = (TextView) view.findViewById(R.id.event_body_text);
         genderImage = (ImageView) view.findViewById(R.id.gender_image);
         eventDetailsLayout = (LinearLayout) view.findViewById(R.id.event_details_box);
+        filterButton = (Button) view.findViewById(R.id.filter_button);
 
         eventDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +68,14 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                     MapFragmentHandler mapFragmentHandler = (MapFragmentHandler) getActivity();
                     mapFragmentHandler.handleEventDetailsClick(eventInScope);
                 }
+            }
+        });
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapFragmentHandler mapFragmentHandler = (MapFragmentHandler) getActivity();
+                mapFragmentHandler.handleFilterClick();
             }
         });
 
@@ -116,6 +127,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     public interface MapFragmentHandler{
         public void handleEventDetailsClick(Event event);
+        public void handleFilterClick();
     }
 
 }
