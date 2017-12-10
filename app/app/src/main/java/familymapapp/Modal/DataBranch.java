@@ -10,6 +10,8 @@ import java.util.function.Consumer;
 import familymapapp.Service.PersonService;
 import familymapapp.UTIL.Util;
 
+import static familymapapp.Modal.DataTree.types;
+
 /**
  * Created by kittykatt on 12/9/17.
  */
@@ -73,5 +75,18 @@ public class DataBranch{
             //Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
         PersonService.get(personId, success, failure);
+    }
+
+    public Event getEarliestEvent(){
+        Event earliestEvent = null;
+        for (HashMap.Entry<String, EventLeaf> i : eventLeafs.entrySet()) {
+            Event iteratedEvent = i.getValue().getLeaf();
+            int iteratedEventYear = Integer.valueOf(iteratedEvent.getYear());
+            int earliestEventYear = Integer.valueOf(getEarliestEvent().getYear());
+            if(earliestEvent == null || iteratedEventYear < earliestEventYear){
+                earliestEvent = iteratedEvent;
+            }
+        }
+        return earliestEvent;
     }
 }

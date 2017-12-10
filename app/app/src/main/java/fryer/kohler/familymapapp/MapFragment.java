@@ -19,9 +19,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
+import familymapapp.Modal.Settings;
 import familymapapp.Modal.TemporaryPersonData;
 
 
@@ -38,6 +42,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     TextView eventTitleTextView;
     TextView eventBodyTextView;
     Button filterButton;
+    Button settingsButton;
     ImageView genderImage;
     LinearLayout eventDetailsLayout;
     Event eventInScope;
@@ -54,6 +59,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         genderImage = (ImageView) view.findViewById(R.id.gender_image);
         eventDetailsLayout = (LinearLayout) view.findViewById(R.id.event_details_box);
         filterButton = (Button) view.findViewById(R.id.filter_button);
+        settingsButton = (Button) view.findViewById(R.id.settings_button);
 
         eventDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +80,21 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             }
         });
 
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapFragmentHandler mapFragmentHandler = (MapFragmentHandler) getActivity();
+                mapFragmentHandler.handleSettingsClick();
+            }
+        });
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         return view;
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
-        // Retrieve the data from the marker.
         Event event = (Event) marker.getTag();
         this.eventInScope = event;
         eventTitleTextView.setText(event.getPersonId());
@@ -106,7 +117,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     }
 
     public void setUpMap(){
-
         googleMap.setOnMarkerClickListener(this);
         DataTree dataTree = DataTree.getInstance();
         for(Event event : dataTree.getFilteredEvents()){
@@ -123,9 +133,26 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         }
     }
 
+    public void drawLines(Event event){
+        //get array list of polys for spouse
+        ArrayList<LatLng> coordinates = DataTree.getInstance().getPersonsSpouseEarliestEvent(event.getPersonId());
+        for(LatLng coordinate : coordinates){
+            drawLine( , ,Settings.getInstance().getSelectedSpouseLineColor());
+        }
+        drawLine( , ,Settings.getInstance().getSelectedSpouseLineColor());
+        //get array list of polys for family tree
+        //get array list of polys for life events
+    }
+
+    void drawLine(LatLng point1, LatLng point2, int color) {
+        PolylineOptions options = new PolylineOptions();
+        options.add(point1, point2).color(color).width(WIDTH);
+    }
+
     public interface MapFragmentHandler{
         public void handleEventDetailsClick(Event event);
         public void handleFilterClick();
+        public void handleSettingsClick();
     }
 
 }

@@ -3,6 +3,8 @@ package familymapapp.Modal;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -153,11 +155,21 @@ public class DataTree {
                 children.add(child);
             }
         }
-        Log.d("debug", children.size() + " ***************************************************");
         return children;
     }
 
-
+    public ArrayList<LatLng> getPersonsSpouseEarliestEvent(String personId){
+        ArrayList<LatLng> coordinates = new ArrayList<LatLng>();
+        Person person = getPersonsSpouse(personId);
+        if(person != null){
+            Event event = branches.get(person.getId()).getEarliestEvent();
+            Long latitude = Long.valueOf(event.getLatitude());
+            Long longitude = Long.valueOf(event.getLongitude());
+            LatLng coordinate = new LatLng(latitude,longitude);
+            coordinates.add(coordinate);
+        }
+        return coordinates;
+    }
 
 
 }

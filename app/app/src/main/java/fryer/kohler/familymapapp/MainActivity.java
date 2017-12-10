@@ -103,6 +103,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         fragmentTransaction.commit();
     }
 
+    public void handleSettingsClick(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
     public void handleFilterClick(){
         Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
