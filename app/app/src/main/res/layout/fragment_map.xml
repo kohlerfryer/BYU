@@ -21,6 +21,15 @@
             android:layout_gravity="right"
             android:text="F" />
 
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="S" />
+
+
+
     </android.support.v7.widget.Toolbar>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"

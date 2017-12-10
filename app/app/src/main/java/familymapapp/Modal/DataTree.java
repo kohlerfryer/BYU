@@ -56,7 +56,7 @@ public class DataTree {
     }
 
     public ArrayList<Event> getFilteredPersonEvents(String person) {
-        return branches.get(person).getFilteredEvents();
+        return branches.get(person).getFilteredEvents(getAllTypes());
     }
 
     public Person getPerson(String personId) {
@@ -88,6 +88,14 @@ public class DataTree {
         return types;
     }
 
+    public String[] getAllTypes(){
+        String[] types = new String[activeEventTypes.size()];
+        int index = 0;
+        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
+            types[index++] = entry.getKey();
+        }
+        return types;
+    }
 
     public String getActiveEventTypeKey(int index){
         int counter = 0;

@@ -39,17 +39,14 @@ public class DataBranch{
     public ArrayList<Event> getFilteredEvents(String ... types){
         ArrayList<Event> combinedEvents = new ArrayList<Event>();
         for(String type : types){
-            //Log.d("debug", "filter size" + eventLeafs.size());
+            Log.d("debug", "type: " + type);
             if(eventLeafs.get(type) != null){
                 combinedEvents.add(eventLeafs.get(type).getLeaf());
             }
-
-
         }
-
-        //Log.d("debug", "size" +  String.valueOf(combinedEvents.size()));
         return combinedEvents;
     }
+
 
 //    public Person getFilteredPerson(String ... strings){
 //

@@ -99,7 +99,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     @Override
     public void onResume(){
         super.onResume();
-
         if(googleMap != null){
             googleMap.clear();
             setUpMap();
