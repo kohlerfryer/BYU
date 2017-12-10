@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by kittykatt on 12/9/17.
@@ -15,7 +16,9 @@ public class DataTree {
     private static HashMap<String, DataBranch> branches;
     private static DataTree tree = null;
     //public for two-way data binding
-    public static String[] activeEventTypes = {"death", "birth", "marriage", "baptism"};
+    public static String[] types = {"death", "birth", "marriage", "baptism"};
+    //"death": 0
+    private static LinkedHashMap<String, Integer> activeEventTypes;
 
     protected DataTree() {
         // Exists only to defeat instantiation.
@@ -30,38 +33,72 @@ public class DataTree {
 
     public static void initialize(ArrayList<Event> events) {
         branches = new HashMap<String, DataBranch>();
+        activeEventTypes = new LinkedHashMap<>();
         for (Event event : events) {
-            //Log.d("debug", "events");
+            activeEventTypes.put(event.getEventType(), 1);
             if (!branches.containsKey(event.getPersonId())) {
-                //Log.d("debug", "does not contain key");
                 branches.put(event.getPersonId(), new DataBranch(event.getPersonId()));
             }
             branches.get(event.getPersonId()).addEvent(event);
         }
     }
 
-    //    public ArrayList<Event> getPersonEvents(String personId){
-//
-//    }
-//
-    public ArrayList<Event> getFilteredEvents(String... filters) {
+    public ArrayList<Event> getFilteredEvents() {
         ArrayList<Event> combinedEvents = new ArrayList<Event>();
         for (HashMap.Entry<String, DataBranch> entry : this.branches.entrySet()) {
             //Integer key = entry.getKey();
             DataBranch branch = entry.getValue();
             //change this below
-            ArrayList<Event> personEvents = branch.getFilteredEvents(filters);
+            ArrayList<Event> personEvents = branch.getFilteredEvents(getActiveTypes());
             combinedEvents.addAll(personEvents);
         }
         return combinedEvents;
     }
 
-    public ArrayList<Event> getFilteredPersonEvents(String person, String... filters) {
-        return branches.get(person).getFilteredEvents(filters);
+    public ArrayList<Event> getFilteredPersonEvents(String person) {
+        return branches.get(person).getFilteredEvents();
     }
 
     public Person getPerson(String personId) {
         return branches.get(personId).getPerson();
+    }
+
+    public int getActiveEventTypeSize(){
+        return activeEventTypes.size();
+    }
+
+    public void setActiveEventType(String type, Integer i){
+        activeEventTypes.put(type, i);
+    }
+
+    public int getActiveEventType(String index){
+        return activeEventTypes.get(index);
+    }
+
+    public String[] getActiveTypes(){
+        String[] types = new String[activeEventTypes.size()];
+        int index = 0;
+        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
+            String key = entry.getKey();
+            Integer active = entry.getValue();
+            if(active == 1){
+                types[index++] = key;
+            }
+        }
+        return types;
+    }
+
+
+    public String getActiveEventTypeKey(int index){
+        int counter = 0;
+        String key = "";
+        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
+            if(counter == index){
+                key = entry.getKey();
+            }
+            counter++;
+        }
+        return key;
     }
 
     public ArrayList<Person> getFamily(String personId, String... filters) {
@@ -112,17 +149,8 @@ public class DataTree {
         return children;
     }
 
-    //Public ArrayList<Person> getFathersAncestors(String personId){
 
-    //}
-//
-//    public Person getPersonsMother(String personId){
-//
-//    }
-//
-//    public ArrayList<Person> getPersonsChildren(String personId){
-//
-//    }
+
 
 }
 

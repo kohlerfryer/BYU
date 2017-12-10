@@ -77,11 +77,11 @@ public class PersonActivity extends AppCompatActivity {
             genderTextView.setText(person.getGender());
 
             ArrayList<DetailsRowDataObject> personEvents = Util.castArrayList(
-                    dataTree.getFilteredPersonEvents(person.getId(), DataTree.activeEventTypes)
+                    dataTree.getFilteredPersonEvents(person.getId())
             );
 
             ArrayList<DetailsRowDataObject> family = Util.castArrayList(
-                    dataTree.getFamily(person.getId(), DataTree.activeEventTypes)
+                    dataTree.getFamily(person.getId())
             );
 
             eventDetailsRowAdapter.setRowContent(personEvents, eventOnClickCallBack);

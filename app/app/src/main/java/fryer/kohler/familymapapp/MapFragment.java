@@ -41,12 +41,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     ImageView genderImage;
     LinearLayout eventDetailsLayout;
     Event eventInScope;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -86,11 +81,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public boolean onMarkerClick(final Marker marker) {
 
         // Retrieve the data from the marker.
@@ -98,19 +88,29 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         this.eventInScope = event;
         eventTitleTextView.setText(event.getPersonId());
         eventBodyTextView.setText(event.getEventType() + ":" + event.getCity() + "," + event.getCountry() + "(" + event.getYear() + ")");
-
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
         return false;
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney, Australia,
-        // and move the map's camera to the same location.
+        this.googleMap = googleMap;
+        setUpMap();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if(googleMap != null){
+            googleMap.clear();
+            setUpMap();
+        }
+    }
+
+    public void setUpMap(){
+
         googleMap.setOnMarkerClickListener(this);
         DataTree dataTree = DataTree.getInstance();
-        for(Event event : dataTree.getFilteredEvents(dataTree.activeEventTypes)){
+        for(Event event : dataTree.getFilteredEvents()){
             Double longitude = Double.parseDouble(event.getLongitude());
             Double lattitude = Double.parseDouble(event.getLatitude());
             LatLng lattitudeLongitude = new LatLng(lattitude, longitude);
@@ -122,7 +122,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             marker.setTag(event);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(lattitudeLongitude));
         }
-
     }
 
     public interface MapFragmentHandler{
