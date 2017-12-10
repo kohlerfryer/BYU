@@ -17,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.function.Consumer;
 
+import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.TemporaryPersonData;
 import familymapapp.Response.EventsResponse;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
             Log.d("debug", data);
             EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
             //Log.d("debug1", response.getEvents().length);
-            TemporaryPersonData.getInstance().setEvents(response.getEvents());
+            DataTree.getInstance().initialize(response.getEvents());
             switchFragment(new MapFragment());
         };
 

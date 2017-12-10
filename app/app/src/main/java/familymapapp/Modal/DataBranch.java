@@ -26,8 +26,10 @@ public class DataBranch{
         this.loadPerson(personId);
     }
 
-    public addEvent(Event event){
+    public void addEvent(Event event){
+        //Log.d("debug", "adding event");
         this.eventLeafs.put(event.getEventType().toLowerCase(), new EventLeaf(event));
+        //Log.d("debug", this.eventLeafs.get(event.getEventType().toLowerCase()).getLeaf().getCity());
     }
 
 //    public setPerson(Person person) {
@@ -35,24 +37,43 @@ public class DataBranch{
 //    }
 
     public ArrayList<Event> getFilteredEvents(String ... types){
+        ArrayList<Event> combinedEvents = new ArrayList<Event>();
+        for(String type : types){
+            //Log.d("debug", "filter size" + eventLeafs.size());
+            if(eventLeafs.get(type) != null){
+                combinedEvents.add(eventLeafs.get(type).getLeaf());
+            }
 
+
+        }
+
+        //Log.d("debug", "size" +  String.valueOf(combinedEvents.size()));
+        return combinedEvents;
     }
 
-    public Person getFilteredPerson(String ... strings){
+//    public Person getFilteredPerson(String ... strings){
+//
+//    }
 
+    public PersonLeaf getPersonLeaf(){
+        return this.personLeaf;
+    }
+
+    public Person getPerson(){
+        return this.personLeaf.getLeaf();
     }
 
 
     private void loadPerson(String personId){
         Consumer<String> success = (data) -> {
-            Log.d("debug", data);
+            //Log.d("debug", data);
             Person person = (Person) Util.convertJsonStringToObject(data, Person.class);
             this.personLeaf = new PersonLeaf(person);
 
         };
 
         Consumer<String> failure = (data) -> {
-            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
+            //Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
         PersonService.get(personId, success, failure);
     }

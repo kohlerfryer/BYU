@@ -9,6 +9,11 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import familymapapp.Modal.DetailsRowDataObject;
+import familymapapp.Modal.Event;
 
 /**
  * Created by programmer on 11/29/17.
@@ -51,6 +56,14 @@ public class Util {
         Gson gson = new Gson();
         String jsonString = gson.toJson(object);
         return jsonString;
+    }
+
+    public static <newType, oldType> ArrayList<newType> castArrayList(ArrayList<oldType> list){
+        ArrayList<newType> newlyCastedArrayList = new ArrayList<newType>();
+        for(oldType listObject : list){
+            newlyCastedArrayList.add((newType)listObject);
+        }
+        return newlyCastedArrayList;
     }
 
 

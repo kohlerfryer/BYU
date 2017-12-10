@@ -3,7 +3,7 @@ package familymapapp.Modal;
 /**
 * represents a single Person tuple
 */
-public class Person{
+public class Person implements DetailsRowDataObject{
 
     /** tuples unique identifier in relation */
     private String id;
@@ -28,7 +28,6 @@ public class Person{
 
     /** referrs to spouse tuple of this person */
     private String spouseId;
-    //{"descendant":"aa","personID":"HueyMurchison","firstName":"Huey","lastname":"Murchison","gender":"M","spouse":"LonnaWilhite"}
     public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         this.id = id;
         this.descendant = descendant;
@@ -47,7 +46,22 @@ public class Person{
         this.lastName = lastName;
         this.gender = gender;
     }
-       
+
+    @Override
+    public String getFirstRow() {
+        return getFirstName() + " " + getLastName();
+    }
+
+    @Override
+    public String getSecondRow() {
+        return "****";
+    }
+
+    @Override
+    public int getIcon() {
+        return android.support.v4.R.drawable.notification_icon_background;
+    }
+
     public String getId(){
         return this.id;
     }

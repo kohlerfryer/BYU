@@ -12,12 +12,14 @@ import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import familymapapp.Modal.DataTree;
 import familymapapp.Modal.DetailsRowDataObject;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.Person;
@@ -32,9 +34,14 @@ import familymapapp.UTIL.Util;
 public class PersonActivity extends AppCompatActivity {
 
     Person person;
-    RecyclerView detailsRowRecyclerView;
-    DetailsRowAdapter detailsRowAdapter;
-    TemporaryPersonData personData;
+    RecyclerView eventDetailsRowRecyclerView;
+    RecyclerView personDetailsRowRecyclerView;
+    DetailsRowAdapter eventDetailsRowAdapter;
+    DetailsRowAdapter personDetailsRowAdapter;
+    DataTree dataTree;
+    TextView firstNameTextView;
+    TextView lastNameTextView;
+    TextView genderTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,25 +50,43 @@ public class PersonActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String personId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        personData = TemporaryPersonData.getInstance();
-        detailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row_events);
-        detailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        detailsRowAdapter = new DetailsRowAdapter(this);
-        loadPerson(personId);
+        firstNameTextView = (TextView) findViewById(R.id.first_name_text);
+        lastNameTextView = (TextView) findViewById(R.id.last_name_text);
+        genderTextView = (TextView) findViewById(R.id.gender_text);
+
+        dataTree = DataTree.getInstance();
+
+        eventDetailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row_events);
+        eventDetailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        personDetailsRowRecyclerView = (RecyclerView) findViewById(R.id.details_row_family);
+        personDetailsRowRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        eventDetailsRowAdapter = new DetailsRowAdapter(this);
+        personDetailsRowAdapter = new DetailsRowAdapter(this);
 
         this.loadPerson(personId);
     }
 
-    public void loadPerson(String personId){
+    private void loadPerson(String personId){
         Consumer<String> success = (data) -> {
-            Log.d("debug", data);
             person = (Person) Util.convertJsonStringToObject(data, Person.class);
+            firstNameTextView.setText(person.getFirstName());
+            lastNameTextView.setText(person.getLastName());
+            genderTextView.setText(person.getGender());
 
-            Log.d("debug", "person id" + person.getId());
-            ArrayList<DetailsRowDataObject> personEvents = personData.getPersonEventDetailsRowObjects(person.getId());
+            ArrayList<DetailsRowDataObject> personEvents = Util.castArrayList(
+                    dataTree.getFilteredPersonEvents(person.getId(), DataTree.activeEventTypes)
+            );
 
-            detailsRowAdapter.setRowContent(personEvents, onClickCallBack);
-            detailsRowRecyclerView.setAdapter(detailsRowAdapter);
+            ArrayList<DetailsRowDataObject> family = Util.castArrayList(
+                    dataTree.getFamily(person.getId(), DataTree.activeEventTypes)
+            );
+
+            eventDetailsRowAdapter.setRowContent(personEvents, onClickCallBack);
+            eventDetailsRowRecyclerView.setAdapter(eventDetailsRowAdapter);
+
+            personDetailsRowAdapter.setRowContent(family, onClickCallBack);
+            personDetailsRowRecyclerView.setAdapter(personDetailsRowAdapter);
 
         };
 
@@ -75,31 +100,6 @@ public class PersonActivity extends AppCompatActivity {
         Log.d("debug", "YYYYYEESIRRRR" + id);
     };
 
-//    public void getPersonEvents(String personId){
-//
-//        Consumer<String> success = (data) -> {
-//            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
-//            Event[] events = response.getEvents();
-//
-//            detailsRowAdapter.setRowContent();
-//            detailsRowRecyclerView.setAdapter(detailsRowAdapter);
-//        };
-//
-//        Consumer<String> failure = (data) -> {
-//            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
-//        };
-//
-//        EventsService.get(success, failure);
-//    }
 
-
-//    public static ArrayList<Quadruplet<String, String, Integer, Runnable>> convertEventsToQuadruplets (ArrayList<Event> events){
-//        ArrayList<Quadruplet<String, String, Integer, Runnable>> quadruplets = new ArrayList<Quadruplet<String, String, Integer, Runnable>>();
-//        for(Event event: events) {
-//
-//            quadruplets.add(new Quadruplet<String, String, Integer, Runnable>(event.getEventType(), event.getCity(), R.drawable.common_google_signin_btn_text_dark_focused, onClickCallBack));
-//        }
-//        return quadruplets;
-//    }
 
 }

@@ -9,7 +9,7 @@ public class PersonResponseBody{
     private String descendant;
     private String personID;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String gender;
     private String father;
     private String mother;
@@ -17,11 +17,11 @@ public class PersonResponseBody{
     private String message;
     private Gson gson;
 
-    PersonResponseBody(String descendant, String personID, String firstName, String lastname, String gender, String father, String mother, String spouse){
+    PersonResponseBody(String descendant, String personID, String firstName, String lastName, String gender, String father, String mother, String spouse){
         this.descendant = descendant;
         this.personID = personID;
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.gender = gender;
         this.father = father;
         this.mother = mother;
@@ -43,7 +43,7 @@ public class PersonResponseBody{
             response.addProperty("descendant", this.descendant);
             response.addProperty("id", this.personID);
             response.addProperty("firstName", this.firstName);
-            response.addProperty("lastname", this.lastname);
+            response.addProperty("lastName", this.lastName);
             response.addProperty("gender", this.gender);
             response.addProperty("fatherId", this.father);
             response.addProperty("motherId", this.mother);

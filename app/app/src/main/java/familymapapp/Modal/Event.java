@@ -60,7 +60,7 @@ import fryer.kohler.familymapapp.R;
 
     @Override
     public int getIcon() {
-        return R.drawable.common_google_signin_btn_icon_dark_normal;
+         return R.drawable.common_google_signin_btn_icon_dark_normal;
     }
 
     public String getId(){

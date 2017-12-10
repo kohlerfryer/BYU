@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.TemporaryPersonData;
 
@@ -97,8 +98,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         googleMap.setOnMarkerClickListener(this);
-        TemporaryPersonData personData = TemporaryPersonData.getInstance();
-        for(Event event : personData.getEvents()){
+        DataTree dataTree = DataTree.getInstance();
+        for(Event event : dataTree.getFilteredEvents(dataTree.activeEventTypes)){
             Double longitude = Double.parseDouble(event.getLongitude());
             Double lattitude = Double.parseDouble(event.getLatitude());
             LatLng lattitudeLongitude = new LatLng(lattitude, longitude);

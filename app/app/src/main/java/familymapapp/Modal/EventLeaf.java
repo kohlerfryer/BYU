@@ -15,10 +15,12 @@ public class EventLeaf implements DataLeaf{
     }
 
     public Event getLeaf(){
+
         return this.event;
     }
+
     //searches all of event fields for certain value
-    public boolean containsValue(String constraint){
-        //if(event.getCity.contains(constraint)) return true;
-    }
+//    public boolean containsValue(String constraint){
+//        //if(event.getCity.contains(constraint)) return true;
+//    }
 }

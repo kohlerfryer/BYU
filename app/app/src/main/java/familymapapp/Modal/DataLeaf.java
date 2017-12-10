@@ -5,6 +5,6 @@ package familymapapp.Modal;
  */
 
 public interface DataLeaf{
-    public boolean containsValue(String constraint);
+//    public boolean containsValue(String constraint);
     public Object getLeaf();
 }
