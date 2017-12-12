@@ -1,5 +1,7 @@
 package familymapapp.Modal;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import fryer.kohler.familymapapp.DetailsRowViewHolder;
 import fryer.kohler.familymapapp.R;
 
@@ -89,6 +91,11 @@ import fryer.kohler.familymapapp.R;
      }
      public String getDescendant(){
 	 return this.descendant;
+     }
+     public LatLng convertCoordinatesToLtLng(){
+         Double latitude = Double.valueOf(getLatitude());
+         Double longitude = Double.valueOf(getLongitude());
+         return new LatLng(latitude,longitude);
      }
 
 

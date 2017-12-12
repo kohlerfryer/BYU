@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 
 public class DataTree {
     //person_id -> databranch
-    private static HashMap<String, DataBranch> branches;
+    public static HashMap<String, DataBranch> branches;
     private static DataTree tree = null;
     //public for two-way data binding
     public static String[] types = {"death", "birth", "marriage", "baptism"};
@@ -158,19 +158,23 @@ public class DataTree {
         return children;
     }
 
-    public ArrayList<LatLng> getPersonsSpouseEarliestEvent(String personId){
-        ArrayList<LatLng> coordinates = new ArrayList<LatLng>();
-        Person person = getPersonsSpouse(personId);
+    public Event getPersonsEarliestEvent(String personId){
+        Person person = getPerson(personId);
+        Event event = null;
         if(person != null){
-            Event event = branches.get(person.getId()).getEarliestEvent();
-            Long latitude = Long.valueOf(event.getLatitude());
-            Long longitude = Long.valueOf(event.getLongitude());
-            LatLng coordinate = new LatLng(latitude,longitude);
-            coordinates.add(coordinate);
+            event = branches.get(person.getId()).getEarliestEvent();
         }
-        return coordinates;
+        return event;
     }
 
+//    public Event getPersonsSpouseEarliestEvent(String personId){
+//        ArrayList<LatLng> coordinates = new ArrayList<LatLng>();
+//        Person person = getPersonsSpouse(personId);
+//        if(person != null && person.getSpouseId() != null){
+//            coordinates.addAll(getPersonsEarliestEvent(person.getSpouseId()));
+//        }
+//        return coordinates;
+//    }
 
 }
 

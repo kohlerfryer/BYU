@@ -1,5 +1,6 @@
 package fryer.kohler.familymapapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,12 +20,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
+import familymapapp.Modal.PolylineDrawer;
 import familymapapp.Modal.Settings;
 import familymapapp.Modal.TemporaryPersonData;
 
@@ -47,6 +50,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     LinearLayout eventDetailsLayout;
     Event eventInScope;
     GoogleMap googleMap;
+    PolylineDrawer polylineDrawer;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -99,6 +104,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         this.eventInScope = event;
         eventTitleTextView.setText(event.getPersonId());
         eventBodyTextView.setText(event.getEventType() + ":" + event.getCity() + "," + event.getCountry() + "(" + event.getYear() + ")");
+        polylineDrawer.drawLines(event);
         return false;
     }
     @Override
@@ -117,6 +123,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     }
 
     public void setUpMap(){
+        polylineDrawer = new PolylineDrawer(googleMap);
         googleMap.setOnMarkerClickListener(this);
         DataTree dataTree = DataTree.getInstance();
         for(Event event : dataTree.getFilteredEvents()){
@@ -133,21 +140,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         }
     }
 
-    public void drawLines(Event event){
-        //get array list of polys for spouse
-        ArrayList<LatLng> coordinates = DataTree.getInstance().getPersonsSpouseEarliestEvent(event.getPersonId());
-        for(LatLng coordinate : coordinates){
-            drawLine( , ,Settings.getInstance().getSelectedSpouseLineColor());
-        }
-        drawLine( , ,Settings.getInstance().getSelectedSpouseLineColor());
-        //get array list of polys for family tree
-        //get array list of polys for life events
-    }
-
-    void drawLine(LatLng point1, LatLng point2, int color) {
-        PolylineOptions options = new PolylineOptions();
-        options.add(point1, point2).color(color).width(WIDTH);
-    }
 
     public interface MapFragmentHandler{
         public void handleEventDetailsClick(Event event);

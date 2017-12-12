@@ -82,8 +82,7 @@ public class DataBranch{
         for (HashMap.Entry<String, EventLeaf> i : eventLeafs.entrySet()) {
             Event iteratedEvent = i.getValue().getLeaf();
             int iteratedEventYear = Integer.valueOf(iteratedEvent.getYear());
-            int earliestEventYear = Integer.valueOf(getEarliestEvent().getYear());
-            if(earliestEvent == null || iteratedEventYear < earliestEventYear){
+            if(earliestEvent == null || iteratedEventYear < Integer.valueOf(earliestEvent.getYear())){
                 earliestEvent = iteratedEvent;
             }
         }
