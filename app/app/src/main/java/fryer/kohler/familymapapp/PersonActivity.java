@@ -70,32 +70,25 @@ public class PersonActivity extends AppCompatActivity {
     }
 
     private void loadPerson(String personId){
-        Consumer<String> success = (data) -> {
-            person = (Person) Util.convertJsonStringToObject(data, Person.class);
-            firstNameTextView.setText(person.getFirstName());
-            lastNameTextView.setText(person.getLastName());
-            genderTextView.setText(person.getGender());
+        Person person = dataTree.getPersons().get(personId);
+        firstNameTextView.setText(person.getFirstName());
+        lastNameTextView.setText(person.getLastName());
+        genderTextView.setText(person.getGender());
 
-            ArrayList<DetailsRowDataObject> personEvents = Util.castArrayList(
-                    dataTree.getFilteredPersonEvents(person.getId())
-            );
+        ArrayList<DetailsRowDataObject> personEvents = Util.castArrayList(
+                person.getEvents()
+        );
 
-            ArrayList<DetailsRowDataObject> family = Util.castArrayList(
-                    dataTree.getFamily(person.getId())
-            );
+        ArrayList<DetailsRowDataObject> family = Util.castArrayList(
+                person.getFamily()
+        );
 
-            eventDetailsRowAdapter.setRowContent(personEvents, eventOnClickCallBack);
-            eventDetailsRowRecyclerView.setAdapter(eventDetailsRowAdapter);
+        eventDetailsRowAdapter.setRowContent(personEvents, eventOnClickCallBack);
+        eventDetailsRowRecyclerView.setAdapter(eventDetailsRowAdapter);
 
-            personDetailsRowAdapter.setRowContent(family, personOnClickCallBack);
-            personDetailsRowRecyclerView.setAdapter(personDetailsRowAdapter);
+        personDetailsRowAdapter.setRowContent(family, personOnClickCallBack);
+        personDetailsRowRecyclerView.setAdapter(personDetailsRowAdapter);
 
-        };
-
-        Consumer<String> failure = (data) -> {
-            Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
-        };
-        PersonService.get(personId, success, failure);
     }
 
     private Consumer<String> personOnClickCallBack = (personId) -> {

@@ -51,6 +51,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     Event eventInScope;
     GoogleMap googleMap;
     PolylineDrawer polylineDrawer;
+    Event eventInFocus;
 
 
     @Override
@@ -105,6 +106,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         eventTitleTextView.setText(event.getPersonId());
         eventBodyTextView.setText(event.getEventType() + ":" + event.getCity() + "," + event.getCountry() + "(" + event.getYear() + ")");
         polylineDrawer.drawLines(event);
+        eventInFocus = event;
         return false;
     }
     @Override
@@ -119,7 +121,9 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         if(googleMap != null){
             googleMap.clear();
             setUpMap();
+            polylineDrawer.drawLines(eventInFocus);
         }
+
     }
 
     public void setUpMap(){

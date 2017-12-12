@@ -10,82 +10,80 @@ import java.util.function.Consumer;
 import familymapapp.Service.PersonService;
 import familymapapp.UTIL.Util;
 
-import static familymapapp.Modal.DataTree.types;
-
 /**
  * Created by kittykatt on 12/9/17.
  */
 
-public class DataBranch{
-    //person associated with branch
-    PersonLeaf personLeaf;
-    //associated persons events
-    //eventType -> event
-    HashMap<String, EventLeaf> eventLeafs;
-
-    public DataBranch(String personId){
-        this.eventLeafs = new HashMap<String, EventLeaf>();
-        this.loadPerson(personId);
-    }
-
-    public void addEvent(Event event){
-        //Log.d("debug", "adding event");
-        this.eventLeafs.put(event.getEventType().toLowerCase(), new EventLeaf(event));
-        //Log.d("debug", this.eventLeafs.get(event.getEventType().toLowerCase()).getLeaf().getCity());
-    }
-
-//    public setPerson(Person person) {
-//        this.personLeaf = new PersonLeaf(person);
-//    }
-
-    public ArrayList<Event> getFilteredEvents(String ... types){
-        ArrayList<Event> combinedEvents = new ArrayList<Event>();
-        for(String type : types){
-            Log.d("debug", "type: " + type);
-            if(eventLeafs.get(type) != null){
-                combinedEvents.add(eventLeafs.get(type).getLeaf());
-            }
-        }
-        return combinedEvents;
-    }
-
-
-//    public Person getFilteredPerson(String ... strings){
+//public class DataBranch{
+//    //person associated with branch
+//    PersonLeaf personLeaf;
+//    //associated persons events
+//    //eventType -> event
+//    HashMap<String, EventLeaf> eventLeafs;
 //
+//    public DataBranch(String personId){
+//        this.eventLeafs = new HashMap<String, EventLeaf>();
+//        this.loadPerson(personId);
 //    }
-
-    public PersonLeaf getPersonLeaf(){
-        return this.personLeaf;
-    }
-
-    public Person getPerson(){
-        return this.personLeaf.getLeaf();
-    }
-
-
-    private void loadPerson(String personId){
-        Consumer<String> success = (data) -> {
-            //Log.d("debug", data);
-            Person person = (Person) Util.convertJsonStringToObject(data, Person.class);
-            this.personLeaf = new PersonLeaf(person);
-
-        };
-
-        Consumer<String> failure = (data) -> {
-            //Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
-        };
-        PersonService.get(personId, success, failure);
-    }
-
-    public Event getEarliestEvent(){
-        Event earliestEvent = null;
-        for (HashMap.Entry<String, EventLeaf> i : eventLeafs.entrySet()) {
-            Event iteratedEvent = i.getValue().getLeaf();
-            int iteratedEventYear = Integer.valueOf(iteratedEvent.getYear());
-            if(earliestEvent == null || iteratedEventYear < Integer.valueOf(earliestEvent.getYear())){
-                earliestEvent = iteratedEvent;
-            }
-        }
-        return earliestEvent;
-    }
-}
+//
+//    public void addEvent(Event event){
+//        //Log.d("debug", "adding event");
+//        this.eventLeafs.put(event.getEventType().toLowerCase(), new EventLeaf(event));
+//        //Log.d("debug", this.eventLeafs.get(event.getEventType().toLowerCase()).getLeaf().getCity());
+//    }
+//
+////    public setPerson(Person person) {
+////        this.personLeaf = new PersonLeaf(person);
+////    }
+//
+//    public ArrayList<Event> getFilteredEvents(String ... types){
+//        ArrayList<Event> combinedEvents = new ArrayList<Event>();
+//        for(String type : types){
+////            Log.d("debug", "type: " + type);
+//            if(eventLeafs.get(type) != null){
+//                combinedEvents.add(eventLeafs.get(type).getLeaf());
+//            }
+//        }
+//        return combinedEvents;
+//    }
+//
+//
+////    public Person getFilteredPerson(String ... strings){
+////
+////    }
+//
+//    public PersonLeaf getPersonLeaf(){
+//        return this.personLeaf;
+//    }
+//
+//    public Person getPerson(){
+//        return this.personLeaf.getLeaf();
+//    }
+//
+//
+//    private void loadPerson(String personId){
+//        Consumer<String> success = (data) -> {
+//            Log.d("debug", data);
+//            Person person = (Person) Util.convertJsonStringToObject(data, Person.class);
+//            this.personLeaf = new PersonLeaf(person);
+//
+//        };
+//
+//        Consumer<String> failure = (data) -> {
+//            //Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
+//        };
+//        PersonService.get(personId, success, failure);
+//    }
+//
+//    public Event getEarliestEvent(){
+//        Event earliestEvent = null;
+//        for (HashMap.Entry<String, EventLeaf> i : eventLeafs.entrySet()) {
+//            Event iteratedEvent = i.getValue().getLeaf();
+//            int iteratedEventYear = Integer.valueOf(iteratedEvent.getYear());
+//            if(earliestEvent == null || iteratedEventYear < Integer.valueOf(earliestEvent.getYear())){
+//                earliestEvent = iteratedEvent;
+//            }
+//        }
+//        return earliestEvent;
+//    }
+//}

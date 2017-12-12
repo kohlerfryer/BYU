@@ -19,9 +19,13 @@ import java.util.function.Consumer;
 
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
+import familymapapp.Modal.Person;
 import familymapapp.Modal.TemporaryPersonData;
 import familymapapp.Response.EventsResponse;
+import familymapapp.Response.PersonsResponse;
 import familymapapp.Service.EventsService;
+import familymapapp.Service.PersonService;
+import familymapapp.Service.PersonsService;
 import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Util;
 
@@ -78,20 +82,31 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         Settings settings = Settings.getInstance();
         settings.setAuthenticationToken(authenticationToken);
 
-        Consumer<String> success = (data) -> {
-            //todo clean up auth token handling, its gross
-            Log.d("debug", data);
-            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
-            //Log.d("debug1", response.getEvents().length);
-            DataTree.getInstance().initialize(response.getEvents());
-            switchFragment(new MapFragment());
-        };
 
         Consumer<String> failure = (data) -> {
             Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
 
-        EventsService.get(success, failure);
+        Consumer<String> eventSuccess = (data) -> {
+            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
+            DataTree.getInstance().setEvents(response.getEvents());
+            switchFragment(new MapFragment());
+        };
+
+        Consumer<String> personsSuccess = (data) -> {
+            PersonsResponse response = (PersonsResponse) Util.convertJsonStringToObject(data, PersonsResponse.class);
+            DataTree.getInstance().setPersons(response.getPersons());
+            EventsService.get(eventSuccess, failure);
+        };
+
+        Consumer<String> personSuccess = (data) -> {
+            Person person = (Person) Util.convertJsonStringToObject(data, Person.class);
+            DataTree.getInstance().setRootPerson(person);
+            PersonsService.get(personsSuccess, failure);
+        };
+
+        PersonService.get(personId, personSuccess, failure);
+
     }
 
     public void switchFragment(Fragment fragment){
@@ -117,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     @Override
     public void handleEventDetailsClick(Event event) {
         Intent intent = new Intent(this, PersonActivity.class);
-        Log.d("debug", event.getPersonId());
         intent.putExtra(EXTRA_MESSAGE, event.getPersonId());
         startActivity(intent);
     }

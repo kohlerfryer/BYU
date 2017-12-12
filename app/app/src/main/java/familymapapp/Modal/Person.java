@@ -1,6 +1,12 @@
 package familymapapp.Modal;
 
+import android.provider.ContactsContract;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 /**
 * represents a single Person tuple
@@ -31,8 +37,23 @@ public class Person implements DetailsRowDataObject{
     /** referrs to spouse tuple of this person */
     private String spouseId;
 
-    /** extra info about person for handling state */
-    public HashMap<String, String> metaData;
+    public String type = "child";
+
+    private TreeSet<Event> events = new TreeSet<>(new Comparator<Event>() {
+        @Override
+        public int compare(Event e1, Event e2) {
+            return Integer.valueOf(e1.getYear()) - Integer.valueOf(e2.getYear());
+        }
+    });
+
+    public Person(){
+        this.events = new TreeSet<>(new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                return Integer.valueOf(e1.getYear()) - Integer.valueOf(e2.getYear());
+            }
+        });
+    }
 
     public Person(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
         this.id = id;
@@ -43,7 +64,6 @@ public class Person implements DetailsRowDataObject{
         this.fatherId = fatherId;
         this.motherId = motherId;
         this.spouseId = spouseId;
-        metaData = new HashMap<String, String>();
     }
 
     public Person(String id, String descendant, String firstName, String lastName, String gender){
@@ -61,8 +81,7 @@ public class Person implements DetailsRowDataObject{
 
     @Override
     public String getSecondRow() {
-        return "******";
-                //metaData.get("type");
+        return this.type;
     }
 
     @Override
@@ -94,8 +113,48 @@ public class Person implements DetailsRowDataObject{
     public String getSpouseId(){
         return this.spouseId;
     }
+    public ArrayList<Event> getEvents(){
+        ArrayList<Event> eventsArray = new ArrayList<>();
+        for(Event event : this.events){
+            eventsArray.add(event);
+        }
+        return eventsArray;
+    }
+    public Person getMother(){
+        Person mother = null;
+        if(getMotherId() != null && !getMotherId().equals("")){
+            mother = DataTree.getInstance().getPersons().get(getMotherId());
+            mother.type = "mother";
+        }
+        return mother;
+    }
+    public Person getFather(){
+        Person father = null;
+        if(getFatherId() != null && !getFatherId().equals("")){
+            father = DataTree.getInstance().getPersons().get(getFatherId());
+            father.type = "father";
+        }
 
-   public void setDescendant(String descendant){
+        return father;
+    }
+    public Person getSpouse(){
+        Person spouse = null;
+        if(getSpouseId() != null && !getSpouseId().equals("")){
+            spouse = DataTree.getInstance().getPersons().get(getSpouseId());
+            spouse.type = "spouse";
+        }
+        return spouse;
+    }
+    public ArrayList<Person> getFamily(){
+        ArrayList<Person> family = new ArrayList<>();
+        family.addAll(DataTree.getInstance().getChildren(this));
+        if(getFather() != null) family.add(getFather());
+        if(getMother() != null) family.add(getMother());
+        if(getSpouse() != null) family.add(getSpouse());
+        return family;
+    }
+
+    public void setDescendant(String descendant){
         this.descendant = descendant;
     }
     public void setFirstName(String firstName){
@@ -116,4 +175,6 @@ public class Person implements DetailsRowDataObject{
     public void setSpouseId(String spouseId){
         this.spouseId = spouseId;
     }
+
+    public void addToEventArray(Event event){this.events.add(event);}
 }

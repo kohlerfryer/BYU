@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by programmer on 12/11/17.
@@ -19,15 +20,24 @@ import java.util.ArrayList;
 public class PolylineDrawer {
     ArrayList<Polyline> spouseLines;
     ArrayList<Polyline> familyLines;
+    ArrayList<Polyline> lifeEventLines;
     GoogleMap googleMap;
 
     public PolylineDrawer(GoogleMap googleMap){
         spouseLines = new ArrayList<>();
+        familyLines = new ArrayList<>();
+        lifeEventLines = new ArrayList<>();
         this.googleMap = googleMap;
     }
 
     public void clearPolyLines(){
         for(Polyline polyline : spouseLines){
+            polyline.remove();
+        }
+        for(Polyline polyline : familyLines){
+            polyline.remove();
+        }
+        for(Polyline polyline : lifeEventLines){
             polyline.remove();
         }
     }
@@ -40,29 +50,38 @@ public class PolylineDrawer {
 
     public void drawLines(Event event){
         clearPolyLines();
-        drawSpouseLines(event);
-        drawFamilyTreeLines(event);
+        drawSpouseLines(event, 10);
+        drawFamilyTreeLines(event, 10);
+        drawLifeEvents(event, 10);
     }
 
-    private void drawSpouseLines(Event event){
-        Person person = DataTree.getInstance().getPerson(event.getPersonId());
-        if(person.getSpouseId() != null){
-            Event spouseEvent = DataTree.getInstance().getPersonsEarliestEvent(person.getSpouseId());
-            createPolyline(spouseLines, event.convertCoordinatesToLtLng(), spouseEvent.convertCoordinatesToLtLng(), Color.RED, 10);
+    private void drawSpouseLines(Event event, int width){
+        Person person = DataTree.getInstance().getPersons().get(event.getPersonId());
+        if(person.getSpouse() != null){
+            Event spouseEvent = person.getSpouse().getEvents().get(0);
+            createPolyline(spouseLines, event.convertCoordinatesToLtLng(), spouseEvent.convertCoordinatesToLtLng(), Settings.getInstance().getSelectedSpouseLineColor(), width);
         }
     }
 
-    private void drawFamilyTreeLines(Event event){
-        Person person = DataTree.getInstance().getPerson(event.getPersonId());
-        if(person.getFatherId() != null){
-            Event fatherEvent = DataTree.getInstance().getPersonsEarliestEvent(person.getFatherId());
-            createPolyline(familyLines, event.convertCoordinatesToLtLng(), fatherEvent.convertCoordinatesToLtLng(), Color.BLUE, 10);
-            drawFamilyTreeLines(fatherEvent);
+    private void drawFamilyTreeLines(Event event, int width){
+        Person person = DataTree.getInstance().getPersons().get(event.getPersonId());
+        if(person.getFather() != null){
+            Event fatherEvent = person.getFather().getEvents().get(0);
+            createPolyline(familyLines, event.convertCoordinatesToLtLng(), fatherEvent.convertCoordinatesToLtLng(), Settings.getInstance().getSelectedFamilyTreeLineColor(), width);
+            drawFamilyTreeLines(fatherEvent, width-2);
         }
-        if(person.getMotherId() != null){
-            Event motherEvent = DataTree.getInstance().getPersonsEarliestEvent(person.getMotherId());
-            createPolyline(familyLines, event.convertCoordinatesToLtLng(), motherEvent.convertCoordinatesToLtLng(), Color.BLUE, 10);
-            drawFamilyTreeLines(motherEvent);
+        if(person.getMother() != null){
+            Event motherEvent = person.getMother().getEvents().get(0);
+            createPolyline(familyLines, event.convertCoordinatesToLtLng(), motherEvent.convertCoordinatesToLtLng(), Settings.getInstance().getSelectedFamilyTreeLineColor(), width);
+            drawFamilyTreeLines(motherEvent, width-2);
+        }
+    }
+
+    private void drawLifeEvents(Event event, int width){
+        Person person = DataTree.getInstance().getPersons().get(event.getPersonId());
+        ArrayList<Event> lifeEvents = person.getEvents();
+        for(int i = 0; i < person.getEvents().size() - 1; i++){
+            createPolyline(lifeEventLines, lifeEvents.get(i).convertCoordinatesToLtLng(), lifeEvents.get(i+1).convertCoordinatesToLtLng(), Settings.getInstance().getSelectedLifeStoryLineColor(), width);
         }
     }
 }

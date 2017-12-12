@@ -1,5 +1,7 @@
 package familymapapp.Modal;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,13 +13,13 @@ public class Settings {
 
     private static Settings settings = null;
 
-    private HashMap<String, String> lifeStoryLineColors;
-    private HashMap<String, String> familyTreeLineColors;
-    private HashMap<String, String> spouseLineColors;
+    private HashMap<String, Integer> lifeStoryLineColors;
+    private HashMap<String, Integer> familyTreeLineColors;
+    private HashMap<String, Integer> spouseLineColors;
 
-    private String selectedLifeStoryColor = "green";
-    private String selectedFamilyTreeColor = "blue";
-    private String selectedSpouseColor = "red";
+    public String selectedLifeStoryColor = "green";
+    public String selectedFamilyTreeColor = "blue";
+    public String selectedSpouseColor = "red";
 
     private boolean lifeStoryLinesActive = true;
     private boolean familyTreeLinesActive = true;
@@ -28,9 +30,17 @@ public class Settings {
         familyTreeLineColors = new HashMap<>();
         spouseLineColors = new HashMap<>();
 
-        lifeStoryLineColors.put(selectedLifeStoryColor, "#4CAF50");
-        familyTreeLineColors.put(selectedFamilyTreeColor, "#80D8FF");
-        spouseLineColors.put(selectedSpouseColor, "#DD2C00");
+        this.selectedLifeStoryColor = "green";
+        this.selectedFamilyTreeColor = "blue";
+        this.selectedSpouseColor = "red";
+
+        lifeStoryLineColors.put(this.selectedLifeStoryColor, Color.GREEN);
+        familyTreeLineColors.put(this.selectedFamilyTreeColor, Color.BLUE);
+        spouseLineColors.put(this.selectedSpouseColor, Color.RED);
+
+        lifeStoryLineColors.put("black", Color.BLACK);
+        familyTreeLineColors.put("cyan", Color.CYAN);
+        spouseLineColors.put("grey", Color.DKGRAY);
     }
 
     public static Settings getInstance() {
@@ -40,8 +50,6 @@ public class Settings {
         return settings;
     }
 
-
-
     public void setSelectedLifeStoryLineColor(String color){
         this.selectedLifeStoryColor = color;
     }
@@ -49,6 +57,7 @@ public class Settings {
         this.selectedFamilyTreeColor = color;
     }
     public void setSelectedSpouseLineColor(String color){
+
         this.selectedLifeStoryColor = color;
     }
     public void setFamilyTreeLinesActive(boolean b){
@@ -63,15 +72,16 @@ public class Settings {
 
 
 
-    public String getSelectedLifeStoryLineColor(){
-        return this.selectedLifeStoryColor;
+    public int getSelectedLifeStoryLineColor(){
+        return lifeStoryLineColors.get(this.selectedLifeStoryColor);
     }
-    public String getSelectedFamilyTreeLineColor(){
-        return this.selectedFamilyTreeColor;
+    public int getSelectedFamilyTreeLineColor(){
+        return familyTreeLineColors.get(this.selectedFamilyTreeColor);
     }
-    public String getSelectedSpouseLineColor(){
-        return this.selectedLifeStoryColor;
+    public int getSelectedSpouseLineColor(){
+        return spouseLineColors.get(this.selectedSpouseColor);
     }
+
     public boolean getLifeStoryLinesActive(){
         return this.lifeStoryLinesActive;
     }
@@ -95,11 +105,11 @@ public class Settings {
         return getKeys(this.spouseLineColors);
     }
 
-    private ArrayList<String> getKeys(HashMap<String, String> map){
+    private ArrayList<String> getKeys(HashMap<String, Integer> map){
         ArrayList<String> colors = new ArrayList<String>();
-        for (HashMap.Entry<String, String> entry : map.entrySet()) {
+        for (HashMap.Entry<String, Integer> entry : map.entrySet()) {
             String key = entry.getKey();
-            String color = entry.getValue();
+            Integer color = entry.getValue();
             colors.add(key);
         }
         return colors;

@@ -23,8 +23,8 @@ public class FilterRowViewHolder extends RecyclerView.ViewHolder{
         filterSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Integer active = isChecked == true ? 0 : 1;
-                DataTree.getInstance().setActiveEventType(filterSwitch.getText().toString(), active);
+                //Integer active = isChecked == true ? 0 : 1;
+                //DataTree.getInstance().setActiveEventType(filterSwitch.getText().toString(), active);
             }
         });
     }

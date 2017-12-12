@@ -19,16 +19,16 @@ import familymapapp.Request.RegisterRequestBody;
 import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Util;
 
-public class PersonService {
+public class PersonsService {
 
     //TODO -- make response objects
-    public static void get(String personId, Consumer<String> success, Consumer<String> failure){
+    public static void get(Consumer<String> success, Consumer<String> failure){
         JsonObject person;
         //todo make model for person -- -make all service classes unison and clean :_
         Settings settings = Settings.getInstance();
         GetRequest getRequest = new GetRequest("application/json", success, failure, settings.getAuthenticationToken());
         try{
-            URL url = new URL("http://10.0.2.2:8000/person/"+personId);
+            URL url = new URL("http://10.0.2.2:8000/person");
             getRequest.execute(url);
         }catch(Exception e){
 

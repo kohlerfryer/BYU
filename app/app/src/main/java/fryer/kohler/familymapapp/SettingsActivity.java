@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -67,9 +68,43 @@ public class SettingsActivity extends AppCompatActivity {
         familyTreeLinesSpinner.setAdapter(familyTreeArrayAdapter);
         spouseLinesSpinner.setAdapter(spouseArrayAdapter);
 
-        setSpinnerValue(LifeStoryArrayAdapter, lifeStoryLinesSpinner, Settings.getInstance().getSelectedLifeStoryLineColor());
-        setSpinnerValue(familyTreeArrayAdapter, familyTreeLinesSpinner, Settings.getInstance().getSelectedFamilyTreeLineColor());
-        setSpinnerValue(spouseArrayAdapter, spouseLinesSpinner, Settings.getInstance().getSelectedSpouseLineColor());
+        setSpinnerValue(LifeStoryArrayAdapter, lifeStoryLinesSpinner, Settings.getInstance().selectedLifeStoryColor);
+        setSpinnerValue(familyTreeArrayAdapter, familyTreeLinesSpinner, Settings.getInstance().selectedFamilyTreeColor);
+        setSpinnerValue(spouseArrayAdapter, spouseLinesSpinner, Settings.getInstance().selectedSpouseColor);
+
+        lifeStoryLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String color = (String) parent.getItemAtPosition(position).toString();
+                Settings.getInstance().setSelectedLifeStoryLineColor(color);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        familyTreeLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String color = (String) parent.getItemAtPosition(position).toString();
+                Settings.getInstance().setSelectedFamilyTreeLineColor(color);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        spouseLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String color = (String) parent.getItemAtPosition(position).toString();
+                Settings.getInstance().setSelectedSpouseLineColor(color);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
 
     }
 
