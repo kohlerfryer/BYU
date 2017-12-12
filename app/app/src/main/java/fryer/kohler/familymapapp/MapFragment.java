@@ -121,6 +121,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         if(googleMap != null){
             googleMap.clear();
             setUpMap();
+        }
+        if(eventInFocus != null){
             polylineDrawer.drawLines(eventInFocus);
         }
 

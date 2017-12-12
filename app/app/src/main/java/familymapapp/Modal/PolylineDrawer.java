@@ -50,9 +50,12 @@ public class PolylineDrawer {
 
     public void drawLines(Event event){
         clearPolyLines();
-        drawSpouseLines(event, 10);
-        drawFamilyTreeLines(event, 10);
-        drawLifeEvents(event, 10);
+        if(Settings.getInstance().spouseLinesActive)
+            drawSpouseLines(event, 10);
+        if(Settings.getInstance().familyTreeLinesActive)
+            drawFamilyTreeLines(event, 10);
+        if(Settings.getInstance().lifeStoryLinesActive)
+            drawLifeEvents(event, 10);
     }
 
     private void drawSpouseLines(Event event, int width){

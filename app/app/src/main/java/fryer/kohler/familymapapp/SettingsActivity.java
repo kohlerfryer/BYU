@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -71,6 +72,9 @@ public class SettingsActivity extends AppCompatActivity {
         setSpinnerValue(LifeStoryArrayAdapter, lifeStoryLinesSpinner, Settings.getInstance().selectedLifeStoryColor);
         setSpinnerValue(familyTreeArrayAdapter, familyTreeLinesSpinner, Settings.getInstance().selectedFamilyTreeColor);
         setSpinnerValue(spouseArrayAdapter, spouseLinesSpinner, Settings.getInstance().selectedSpouseColor);
+        lifeStoryLinesSwitch.setChecked(Settings.getInstance().getLifeStoryLinesActive());
+        familyTreeLinesSwitch.setChecked(Settings.getInstance().getFamilyTreeLinesActive());
+        spouseLinesSwitch.setChecked(Settings.getInstance().getSpouseLinesActive());
 
         lifeStoryLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -102,6 +106,27 @@ public class SettingsActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.getInstance().setLifeStoryLinesActive(isChecked);
+            }
+        });
+
+        spouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.getInstance().setSpouseLinesActive(isChecked);
+            }
+        });
+
+        familyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.getInstance().setFasmilyTreeLinesActive(isChecked);
             }
         });
 

@@ -21,22 +21,18 @@ public class Settings {
     public String selectedFamilyTreeColor = "blue";
     public String selectedSpouseColor = "red";
 
-    private boolean lifeStoryLinesActive = true;
-    private boolean familyTreeLinesActive = true;
-    private boolean spouseLinesActive = true;
+    public boolean lifeStoryLinesActive = true;
+    public boolean familyTreeLinesActive = true;
+    public boolean spouseLinesActive = true;
 
-    protected Settings() {
+    protected void initialize() {
         lifeStoryLineColors = new HashMap<>();
         familyTreeLineColors = new HashMap<>();
         spouseLineColors = new HashMap<>();
 
-        this.selectedLifeStoryColor = "green";
-        this.selectedFamilyTreeColor = "blue";
-        this.selectedSpouseColor = "red";
-
-        lifeStoryLineColors.put(this.selectedLifeStoryColor, Color.GREEN);
-        familyTreeLineColors.put(this.selectedFamilyTreeColor, Color.BLUE);
-        spouseLineColors.put(this.selectedSpouseColor, Color.RED);
+        lifeStoryLineColors.put(selectedLifeStoryColor, Color.GREEN);
+        familyTreeLineColors.put(selectedFamilyTreeColor, Color.BLUE);
+        spouseLineColors.put(selectedSpouseColor, Color.RED);
 
         lifeStoryLineColors.put("black", Color.BLACK);
         familyTreeLineColors.put("cyan", Color.CYAN);
@@ -46,6 +42,7 @@ public class Settings {
     public static Settings getInstance() {
         if (settings == null) {
             settings = new Settings();
+            settings.initialize();
         }
         return settings;
     }
@@ -57,10 +54,9 @@ public class Settings {
         this.selectedFamilyTreeColor = color;
     }
     public void setSelectedSpouseLineColor(String color){
-
-        this.selectedLifeStoryColor = color;
+        this.selectedSpouseColor = color;
     }
-    public void setFamilyTreeLinesActive(boolean b){
+    public void setFasmilyTreeLinesActive(boolean b){
         familyTreeLinesActive = b;
     }
     public void setLifeStoryLinesActive(boolean b){
@@ -73,13 +69,13 @@ public class Settings {
 
 
     public int getSelectedLifeStoryLineColor(){
-        return lifeStoryLineColors.get(this.selectedLifeStoryColor);
+        return lifeStoryLineColors.get(selectedLifeStoryColor);
     }
     public int getSelectedFamilyTreeLineColor(){
-        return familyTreeLineColors.get(this.selectedFamilyTreeColor);
+        return familyTreeLineColors.get(selectedFamilyTreeColor);
     }
     public int getSelectedSpouseLineColor(){
-        return spouseLineColors.get(this.selectedSpouseColor);
+        return spouseLineColors.get(selectedSpouseColor);
     }
 
     public boolean getLifeStoryLinesActive(){
