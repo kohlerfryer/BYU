@@ -17,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.function.Consumer;
 
+import familymapapp.HTTP.Proxy;
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.Person;
@@ -44,12 +45,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        //if token expire then
-        LoginFragment fragment = new LoginFragment();
-        fragmentTransaction.replace(id.main_layout, fragment);
-        fragmentTransaction.commit();
-        //do the stuff above :)
-
+        if(Proxy.authenticationToken == null){
+            LoginFragment fragment = new LoginFragment();
+            fragmentTransaction.replace(id.main_layout, fragment);
+            fragmentTransaction.commit();
+        }else{
+            MapFragment fragment = new MapFragment();
+            fragmentTransaction.replace(id.main_layout, fragment);
+            fragmentTransaction.commit();
+        }
 
     }
 
@@ -78,34 +82,18 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     //TODO USE RSPONSE OBJECT
     @Override
     public void handleLoginSuccess(String personId, String authenticationToken) {
+        Proxy.authenticationToken = authenticationToken;
+        Proxy.rootPersonId = personId;
 
-        Settings settings = Settings.getInstance();
-        settings.setAuthenticationToken(authenticationToken);
-
+        Consumer<String> success = (data) -> {
+            switchFragment(new MapFragment());
+        };
 
         Consumer<String> failure = (data) -> {
             Toast.makeText(this, Util.getValueFromJson(data, "message"), 30000).show();
         };
 
-        Consumer<String> eventSuccess = (data) -> {
-            EventsResponse response = (EventsResponse) Util.convertJsonStringToObject(data, EventsResponse.class);
-            DataTree.getInstance().setEvents(response.getEvents());
-            switchFragment(new MapFragment());
-        };
-
-        Consumer<String> personsSuccess = (data) -> {
-            PersonsResponse response = (PersonsResponse) Util.convertJsonStringToObject(data, PersonsResponse.class);
-            DataTree.getInstance().setPersons(response.getPersons());
-            EventsService.get(eventSuccess, failure);
-        };
-
-        Consumer<String> personSuccess = (data) -> {
-            Person person = (Person) Util.convertJsonStringToObject(data, Person.class);
-            DataTree.getInstance().setRootPerson(person);
-            PersonsService.get(personsSuccess, failure);
-        };
-
-        PersonService.get(personId, personSuccess, failure);
+        Proxy.syncData(success, failure);
 
     }
 

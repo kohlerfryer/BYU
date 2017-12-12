@@ -131,6 +131,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public void setUpMap(){
         polylineDrawer = new PolylineDrawer(googleMap);
         googleMap.setOnMarkerClickListener(this);
+        googleMap.setMapType(Settings.getInstance().getMapType());
         DataTree dataTree = DataTree.getInstance();
         for(Event event : dataTree.getFilteredEvents()){
             Double longitude = Double.parseDouble(event.getLongitude());

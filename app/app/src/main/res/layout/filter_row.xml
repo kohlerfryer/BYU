@@ -14,7 +14,7 @@
         android:ellipsize="marquee"
         android:paddingLeft="5dp"
         android:singleLine="true"
-        android:text="Content"
+        android:text=""
         android:textSize="12sp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:paddingBottom="5dp"
 
         android:paddingLeft="5dp"
-        android:text="Username"
+        android:text="Filter"
         android:textSize="14sp" />
 
     <Switch

@@ -31,9 +31,7 @@ public class FilterRowAdapter extends RecyclerView.Adapter<FilterRowViewHolder> 
 
     @Override
     public int getItemCount() {
-//        Log.d("debug", "amount : " + DataTree.getInstance().getActiveEventTypeSize());
-        //return DataTree.getInstance().getActiveEventTypeSize();
-        return 0;
+        return DataTree.getInstance().eventFilters.size()-1;
     }
 
     @Override
@@ -45,10 +43,10 @@ public class FilterRowAdapter extends RecyclerView.Adapter<FilterRowViewHolder> 
 
     @Override
     public void onBindViewHolder(FilterRowViewHolder holder, int position) {
-//        String eventTypeKey = DataTree.getInstance().getActiveEventTypeKey(position);
-//        boolean checked = DataTree.getInstance().getActiveEventType(eventTypeKey) == 0 ? true : false;
-//        holder.filterSwitch.setChecked(checked);
-//        holder.filterSwitch.setText(eventTypeKey);
+        String filterName = DataTree.indexForEventFilters.get(position);
+        boolean filterActive = DataTree.eventFilters.get(filterName) == 1 ? true : false;
+        holder.filterSwitch.setChecked(filterActive);
+        holder.filterSwitch.setText(filterName);
     }
 
 }

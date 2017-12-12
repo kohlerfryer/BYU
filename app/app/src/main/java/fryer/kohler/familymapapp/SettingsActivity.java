@@ -1,5 +1,7 @@
 package fryer.kohler.familymapapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,10 +14,15 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.function.Consumer;
+
+import familymapapp.HTTP.Proxy;
 import familymapapp.Modal.Settings;
+import familymapapp.UTIL.Util;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -31,10 +38,16 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView resyncDataTextView;
     private TextView logoutTextView;
 
+    private Context context;
+
+    private Consumer<String> rysyncSuccess;
+
+    private Consumer<String> rysncFailure;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        context = this;
 
         lifeStoryLinesSpinner = (Spinner) findViewById(R.id.life_story_lines_spinner);
         familyTreeLinesSpinner = (Spinner) findViewById(R.id.family_tree_spinner);
@@ -45,6 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
         familyTreeLinesSwitch = (Switch) findViewById(R.id.family_tree_lines_switch);
         spouseLinesSwitch = (Switch) findViewById(R.id.spouse_lines_switch);
 
+        resyncDataTextView = (TextView) findViewById(R.id.resync_data_text_view);
+        logoutTextView = (TextView) findViewById(R.id.logout_text_view);
+
         ArrayAdapter<String> LifeStoryArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Settings.getInstance().getLifeStoryLineColorKeys()
         );
@@ -53,6 +69,9 @@ public class SettingsActivity extends AppCompatActivity {
         );
         ArrayAdapter<String> spouseArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Settings.getInstance().getSpouseLineColorKeys()
+        );
+        ArrayAdapter<String> mapArrayAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, Settings.getInstance().getMapTypeKeys()
         );
 
         LifeStoryArrayAdapter.setDropDownViewResource(
@@ -64,14 +83,19 @@ public class SettingsActivity extends AppCompatActivity {
         spouseArrayAdapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item
         );
+        mapArrayAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
 
         lifeStoryLinesSpinner.setAdapter(LifeStoryArrayAdapter);
         familyTreeLinesSpinner.setAdapter(familyTreeArrayAdapter);
         spouseLinesSpinner.setAdapter(spouseArrayAdapter);
+        mapTypeSpinner.setAdapter(mapArrayAdapter);
 
         setSpinnerValue(LifeStoryArrayAdapter, lifeStoryLinesSpinner, Settings.getInstance().selectedLifeStoryColor);
         setSpinnerValue(familyTreeArrayAdapter, familyTreeLinesSpinner, Settings.getInstance().selectedFamilyTreeColor);
         setSpinnerValue(spouseArrayAdapter, spouseLinesSpinner, Settings.getInstance().selectedSpouseColor);
+        setSpinnerValue(mapArrayAdapter, mapTypeSpinner, Settings.getInstance().selectedMapType);
         lifeStoryLinesSwitch.setChecked(Settings.getInstance().getLifeStoryLinesActive());
         familyTreeLinesSwitch.setChecked(Settings.getInstance().getFamilyTreeLinesActive());
         spouseLinesSwitch.setChecked(Settings.getInstance().getSpouseLinesActive());
@@ -108,6 +132,16 @@ public class SettingsActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        mapTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String type = (String) parent.getItemAtPosition(position).toString();
+                Settings.getInstance().setSelectedMapType(type);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -130,6 +164,29 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        rysyncSuccess = (data) -> {
+            Toast.makeText(this, "re-synced", 3000).show();
+        };
+
+        rysncFailure = (data) -> {
+            Toast.makeText(this, "error re-syncing", 30000).show();
+        };
+
+        resyncDataTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Proxy.syncData(rysyncSuccess, rysncFailure);
+            }
+        });
+
+        logoutTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Proxy.logout();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

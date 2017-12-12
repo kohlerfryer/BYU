@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -14,8 +15,10 @@ public class DataTree {
 
     private static DataTree tree = null;
 
-    private static ArrayList<String> activeEventFilters;
-    private static ArrayList<String> eventFilters;
+    public static HashMap<String, Integer> eventFilters;
+    public static ArrayList<String> indexForEventFilters;
+    public static ArrayList<String> motherSidePersons;
+    public static ArrayList<String> fatherSidePersons;
 
     // personId -> person
     private static HashMap<String, Person> persons;
@@ -32,13 +35,15 @@ public class DataTree {
     protected DataTree() {
         persons = new HashMap<>();
         events = new HashMap<>();
-        activeEventFilters = new ArrayList<>();
-        eventFilters = new ArrayList<>();
+        eventFilters = new HashMap<>();
+        motherSidePersons = new ArrayList<>();
+        fatherSidePersons = new ArrayList<>();
+        indexForEventFilters = new ArrayList<>();
 
-        eventFilters.add(FATHER_SIDE_FILTER);
-        eventFilters.add(MOTHER_SIDE_FILTER);
-        eventFilters.add(MALE_EVENT_FILTER);
-        eventFilters.add(FEMALE_EVENT_FILTER);
+        eventFilters.put(FATHER_SIDE_FILTER, 1);
+        eventFilters.put(MOTHER_SIDE_FILTER, 1);
+        eventFilters.put(MALE_EVENT_FILTER, 1);
+        eventFilters.put(FEMALE_EVENT_FILTER, 1);
     }
 
     public static DataTree getInstance() {
@@ -52,17 +57,23 @@ public class DataTree {
         for (Person person : disorganizedPersons) {
             DataTree.persons.put(person.getId(), person);
         }
+
+        setFatherSidePersons(rootPerson.getFather());
+        setMotherSidePersons(rootPerson.getMother());
     }
 
     public static void setEvents(ArrayList<Event> disorganizedEvents) {
         for (Event event : disorganizedEvents) {
             DataTree.events.put(event.getId(), event);
             persons.get(event.getPersonId()).addToEventArray(event);
-            if(!activeEventFilters.contains(event.getEventType())){
-                activeEventFilters.add(event.getEventType());
-                eventFilters.add(event.getEventType());
-            }
+            eventFilters.put(event.getEventType().toLowerCase(), 1);
         }
+
+        for (HashMap.Entry<String, Integer> entry : eventFilters.entrySet()) {
+            String key = entry.getKey();
+            indexForEventFilters.add(key);
+        }
+
     }
 
     public static void setRootPerson(Person person){
@@ -73,7 +84,7 @@ public class DataTree {
         ArrayList<Event> filteredEvents = new ArrayList<>();
         for (HashMap.Entry<String, Event> entry : events.entrySet()) {
             Event event = entry.getValue();
-            if(activeEventFilters.contains(event.getEventType())){
+            if(eventFilters.get(event.getEventType()) == 1 && filterableFromStandardFilters(event)){
                 filteredEvents.add(event);
             }
         }
@@ -97,6 +108,61 @@ public class DataTree {
         }
         return children;
     }
+
+    public static boolean passesMaleFilter(Event event){
+        return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender() == "M");
+    }
+
+    public static boolean passesFemaleFilter(Event event){
+        return (eventFilters.get(FEMALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender() == "F");
+    }
+
+    public static boolean passesGenderFilter(Event event){
+        if(eventFilters.get(FEMALE_EVENT_FILTER) != 1 && eventFilters.get(MALE_EVENT_FILTER) != 1)return true;
+        return (passesFemaleFilter(event) || passesMaleFilter(event));
+    }
+
+    public static boolean passesFamilyTreeFilter(Event event){
+        
+    }
+
+    public static boolean filterableFromStandardFilters(Event event){
+        if(!passesGenderFilter(event))return false;
+        if(!passesFamilyTreeFilter)return false;
+        return true;
+
+        if(passesMaleFemaleFilter(event)) {
+            if(eventFilters.get(FATHER_SIDE_FILTER) == 1 && fatherSidePersons.contains(event.getPersonId())){
+                return true;
+            }
+            else if(eventFilters.get(MOTHER_SIDE_FILTER) == 1 && motherSidePersons.contains(event.getPersonId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void addGenerationIds(Person person, ArrayList<String> list){
+        list.add(person.getId());
+        if (person.getFather() != null){
+            addGenerationIds(person.getFather(), list);
+        }
+        if (person.getMother() != null){
+            addGenerationIds(person.getMother(), list);
+        }
+    }
+
+    public static void setFatherSidePersons(Person person){
+        addGenerationIds(person, fatherSidePersons);
+    }
+
+    public static void setMotherSidePersons(Person person){
+        addGenerationIds(person, motherSidePersons);
+    }
+
+//    public static ArrayList<String> getActiveEventFilters(){
+//        return activeEventFilters;
+//    }
 
 
 //    public ArrayList<Event> getFilteredEvents() {

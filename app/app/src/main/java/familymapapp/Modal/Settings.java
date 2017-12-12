@@ -2,6 +2,8 @@ package familymapapp.Modal;
 
 import android.graphics.Color;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,9 +19,13 @@ public class Settings {
     private HashMap<String, Integer> familyTreeLineColors;
     private HashMap<String, Integer> spouseLineColors;
 
+    private HashMap<String, Integer> mapTypes;
+
     public String selectedLifeStoryColor = "green";
     public String selectedFamilyTreeColor = "blue";
     public String selectedSpouseColor = "red";
+
+    public String selectedMapType = "normal";
 
     public boolean lifeStoryLinesActive = true;
     public boolean familyTreeLinesActive = true;
@@ -29,10 +35,16 @@ public class Settings {
         lifeStoryLineColors = new HashMap<>();
         familyTreeLineColors = new HashMap<>();
         spouseLineColors = new HashMap<>();
+        mapTypes = new HashMap<>();
 
         lifeStoryLineColors.put(selectedLifeStoryColor, Color.GREEN);
         familyTreeLineColors.put(selectedFamilyTreeColor, Color.BLUE);
         spouseLineColors.put(selectedSpouseColor, Color.RED);
+
+        mapTypes.put("normal", GoogleMap.MAP_TYPE_NORMAL);
+        mapTypes.put("hybrid", GoogleMap.MAP_TYPE_HYBRID);
+        mapTypes.put("satellite", GoogleMap.MAP_TYPE_SATELLITE);
+        mapTypes.put("terrain", GoogleMap.MAP_TYPE_TERRAIN);
 
         lifeStoryLineColors.put("black", Color.BLACK);
         familyTreeLineColors.put("cyan", Color.CYAN);
@@ -56,6 +68,11 @@ public class Settings {
     public void setSelectedSpouseLineColor(String color){
         this.selectedSpouseColor = color;
     }
+
+    public void setSelectedMapType(String type){
+        this.selectedMapType = type;
+    }
+
     public void setFasmilyTreeLinesActive(boolean b){
         familyTreeLinesActive = b;
     }
@@ -76,6 +93,10 @@ public class Settings {
     }
     public int getSelectedSpouseLineColor(){
         return spouseLineColors.get(selectedSpouseColor);
+    }
+
+    public int getMapType(){
+        return mapTypes.get(selectedMapType);
     }
 
     public boolean getLifeStoryLinesActive(){
@@ -99,6 +120,10 @@ public class Settings {
 
     public ArrayList<String> getSpouseLineColorKeys(){
         return getKeys(this.spouseLineColors);
+    }
+
+    public ArrayList<String> getMapTypeKeys(){
+        return getKeys(this.mapTypes);
     }
 
     private ArrayList<String> getKeys(HashMap<String, Integer> map){

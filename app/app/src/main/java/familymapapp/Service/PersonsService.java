@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 import familymapapp.HTTP.GetRequest;
 import familymapapp.HTTP.PostRequest;
+import familymapapp.HTTP.Proxy;
 import familymapapp.Request.PersonRequestBody;
 import familymapapp.Request.RegisterRequestBody;
 import familymapapp.UTIL.Settings;
@@ -26,7 +27,7 @@ public class PersonsService {
         JsonObject person;
         //todo make model for person -- -make all service classes unison and clean :_
         Settings settings = Settings.getInstance();
-        GetRequest getRequest = new GetRequest("application/json", success, failure, settings.getAuthenticationToken());
+        GetRequest getRequest = new GetRequest("application/json", success, failure, Proxy.authenticationToken);
         try{
             URL url = new URL("http://10.0.2.2:8000/person");
             getRequest.execute(url);
