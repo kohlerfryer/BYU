@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,47 +38,55 @@ import static fryer.kohler.familymapapp.R.*;
 public class MainActivity extends AppCompatActivity implements LoginFragment.LoginFragmentHandler, MapFragment.MapFragmentHandler {
 
     public static final String EXTRA_MESSAGE = "fryer.kohler.familymapapp.MESSAGE";
+    Button filterButton;
+    Button settingsButton;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        filterButton = (Button) findViewById(R.id.filter_button);
+        settingsButton = (Button) findViewById(R.id.settings_button);
+        searchButton = (Button) findViewById(R.id.search_button);
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleFilterClick();
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleSettingsClick();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleSearchClick();
+            }
+        });
+
         if(Proxy.authenticationToken == null){
+            filterButton.setVisibility(View.GONE);
+            settingsButton.setVisibility(View.GONE);
+            searchButton.setVisibility(View.GONE);
             LoginFragment fragment = new LoginFragment();
-            fragmentTransaction.replace(id.main_layout, fragment);
+            fragmentTransaction.replace(id.fragment, fragment);
             fragmentTransaction.commit();
         }else{
             MapFragment fragment = new MapFragment();
-            fragmentTransaction.replace(id.main_layout, fragment);
+            fragmentTransaction.replace(id.fragment, fragment);
             fragmentTransaction.commit();
         }
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     //TODO USE RSPONSE OBJECT
@@ -86,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         Proxy.rootPersonId = personId;
 
         Consumer<String> success = (data) -> {
+            filterButton.setVisibility(View.VISIBLE);
+            settingsButton.setVisibility(View.VISIBLE);
+            searchButton.setVisibility(View.VISIBLE);
             switchFragment(new MapFragment());
         };
 
@@ -113,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
     public void handleFilterClick(){
         Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
+    }
+
+    public void handleSearchClick(){
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 

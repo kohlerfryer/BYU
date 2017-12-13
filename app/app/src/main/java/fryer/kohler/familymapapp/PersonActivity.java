@@ -70,6 +70,7 @@ public class PersonActivity extends AppCompatActivity {
     }
 
     private void loadPerson(String personId){
+        Log.d("debug", personId);
         Person person = dataTree.getPersons().get(personId);
         firstNameTextView.setText(person.getFirstName());
         lastNameTextView.setText(person.getLastName());
@@ -92,15 +93,15 @@ public class PersonActivity extends AppCompatActivity {
     }
 
     private Consumer<String> personOnClickCallBack = (personId) -> {
-        //Log.d("debug", "YYYYYEESIRRRR" + id);
         Intent intent = new Intent(this, PersonActivity.class);
-        Log.d("debug", personId);
         intent.putExtra(EXTRA_MESSAGE, personId);
         startActivity(intent);
     };
 
-    private Consumer<String> eventOnClickCallBack = (eventIid) -> {
-        //Log.d("debug", "YYYYYEESIRRRR" + id);
+    private Consumer<String> eventOnClickCallBack = (eventId) -> {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, eventId);
+        startActivity(intent);
     };
 
 

@@ -95,6 +95,10 @@ public class DataTree {
         return persons;
     }
 
+    public static HashMap<String, Event> getEvents(){
+        return events;
+    }
+
     public static ArrayList<Person> getChildren(Person parent){
         ArrayList<Person> children = new ArrayList<>();
         for (HashMap.Entry<String, Person> entry : persons.entrySet()) {
@@ -110,36 +114,36 @@ public class DataTree {
     }
 
     public static boolean passesMaleFilter(Event event){
-        return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender() == "M");
+        return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().equals("M"));
     }
 
     public static boolean passesFemaleFilter(Event event){
-        return (eventFilters.get(FEMALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender() == "F");
+        return (eventFilters.get(FEMALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().equals("F"));
     }
 
     public static boolean passesGenderFilter(Event event){
-        if(eventFilters.get(FEMALE_EVENT_FILTER) != 1 && eventFilters.get(MALE_EVENT_FILTER) != 1)return true;
+        if(eventFilters.get(FEMALE_EVENT_FILTER) != 1 && eventFilters.get(MALE_EVENT_FILTER) != 1)return false;
         return (passesFemaleFilter(event) || passesMaleFilter(event));
     }
 
+    public static boolean passesFatherSideFilter(Event event){
+        return(eventFilters.get(FATHER_SIDE_FILTER) == 1 && fatherSidePersons.contains(event.getPersonId()));
+    }
+
+    public static boolean passesMotherSideFilter(Event event){
+        return(eventFilters.get(MOTHER_SIDE_FILTER) == 1 && motherSidePersons.contains(event.getPersonId()));
+    }
+
+
     public static boolean passesFamilyTreeFilter(Event event){
-        
+        if(eventFilters.get(MOTHER_SIDE_FILTER) != 1 && eventFilters.get(FATHER_SIDE_FILTER) != 1)return false;
+        return(passesFatherSideFilter(event) || passesMotherSideFilter(event));
     }
 
     public static boolean filterableFromStandardFilters(Event event){
         if(!passesGenderFilter(event))return false;
-        if(!passesFamilyTreeFilter)return false;
+        if(!passesFamilyTreeFilter(event))return false;
         return true;
-
-        if(passesMaleFemaleFilter(event)) {
-            if(eventFilters.get(FATHER_SIDE_FILTER) == 1 && fatherSidePersons.contains(event.getPersonId())){
-                return true;
-            }
-            else if(eventFilters.get(MOTHER_SIDE_FILTER) == 1 && motherSidePersons.contains(event.getPersonId())){
-                return true;
-            }
-        }
-        return false;
     }
 
     public static void addGenerationIds(Person person, ArrayList<String> list){
@@ -160,141 +164,31 @@ public class DataTree {
         addGenerationIds(person, motherSidePersons);
     }
 
-//    public static ArrayList<String> getActiveEventFilters(){
-//        return activeEventFilters;
-//    }
+    public static ArrayList<Event> searchEvents(String text){
+        text = text.toLowerCase();
+        ArrayList<Event> searchedEvents = new ArrayList<>();
+        for (HashMap.Entry<String, Event> entry : events.entrySet()) {
+            Event event = entry.getValue();
+            if(event.getCountry().toLowerCase().contains(text) || event.getCity().toLowerCase().contains(text) || event.getYear().toLowerCase().contains(text)){
+                searchedEvents.add(event);
+            }
+        }
+        return searchedEvents;
+    }
 
+    public static ArrayList<Person> searchPersons(String text){
+        text = text.toLowerCase();
+        ArrayList<Person> searchedPersons = new ArrayList<>();
+        for (HashMap.Entry<String, Person> entry : persons.entrySet()) {
+            Person person = entry.getValue();
+            person.type = "";
+            if(person.getFirstName().toLowerCase().contains(text) || person.getLastName().toLowerCase().contains(text)){
+                searchedPersons.add(person);
+            }
+        }
+        return searchedPersons;
+    }
 
-//    public ArrayList<Event> getFilteredEvents() {
-//        ArrayList<Event> combinedEvents = new ArrayList<Event>();
-//        for (HashMap.Entry<String, DataBranch> entry : this.branches.entrySet()) {
-//            //Integer key = entry.getKey();
-//            DataBranch branch = entry.getValue();
-//            //change this below
-//            ArrayList<Event> personEvents = branch.getFilteredEvents(getActiveTypes());
-//            combinedEvents.addAll(personEvents);
-//        }
-//        return combinedEvents;
-//    }
-//
-//    public ArrayList<Event> getFilteredPersonEvents(String person) {
-//        return branches.get(person).getFilteredEvents(getAllTypes());
-//    }
-//
-//    public Person getPerson(String personId) {
-//        return branches.get(personId).getPerson();
-//    }
-//
-//    public int getActiveEventTypeSize(){
-//        return activeEventTypes.size();
-//    }
-//
-//    public void setActiveEventType(String type, Integer i){
-//        activeEventTypes.put(type, i);
-//    }
-//
-//    public int getActiveEventType(String index){
-//        return activeEventTypes.get(index);
-//    }
-//
-//    public String[] getActiveTypes(){
-//        String[] types = new String[activeEventTypes.size()];
-//        int index = 0;
-//        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
-//            String key = entry.getKey();
-//            Integer active = entry.getValue();
-//            if(active == 1){
-//                types[index++] = key;
-//            }
-//        }
-//        return types;
-//    }
-//
-//    public String[] getAllTypes(){
-//        String[] types = new String[activeEventTypes.size()];
-//        int index = 0;
-//        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
-//            types[index++] = entry.getKey();
-//        }
-//        return types;
-//    }
-//
-//    public String getActiveEventTypeKey(int index){
-//        int counter = 0;
-//        String key = "";
-//        for (HashMap.Entry<String, Integer> entry : activeEventTypes.entrySet()) {
-//            if(counter == index){
-//                key = entry.getKey();
-//            }
-//            counter++;
-//        }
-//        return key;
-//    }
-//
-//    public ArrayList<Person> getFamily(String personId, String... filters) {
-//        ArrayList<Person> combinedPersons = new ArrayList<Person>();
-//        if(branches.get(personId) != null){
-//            if(getPersonsFather(personId) != null){
-//                combinedPersons.add(getPersonsFather(personId));
-//            }
-//            if(getPersonsMother(personId) != null){
-//                combinedPersons.add(getPersonsMother(personId));
-//            }
-//            if(getPersonsSpouse(personId) != null){
-//                combinedPersons.add(getPersonsSpouse(personId));
-//            }
-//            if(getPersonsChildren(personId) != null){
-//                combinedPersons.addAll(getPersonsChildren(personId));
-//            }
-//        }
-//        return combinedPersons;
-//    }
-//
-//    private Person getPersonsFather(String personId) {
-//        return branches.get(personId).getPersonLeaf().getFather();
-//    }
-//
-//    private Person getPersonsMother(String personId) {
-//        return branches.get(personId).getPersonLeaf().getMother();
-//    }
-//
-//    private Person getPersonsSpouse(String personId) {
-//        return branches.get(personId).getPersonLeaf().getSpouse();
-//    }
-//
-//    private ArrayList<Person> getPersonsChildren(String parentId){
-//        ArrayList<Person> children  = new ArrayList<Person>();
-//        for (HashMap.Entry<String, DataBranch> entry : this.branches.entrySet()) {
-//            DataBranch branch = entry.getValue();
-//            String potentialChildFatherId = branch.getPerson().getFatherId();
-//            String potentialChildMotherId = branch.getPerson().getMotherId();
-//            String potentialChildId = branch.getPerson().getId();
-//            if(parentId.equals(potentialChildFatherId) || parentId.equals(potentialChildMotherId)){
-//                Person child = getPerson(potentialChildId);
-//                //child.metaData.put("type", "child");
-//                children.add(child);
-//            }
-//        }
-//        return children;
-//    }
-//
-//    public Event getPersonsEarliestEvent(String personId){
-//        Person person = getPerson(personId);
-//        Event event = null;
-//        if(person != null){
-//            event = branches.get(person.getId()).getEarliestEvent();
-//        }
-//        return event;
-//    }
-
-//    public Event getPersonsSpouseEarliestEvent(String personId){
-//        ArrayList<LatLng> coordinates = new ArrayList<LatLng>();
-//        Person person = getPersonsSpouse(personId);
-//        if(person != null && person.getSpouseId() != null){
-//            coordinates.addAll(getPersonsEarliestEvent(person.getSpouseId()));
-//        }
-//        return coordinates;
-//    }
 
 }
 
