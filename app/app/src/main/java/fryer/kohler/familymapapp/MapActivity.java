@@ -40,7 +40,7 @@ public class MapActivity extends AppCompatActivity implements MapFragment.MapFra
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         MapFragment fragment = new MapFragment();
         fragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.fragment2, fragment);
+        fragmentTransaction.replace(R.id.map, fragment);
         fragmentTransaction.commit();
 
         upButton.setOnClickListener(new View.OnClickListener() {

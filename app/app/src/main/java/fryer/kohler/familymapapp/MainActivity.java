@@ -8,31 +8,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.function.Consumer;
 
 import familymapapp.HTTP.Proxy;
-import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
-import familymapapp.Modal.Person;
-import familymapapp.Modal.TemporaryPersonData;
-import familymapapp.Response.EventsResponse;
-import familymapapp.Response.PersonsResponse;
-import familymapapp.Service.EventsService;
-import familymapapp.Service.PersonService;
-import familymapapp.Service.PersonsService;
-import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Util;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static fryer.kohler.familymapapp.R.*;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.LoginFragmentHandler, MapFragment.MapFragmentHandler {
@@ -41,12 +27,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     Button filterButton;
     Button settingsButton;
     Button searchButton;
+    FragmentManager fragmentManager;
+    LoginFragment loginFragment;
+    MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         filterButton = (Button) findViewById(R.id.filter_button);
@@ -75,15 +64,16 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         });
 
         if(Proxy.authenticationToken == null){
-            filterButton.setVisibility(View.GONE);
-            settingsButton.setVisibility(View.GONE);
-            searchButton.setVisibility(View.GONE);
-            LoginFragment fragment = new LoginFragment();
-            fragmentTransaction.replace(id.fragment, fragment);
+            Log.d("debug", "loading login screen");
+            filterButton.setVisibility(View.INVISIBLE);
+            settingsButton.setVisibility(View.INVISIBLE);
+            searchButton.setVisibility(View.INVISIBLE);
+            loginFragment = new LoginFragment();
+            fragmentTransaction.replace(id.fragment, loginFragment);
             fragmentTransaction.commit();
         }else{
-            MapFragment fragment = new MapFragment();
-            fragmentTransaction.replace(id.fragment, fragment);
+            mapFragment = new MapFragment();
+            fragmentTransaction.replace(id.fragment, mapFragment);
             fragmentTransaction.commit();
         }
 
@@ -115,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(id.main_layout, fragment);
+        fragmentTransaction.replace(id.fragment, fragment);
         fragmentTransaction.commit();
     }
 

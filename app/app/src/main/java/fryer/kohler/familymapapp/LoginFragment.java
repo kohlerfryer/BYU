@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,7 +145,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
+        Log.d("debug", "what the crap in create view of login");
         this.serverHostInput =  (EditText) view.findViewById(R.id.server_host_input);
         this.serverPortInput =  (EditText) view.findViewById(R.id.server_port_input);
         this.usernameInput =  (EditText) view.findViewById(R.id.username_input);

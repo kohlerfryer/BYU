@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -24,6 +25,8 @@ import familymapapp.HTTP.Proxy;
 import familymapapp.Modal.Settings;
 import familymapapp.UTIL.Util;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private Spinner lifeStoryLinesSpinner;
@@ -37,6 +40,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private TextView resyncDataTextView;
     private TextView logoutTextView;
+
+    private Button upButton;
+    private Button goToTopButton;
 
     private Context context;
 
@@ -60,6 +66,25 @@ public class SettingsActivity extends AppCompatActivity {
 
         resyncDataTextView = (TextView) findViewById(R.id.resync_data_text_view);
         logoutTextView = (TextView) findViewById(R.id.logout_text_view);
+
+        upButton = (Button) findViewById(R.id.up_button);
+        goToTopButton = (Button) findViewById(R.id.go_to_top_button);
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        goToTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ArrayAdapter<String> LifeStoryArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Settings.getInstance().getLifeStoryLineColorKeys()

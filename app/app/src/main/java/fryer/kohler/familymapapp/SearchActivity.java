@@ -1,5 +1,6 @@
 package fryer.kohler.familymapapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import familymapapp.Modal.DataTree;
 import familymapapp.Modal.DetailsRowDataObject;
 import familymapapp.UTIL.Util;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static fryer.kohler.familymapapp.MainActivity.EXTRA_MESSAGE;
 
 public class SearchActivity extends AppCompatActivity {
@@ -32,6 +35,9 @@ public class SearchActivity extends AppCompatActivity {
     DetailsRowAdapter personDetailsRowAdapter;
     EditText searchField;
     DataTree dataTree;
+    private Button upButton;
+    private Button goToTopButton;
+    private Context context;
 
     private Consumer<String> personOnClickCallBack = (personId) -> {
         Log.d("debug", personId);
@@ -50,6 +56,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        this.context = context;
 
         dataTree = DataTree.getInstance();
 
@@ -62,6 +69,25 @@ public class SearchActivity extends AppCompatActivity {
 
         eventDetailsRowAdapter = new DetailsRowAdapter(this);
         personDetailsRowAdapter = new DetailsRowAdapter(this);
+
+        upButton = (Button) findViewById(R.id.up_button);
+        goToTopButton = (Button) findViewById(R.id.go_to_top_button);
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        goToTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         searchField.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {}
@@ -84,10 +110,10 @@ public class SearchActivity extends AppCompatActivity {
                 dataTree.searchEvents(text)
         );
 
-        eventDetailsRowAdapter.setRowContent(personResults, eventOnClickCallBack);
+        eventDetailsRowAdapter.setRowContent(eventResults, eventOnClickCallBack);
         eventDetailsRowRecyclerView.setAdapter(eventDetailsRowAdapter);
 
-        personDetailsRowAdapter.setRowContent(eventResults, personOnClickCallBack);
+        personDetailsRowAdapter.setRowContent(personResults, personOnClickCallBack);
         personDetailsRowRecyclerView.setAdapter(personDetailsRowAdapter);
     }
 

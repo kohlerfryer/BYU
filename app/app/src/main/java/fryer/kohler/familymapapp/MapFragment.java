@@ -57,7 +57,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.d("debug", "what the crap in create view of map");
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         eventTitleTextView = (TextView) view.findViewById(R.id.event_title_text);
         eventBodyTextView = (TextView) view.findViewById(R.id.event_body_text);

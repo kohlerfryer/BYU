@@ -9,8 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar5"
@@ -44,9 +45,9 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="fryer.kohler.familymapapp.MapFragment"
+            android:name="fryer.kohler.familymapapp.LoginFragment"
             android:layout_width="match_parent"
-            android:layout_height="511dp" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

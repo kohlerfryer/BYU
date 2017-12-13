@@ -1,5 +1,6 @@
 package fryer.kohler.familymapapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import familymapapp.UTIL.Settings;
 import familymapapp.UTIL.Quadruplet;
 import familymapapp.UTIL.Util;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static fryer.kohler.familymapapp.MainActivity.EXTRA_MESSAGE;
 
 public class PersonActivity extends AppCompatActivity {
@@ -45,12 +48,18 @@ public class PersonActivity extends AppCompatActivity {
     TextView lastNameTextView;
     TextView genderTextView;
 
+    private Button upButton;
+    private Button goToTopButton;
+
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
         Intent intent = getIntent();
         String personId = intent.getStringExtra(EXTRA_MESSAGE);
+        context = this;
 
         firstNameTextView = (TextView) findViewById(R.id.first_name_text);
         lastNameTextView = (TextView) findViewById(R.id.last_name_text);
@@ -65,6 +74,44 @@ public class PersonActivity extends AppCompatActivity {
 
         eventDetailsRowAdapter = new DetailsRowAdapter(this);
         personDetailsRowAdapter = new DetailsRowAdapter(this);
+
+        upButton = (Button) findViewById(R.id.up_button);
+        goToTopButton = (Button) findViewById(R.id.go_to_top_button);
+
+        upButton = (Button) findViewById(R.id.up_button);
+        goToTopButton = (Button) findViewById(R.id.go_to_top_button);
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        goToTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        goToTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         this.loadPerson(personId);
     }

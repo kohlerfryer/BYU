@@ -39,6 +39,7 @@
         <include
             layout="@layout/content_settings"
             android:layout_width="match_parent" />
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 package familymapapp.Modal;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -123,6 +124,7 @@ public class Person implements DetailsRowDataObject{
     public Person getMother(){
         Person mother = null;
         if(getMotherId() != null && !getMotherId().equals("")){
+            Log.d("debug", "*******************************");
             mother = DataTree.getInstance().getPersons().get(getMotherId());
             mother.type = "mother";
         }
@@ -131,6 +133,7 @@ public class Person implements DetailsRowDataObject{
     public Person getFather(){
         Person father = null;
         if(getFatherId() != null && !getFatherId().equals("")){
+            Log.d("debug", "*******************************");
             father = DataTree.getInstance().getPersons().get(getFatherId());
             father.type = "father";
         }
