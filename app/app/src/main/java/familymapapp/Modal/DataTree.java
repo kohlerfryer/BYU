@@ -115,6 +115,9 @@ public class DataTree {
         }
         return children;
     }
+    public static Person getRootPerson(){
+        return rootPerson;
+    }
 
 
     public static boolean passesMaleFilter(Event event){
