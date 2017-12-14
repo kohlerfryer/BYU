@@ -49,22 +49,22 @@ public class RegisterService extends FamilyMapService{
                 requestBody.getLastName(), 
                 requestBody.getGender(), 
                 hashedPassword,
-                personId
+                requestBody.getFirstName() + "_" + requestBody.getLastName()
             );
 //    public Person create(String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
-            // Person person = this.personAccess.create(
-            //     requestBody.getFirstName()+requestBody.getLastName(),
-            //     requestBody.getFirstName(), 
-            //     requestBody.getLastName(), 
-            //     requestBody.getGender(), 
-            //     null, 
-            //     null,
-            //     null,
-            //     requestBody.getUsername()
-            // );
+            Person person = this.personAccess.create(
+                requestBody.getFirstName()+ "_" +requestBody.getLastName(),
+                requestBody.getFirstName(), 
+                requestBody.getLastName(), 
+                requestBody.getGender(), 
+                null, 
+                null,
+                null,
+                requestBody.getUsername()
+            );
             Authentication authentication = this.authenticationAccess.create(Util.generateRandomString(), requestBody.getUsername());
             dataGenerator.generatePersonData(user, 4, 2017, requestBody.getUsername());
-            responseBody = new RegisterResponseBody(authentication.getToken(), requestBody.getUsername(), requestBody.getFirstName() + requestBody.getLastName());
+            responseBody = new RegisterResponseBody(authentication.getToken(), requestBody.getUsername(), requestBody.getFirstName() + "_" + requestBody.getLastName());
         }catch(InvalidRequestException e){
             responseBody = new RegisterResponseBody(e.getMessage());
         }catch(NullPointerException e){

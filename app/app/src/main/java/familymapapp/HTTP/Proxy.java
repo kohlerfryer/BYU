@@ -23,6 +23,7 @@ public class Proxy {
     public static String rootPersonId;
 
     public static boolean syncData(Consumer<String> onSuccess, Consumer<String> onFailure){
+        DataTree.clear();
         boolean ready = true;
         if(authenticationToken == null || rootPersonId == null)return !ready;
 

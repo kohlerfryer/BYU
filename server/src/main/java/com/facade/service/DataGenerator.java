@@ -48,8 +48,8 @@ public class DataGenerator{
 
     public void generatePersonData(User user, int generations, int year, String descendant){
         year-=40;
-        Person person = this.personAccess.create(
-            user.getFirstName()+ user.getLastName(), 
+        Person person = new Person(
+            user.getFirstName() + "_" + user.getLastName(), 
             user.getFirstName(), 
             user.getLastName(),
             user.getGender(),
@@ -73,7 +73,7 @@ public class DataGenerator{
     private Person generateParentData(String lastName, String gender, int generations, int year, String descendant){
         year -=40;
         String firstName = this.generateFirstName(gender);
-        Person currentPerson = this.personAccess.create(firstName+lastName, firstName, lastName, gender, null, null, null, descendant);
+        Person currentPerson = this.personAccess.create(firstName+ "_" + lastName, firstName, lastName, gender, null, null, null, descendant);
         this.setAncestorData(currentPerson, year, descendant);
         if(generations >  0){
             Person mother = generateParentData(this.generateLastName(), "F", generations -1, year, descendant);

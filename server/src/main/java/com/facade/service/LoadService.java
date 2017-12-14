@@ -59,14 +59,14 @@ public class LoadService extends FamilyMapService{
                     loadUser.getLastName(),
                     loadUser.getGender(),
                     Util.getHash(loadUser.getPassword()),
-                    loadUser.getFirstName()+loadUser.getLastName()
+                    loadUser.getFirstName() + "_" + loadUser.getLastName()
                 );
                 usersCreated++;
             }
 //String id, String firstName, String lastName, String gender, String fatherId, String motherId, String spouseId, String descendant){
             for (LoadPerson loadPerson : loadPersonArray) {
                 personAccess.create(
-                    (loadPerson.getFirstName()+loadPerson.getLastName()),
+                    (loadPerson.getFirstName() + "_" + loadPerson.getLastName()),
                     loadPerson.getFirstName(),
                     loadPerson.getLastName(),
                     loadPerson.getGender(),

@@ -123,7 +123,7 @@ public class Person implements DetailsRowDataObject{
     }
     public Person getMother(){
         Person mother = null;
-        if(getMotherId() != null && !getMotherId().equals("")){
+        if(getMotherId() != null && DataTree.getPersons().containsKey(getMotherId())){
             mother = DataTree.getInstance().getPersons().get(getMotherId());
             mother.type = "mother";
         }
@@ -131,7 +131,7 @@ public class Person implements DetailsRowDataObject{
     }
     public Person getFather(){
         Person father = null;
-        if(getFatherId() != null && !getFatherId().equals("")){
+        if(getFatherId() != null && DataTree.getPersons().containsKey(getFatherId())){
             Log.d("debug", getFatherId());
             father = DataTree.getInstance().getPersons().get(getFatherId());
             father.type = "father";
@@ -141,7 +141,7 @@ public class Person implements DetailsRowDataObject{
     }
     public Person getSpouse(){
         Person spouse = null;
-        if(getSpouseId() != null && !getSpouseId().equals("")){
+        if(getSpouseId() != null && DataTree.getPersons().containsKey(getSpouseId())){
             spouse = DataTree.getInstance().getPersons().get(getSpouseId());
             spouse.type = "spouse";
         }

@@ -83,7 +83,9 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     public void setEventTextViewData(Event event){
         this.eventInScope = event;
-        eventTitleTextView.setText(event.getPersonId());
+        if(DataTree.getPersons().containsKey(event.getPersonId())){
+            eventTitleTextView.setText(DataTree.getPersons().get(event.getPersonId()).getFirstName() + " " + DataTree.getPersons().get(event.getPersonId()).getLastName());
+        }
         eventBodyTextView.setText(event.getEventType() + ":" + event.getCity() + "," + event.getCountry() + "(" + event.getYear() + ")");
         polylineDrawer.drawLines(event);
         eventInFocus = event;

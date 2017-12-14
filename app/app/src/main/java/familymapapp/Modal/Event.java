@@ -57,7 +57,7 @@ import fryer.kohler.familymapapp.R;
 
     @Override
     public String getSecondRow() {
-         return getPersonId();
+         return DataTree.getPersons().get(getPersonId()).getFirstName() + " " + DataTree.getPersons().get(getPersonId()).getLastName();
     }
 
     @Override

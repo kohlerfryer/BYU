@@ -53,6 +53,10 @@ public class DataTree {
         return tree;
     }
 
+    public static void clear(){
+        tree = new DataTree();
+    }
+
     public static void setPersons(ArrayList<Person> disorganizedPersons) {
         for (Person person : disorganizedPersons) {
             DataTree.persons.put(person.getId(), person);
@@ -65,9 +69,13 @@ public class DataTree {
     public static void setEvents(ArrayList<Event> disorganizedEvents) {
         for (Event event : disorganizedEvents) {
             DataTree.events.put(event.getId(), event);
-            persons.get(event.getPersonId()).addToEventArray(event);
+            if(persons.containsKey(event.getPersonId())){
+                persons.get(event.getPersonId()).addToEventArray(event);
+            }
             eventFilters.put(event.getEventType().toLowerCase(), 1);
         }
+
+        Log.d("debug", events.size() + "************");
 
         for (HashMap.Entry<String, Integer> entry : eventFilters.entrySet()) {
             String key = entry.getKey();
@@ -84,7 +92,7 @@ public class DataTree {
         ArrayList<Event> filteredEvents = new ArrayList<>();
         for (HashMap.Entry<String, Event> entry : events.entrySet()) {
             Event event = entry.getValue();
-            if(eventFilters.get(event.getEventType()) == 1 && filterableFromStandardFilters(event)){
+            if(eventFilters.get(event.getEventType().toLowerCase()) == 1 && filterableFromStandardFilters(event)){
                 filteredEvents.add(event);
             }
         }
@@ -114,11 +122,11 @@ public class DataTree {
     }
 
     public static boolean passesMaleFilter(Event event){
-        return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().equals("M"));
+        return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().toLowerCase().equals("m"));
     }
 
     public static boolean passesFemaleFilter(Event event){
-        return (eventFilters.get(FEMALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().equals("F"));
+        return (eventFilters.get(FEMALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().toLowerCase().equals("f"));
     }
 
     public static boolean passesGenderFilter(Event event){
@@ -136,11 +144,14 @@ public class DataTree {
 
 
     public static boolean passesFamilyTreeFilter(Event event){
+        if(!motherSidePersons.contains(event.getPersonId()) && !fatherSidePersons.contains(event.getPersonId()))return true;
         if(eventFilters.get(MOTHER_SIDE_FILTER) != 1 && eventFilters.get(FATHER_SIDE_FILTER) != 1)return false;
         return(passesFatherSideFilter(event) || passesMotherSideFilter(event));
     }
 
     public static boolean filterableFromStandardFilters(Event event){
+        if(event == null) return false;
+        if(!persons.containsKey(event.getPersonId()))return false;
         if(!passesGenderFilter(event))return false;
         if(!passesFamilyTreeFilter(event))return false;
         return true;
@@ -157,10 +168,12 @@ public class DataTree {
     }
 
     public static void setFatherSidePersons(Person person){
+        if(person == null)return;
         addGenerationIds(person, fatherSidePersons);
     }
 
     public static void setMotherSidePersons(Person person){
+        if(person == null)return;
         addGenerationIds(person, motherSidePersons);
     }
 
