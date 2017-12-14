@@ -34,7 +34,8 @@
             android:ems="10"
             android:hint="User Name::"
             android:inputType="textPersonName"
-            android:text="aa" />
+            android:text="sheila"
+            tools:text="parker" />
 
         <EditText
             android:id="@+id/password_input"
