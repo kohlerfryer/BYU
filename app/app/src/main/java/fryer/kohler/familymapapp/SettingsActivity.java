@@ -67,17 +67,17 @@ public class SettingsActivity extends AppCompatActivity {
         resyncDataTextView = (TextView) findViewById(R.id.resync_data_text_view);
         logoutTextView = (TextView) findViewById(R.id.logout_text_view);
 
-        upButton = (Button) findViewById(R.id.up_button);
+//        upButton = (Button) findViewById(R.id.up_button);
         goToTopButton = (Button) findViewById(R.id.go_to_top_button);
 
-        upButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+//        upButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, MainActivity.class);
+//                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
 
         goToTopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +191,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         rysyncSuccess = (data) -> {
             Toast.makeText(this, "re-synced", 3000).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
         };
 
         rysncFailure = (data) -> {

@@ -25,13 +25,13 @@
                 android:layout_gravity="left"
                 android:text="Back" />
 
-            <Button
-                android:id="@+id/up_button"
-                android:layout_width="54dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="^"
-                tools:layout_editor_absoluteX="340dp" />
+            <!--<Button-->
+                <!--android:id="@+id/up_button"-->
+                <!--android:layout_width="54dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:text="^"-->
+                <!--tools:layout_editor_absoluteX="340dp" />-->
 
         </android.support.v7.widget.Toolbar>
 

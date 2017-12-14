@@ -70,17 +70,17 @@ public class SearchActivity extends AppCompatActivity {
         eventDetailsRowAdapter = new DetailsRowAdapter(this);
         personDetailsRowAdapter = new DetailsRowAdapter(this);
 
-        upButton = (Button) findViewById(R.id.up_button);
+//        upButton = (Button) findViewById(R.id.up_button);
         goToTopButton = (Button) findViewById(R.id.go_to_top_button);
 
-        upButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+//        upButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, MainActivity.class);
+//                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
 
         goToTopButton.setOnClickListener(new View.OnClickListener() {
             @Override
