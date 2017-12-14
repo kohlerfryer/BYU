@@ -20,10 +20,8 @@ public class DataTree {
     public static ArrayList<String> motherSidePersons;
     public static ArrayList<String> fatherSidePersons;
 
-    // personId -> person
-    private static HashMap<String, Person> persons;
-    // eventId -> event
-    private static HashMap<String, Event> events;
+    private static HashMap<String, Person> persons;// personId -> person
+    private static HashMap<String, Event> events;// eventId -> event
     private static Person rootPerson;
 
     private static final String FATHER_SIDE_FILTER = "father's side";
@@ -59,6 +57,7 @@ public class DataTree {
 
     public static void setPersons(ArrayList<Person> disorganizedPersons) {
         for (Person person : disorganizedPersons) {
+            System.out.print(person.getId());
             DataTree.persons.put(person.getId(), person);
         }
 
@@ -74,8 +73,6 @@ public class DataTree {
             }
             eventFilters.put(event.getEventType().toLowerCase(), 1);
         }
-
-        Log.d("debug", events.size() + "************");
 
         for (HashMap.Entry<String, Integer> entry : eventFilters.entrySet()) {
             String key = entry.getKey();
@@ -102,11 +99,9 @@ public class DataTree {
     public static HashMap<String, Person> getPersons(){
         return persons;
     }
-
     public static HashMap<String, Event> getEvents(){
         return events;
     }
-
     public static ArrayList<Person> getChildren(Person parent){
         ArrayList<Person> children = new ArrayList<>();
         for (HashMap.Entry<String, Person> entry : persons.entrySet()) {
@@ -120,6 +115,7 @@ public class DataTree {
         }
         return children;
     }
+
 
     public static boolean passesMaleFilter(Event event){
         return (eventFilters.get(MALE_EVENT_FILTER) == 1 && persons.get(event.getPersonId()).getGender().toLowerCase().equals("m"));

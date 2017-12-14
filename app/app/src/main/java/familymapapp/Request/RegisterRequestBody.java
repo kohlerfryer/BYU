@@ -16,14 +16,6 @@ public class RegisterRequestBody{
         this.lastName = lastName;
         this.gender = gender;
     }
-//    public RegisterRequestBody(String userName, String password, String email, String firstName, String lastName){
-//        this.userName = userName;
-//        this.password = password;
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.gender = gender;
-//    }
 
     public String getUsername(){
         return this.userName;

@@ -9,15 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.function.Consumer;
 
-import familymapapp.HTTP.Proxy;
+import familymapapp.Proxy.Proxy;
 import familymapapp.Modal.Event;
-import familymapapp.UTIL.Util;
+import familymapapp.Util.Util;
 
 import static fryer.kohler.familymapapp.R.*;
 
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
     }
 
-    //TODO USE RSPONSE OBJECT
     @Override
     public void handleLoginSuccess(String personId, String authenticationToken) {
         Proxy.authenticationToken = authenticationToken;

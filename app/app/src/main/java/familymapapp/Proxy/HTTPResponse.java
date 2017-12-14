@@ -1,4 +1,4 @@
-package familymapapp.HTTP;
+package familymapapp.Proxy;
 
 /**
  * Created by kittykatt on 11/14/17.

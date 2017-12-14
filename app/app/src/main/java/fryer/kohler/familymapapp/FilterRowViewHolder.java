@@ -11,10 +11,6 @@ import java.util.function.Consumer;
 
 import familymapapp.Modal.DataTree;
 
-/**
- * Created by programmer on 12/9/17.
- */
-
 public class FilterRowViewHolder extends RecyclerView.ViewHolder{
     public Switch filterSwitch;
     public FilterRowViewHolder(View itemView) {

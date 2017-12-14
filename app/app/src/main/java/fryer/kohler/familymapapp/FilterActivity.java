@@ -18,11 +18,9 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class FilterActivity extends AppCompatActivity {
 
-    Person person;
     RecyclerView filterRowRecyclerView;
     FilterRowAdapter filterRowAdapter;
 
-    private Button upButton;
     private Button goToTopButton;
 
     private Context context;
@@ -38,17 +36,7 @@ public class FilterActivity extends AppCompatActivity {
         filterRowAdapter = new FilterRowAdapter(this);
         filterRowRecyclerView.setAdapter(filterRowAdapter);
 
-//        upButton = (Button) findViewById(R.id.up_button);
         goToTopButton = (Button) findViewById(R.id.go_to_top_button);
-
-//        upButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, MainActivity.class);
-//                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        });
 
         goToTopButton.setOnClickListener(new View.OnClickListener() {
             @Override

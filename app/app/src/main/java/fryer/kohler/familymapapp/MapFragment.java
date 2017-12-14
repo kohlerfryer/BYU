@@ -1,12 +1,10 @@
 package fryer.kohler.familymapapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,31 +15,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-import java.util.ArrayList;
 
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.Event;
 import familymapapp.Modal.PolylineDrawer;
 import familymapapp.Modal.Settings;
-import familymapapp.Modal.TemporaryPersonData;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- *
- * to handle interaction events.
- *
- * create an instance of this fragment.
- */
+
 public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     TextView eventTitleTextView;
@@ -57,7 +42,6 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("debug", "what the crap in create view of map");
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         eventTitleTextView = (TextView) view.findViewById(R.id.event_title_text);
         eventBodyTextView = (TextView) view.findViewById(R.id.event_body_text);

@@ -37,6 +37,7 @@ public class Authentication{
         return this.timestamp;
     }
 
+
     public void setToken(String token){
         this.token = token;
     }

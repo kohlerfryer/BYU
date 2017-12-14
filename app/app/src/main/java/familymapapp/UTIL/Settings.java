@@ -1,6 +1,5 @@
-package familymapapp.UTIL;
+package familymapapp.Util;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 /**

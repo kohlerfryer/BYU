@@ -15,6 +15,6 @@ public class PersonRequestBody {
     public String getPersonId(){
         return this.personId;
     }
-    public String getAuthenticationToken(){return this.authenticationToken;}
-
-}
+    public String getAuthenticationToken(){
+        return this.authenticationToken;}
+    }

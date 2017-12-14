@@ -1,4 +1,4 @@
-package familymapapp.UTIL;
+package familymapapp.Util;
 
 import android.util.Pair;
 
@@ -9,11 +9,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import familymapapp.Modal.DetailsRowDataObject;
-import familymapapp.Modal.Event;
 
 /**
  * Created by programmer on 11/29/17.

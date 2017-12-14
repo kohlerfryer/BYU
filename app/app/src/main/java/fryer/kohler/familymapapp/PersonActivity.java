@@ -3,35 +3,21 @@ package fryer.kohler.familymapapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.DetailsRowDataObject;
-import familymapapp.Modal.Event;
 import familymapapp.Modal.Person;
-import familymapapp.Modal.TemporaryPersonData;
-import familymapapp.Response.EventsResponse;
-import familymapapp.Service.EventsService;
-import familymapapp.Service.PersonService;
-import familymapapp.UTIL.Settings;
-import familymapapp.UTIL.Quadruplet;
-import familymapapp.UTIL.Util;
+import familymapapp.Util.Util;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static fryer.kohler.familymapapp.MainActivity.EXTRA_MESSAGE;

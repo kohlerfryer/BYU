@@ -90,6 +90,7 @@ public class Person implements DetailsRowDataObject{
         return android.support.v4.R.drawable.notification_icon_background;
     }
 
+
     public String getId(){
         return this.id;
     }
@@ -132,7 +133,6 @@ public class Person implements DetailsRowDataObject{
     public Person getFather(){
         Person father = null;
         if(getFatherId() != null && DataTree.getPersons().containsKey(getFatherId())){
-            Log.d("debug", getFatherId());
             father = DataTree.getInstance().getPersons().get(getFatherId());
             father.type = "father";
         }
@@ -178,5 +178,8 @@ public class Person implements DetailsRowDataObject{
         this.spouseId = spouseId;
     }
 
-    public void addToEventArray(Event event){this.events.add(event);}
+
+    public void addToEventArray(Event event){
+        this.events.add(event);
+    }
 }

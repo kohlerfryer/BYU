@@ -36,7 +36,6 @@ import fryer.kohler.familymapapp.R;
      /** user attatched to event */
      private String descendant;
      
-//{"id":"03VL7DFJXKB56KIC5W","":"52.5167","longitude":"13.3833","country":"Germany","city":"Berlin","type":"baptism","year":"1832","personId":"1832","descendant":"aa"}
      public Event(String id, String latitude, String longitude, String country, String city, String type, String year, String personId, String descendant){
          this.id = id;
          this.latitude = latitude;
@@ -57,7 +56,9 @@ import fryer.kohler.familymapapp.R;
 
     @Override
     public String getSecondRow() {
-         return DataTree.getPersons().get(getPersonId()).getFirstName() + " " + DataTree.getPersons().get(getPersonId()).getLastName();
+         return  DataTree.getPersons().get(getPersonId()).getFirstName()
+                 + " " +
+                 DataTree.getPersons().get(getPersonId()).getLastName();
     }
 
     @Override
@@ -66,31 +67,31 @@ import fryer.kohler.familymapapp.R;
     }
 
     public String getId(){
-	 return this.id;
+	    return this.id;
      }
      public String getLatitude(){
-	 return this.latitude;
+        return this.latitude;
      }
      public String getLongitude(){
-	 return this.longitude;
+         return this.longitude;
      }
      public String getCountry(){
-	 return this.country;
+         return this.country;
      }
      public String getCity(){
-	 return this.city;
+	    return this.city;
      }
      public String getEventType(){
-	 return this.type;
+         return this.type;
      }
      public String getYear(){
-	 return this.year;
+         return this.year;
      }
      public String getPersonId(){
-	 return this.personId;
+         return this.personId;
      }
      public String getDescendant(){
-	 return this.descendant;
+         return this.descendant;
      }
      public LatLng convertCoordinatesToLtLng(){
          Double latitude = Double.valueOf(getLatitude());

@@ -15,10 +15,6 @@ import java.util.function.Consumer;
 import familymapapp.Modal.DataTree;
 import familymapapp.Modal.DetailsRowDataObject;
 
-/**
- * Created by programmer on 12/9/17.
- */
-
 public class FilterRowAdapter extends RecyclerView.Adapter<FilterRowViewHolder> {
 
     private final LayoutInflater inflater;

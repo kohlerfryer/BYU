@@ -4,13 +4,12 @@ package familymapapp.Service;
 import java.net.URL;
 import java.util.function.Consumer;
 
-import familymapapp.HTTP.PostRequest;
+import familymapapp.Proxy.PostRequest;
 import familymapapp.Request.RegisterRequestBody;
-import familymapapp.UTIL.Util;
+import familymapapp.Util.Util;
 
 public class RegisterService {
 
-    //TODO -- make response objects
     public static void register(String serverHost, String serverPort, RegisterRequestBody requestBody, Consumer<String> success, Consumer<String> failure){
         String stringifiedRequestBody = Util.covertObjectToJsonString(requestBody);
 

@@ -3,10 +3,7 @@ package fryer.kohler.familymapapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,15 +14,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.function.Consumer;
 
-import familymapapp.HTTP.Proxy;
+import familymapapp.Proxy.Proxy;
 import familymapapp.Modal.Settings;
-import familymapapp.UTIL.Util;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -41,7 +33,6 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView resyncDataTextView;
     private TextView logoutTextView;
 
-    private Button upButton;
     private Button goToTopButton;
 
     private Context context;
@@ -67,17 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         resyncDataTextView = (TextView) findViewById(R.id.resync_data_text_view);
         logoutTextView = (TextView) findViewById(R.id.logout_text_view);
 
-//        upButton = (Button) findViewById(R.id.up_button);
         goToTopButton = (Button) findViewById(R.id.go_to_top_button);
-
-//        upButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, MainActivity.class);
-//                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        });
 
         goToTopButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,4 @@
-package familymapapp.HTTP;
-
-import android.widget.Toast;
+package familymapapp.Proxy;
 
 import java.util.function.Consumer;
 
@@ -11,8 +9,7 @@ import familymapapp.Response.PersonsResponse;
 import familymapapp.Service.EventsService;
 import familymapapp.Service.PersonService;
 import familymapapp.Service.PersonsService;
-import familymapapp.UTIL.Util;
-import fryer.kohler.familymapapp.MapFragment;
+import familymapapp.Util.Util;
 
 /**
  * Created by programmer on 12/12/17.
